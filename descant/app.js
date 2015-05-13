@@ -4,12 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var express_session = require('express-session');
 
+var db_conf = require('./config/db');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var api_routes = require('./routes/api_routes')
+var api_routes = require('./routes/api_routes');
 
 var app = express();
+
+// Set up database connection
+mongoose.connect(db_conf.url);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +30,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configure passport (TODO!!!)
+app.use(express_session({secret:"todo"}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+var account = require('./models/api/v0.1/user');
+passport.use(new LocalStrategy(account.authenticate()));
+passport.serializeUser(account.serializeUser());
+passport.deserializeUser(account.deserializeUser());
 
 app.use('/', routes);
 app.use('/users', users);
