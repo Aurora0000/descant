@@ -1,5 +1,0 @@
-from django.contrib import admin
-from .forums.models import Tag, Topic
-
-admin.site.register(Tag)
-admin.site.register(Topic)
