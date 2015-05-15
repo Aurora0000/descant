@@ -6,6 +6,11 @@ logs
 pids
 *.pid
 
+# You're not getting my dev database
 *.sqlite3
 
+# Don't want compiled python files
 *.pyc
+
+# Damnit, gedit
+*.*~
