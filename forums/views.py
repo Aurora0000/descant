@@ -7,7 +7,7 @@ from rest_framework.parsers import JSONParser
 from .models import Post
 from .serializers import PostSerializer
         
-@api_view(["GET", "POST"])
+@api_view(['GET', 'POST'])
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def topic_list(request):
     if request.method == 'GET':
@@ -25,3 +25,31 @@ def topic_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, 
                         status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes((IsAuthenticatedOrReadOnly,))             
+def topic_detail(request, pk):
+    try:
+        topic = Post.objects.get(pk=pk, is_topic=True)
+    except Post.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = PostSerializer(topic)
+        # Todo: Add replies
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        # Could be made better, but it'll do.
+        request.data["is_topic"] = True
+        request.data["author_id"] = request.user.id
+        serializer = PostSerializer(topic, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        topic.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
