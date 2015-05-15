@@ -1,9 +1,12 @@
 from django.http import HttpResponse
+from django.utils import timezone
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import JSONParser
+
 from .models import Post
 from .serializers import PostSerializer
         
@@ -43,6 +46,7 @@ def topic_detail(request, pk):
         # Could be made better, but it'll do.
         request.data["is_topic"] = True
         request.data["author_id"] = request.user.id
+        request.data["edit_date"] = timezone.now
         serializer = PostSerializer(topic, data=request.data)
         if serializer.is_valid():
             serializer.save()
