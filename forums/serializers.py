@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from .models import Post, Tag
 
+
+# TODO: Differentiate serializers between posts and topics (so topics don't see useless reply_to fields, and vice versa)
 class PostSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
 
