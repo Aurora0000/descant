@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import generics
 
 from .models import Post, Tag
-from .serializers import PostSerializer, TagSerializer
+from .serializers import PostSerializer, TopicSerializer, TagSerializer
 
 
 class TagList(generics.ListCreateAPIView):
@@ -14,14 +14,16 @@ class TagList(generics.ListCreateAPIView):
 class TopicList(generics.ListCreateAPIView):
     # TODO: logic to set is_topic to true, etc.
     queryset = Post.objects.all().filter(is_topic=True)
-    serializer_class = PostSerializer
+    serializer_class = TopicSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+    def perform_create(self, serializer):
+        serializer.save(author_id=self.request.user.id)
 
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
     # TODO: some logic with the PUT to verify things aren't changed in a hostile way.
     queryset = Post.objects.all().filter(is_topic=True)
-    serializer_class = PostSerializer
+    serializer_class = TopicSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
 

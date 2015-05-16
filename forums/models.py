@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
-    author_id = models.PositiveIntegerField()
+    author_id = models.PositiveIntegerField(editable=False)
     
     contents = models.CharField(max_length=5000)
     
