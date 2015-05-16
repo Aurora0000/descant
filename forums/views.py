@@ -1,9 +1,9 @@
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-
+from django.contrib.auth.models import User
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 
 from .models import Post, Tag
-from .serializers import PostSerializer, TopicSerializer, TagSerializer
+from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer
 
 
 class TagList(generics.ListCreateAPIView):
@@ -38,6 +38,12 @@ class ReplyList(generics.ListCreateAPIView):
 
 
 class ReplyDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.get(is_topic=False)
+    queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)

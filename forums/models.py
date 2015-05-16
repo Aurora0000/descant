@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
-    author_id = models.PositiveIntegerField(editable=False)
+    author_id = models.ForeignKey('auth.User', related_name='posts')
     
     contents = models.CharField(max_length=5000)
     
@@ -28,7 +28,8 @@ class Post(models.Model):
         return True if self.edit_date is not None else False
     
     def __str__(self):
-        return "Post" if self.title is None else self.title
+        return "Reply to Topic {} (ID {})".format(str(self.reply_to), str(self.id)) if (self.title is None) or (
+        self.title == "") else self.title
 
 
 class Tag(models.Model):

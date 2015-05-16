@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^topics/', TopicList.as_view()),
     url(r'^posts/(?P<pk>[0-9]+)/$', ReplyDetail.as_view()),
     url(r'tags/', TagList.as_view()),
+    url(r'users/', UserList.as_view()),
 ]
 
