@@ -1,11 +1,12 @@
 from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
 
-from .views import topic_list, topic_detail
+from .views import *
 
 
 urlpatterns = [
     url(r'^topics/(?P<pk>[0-9]+)/$', topic_detail),
     url(r'^topics/', topic_list),
+    url(r'^posts/(?P<pk>[0-9]+)/$', reply_detail),
+    url(r'tags/', tag_list)
 ]
 

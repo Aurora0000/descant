@@ -17,19 +17,20 @@ class Post(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
     
     # Tags are stored in their own table, the IDs of those are here.
-    tag_ids = models.CommaSeparatedIntegerField(max_length=10, blank=True, 
-                                                null=True)                                          
-    # Cap of 100,000 replies...
-    reply_ids = models.CommaSeparatedIntegerField(max_length=100000,
-                                                  blank=True, null=True)
-    
-    
+    tag_ids = models.CommaSeparatedIntegerField(max_length=10, blank=True,
+                                                null=True)
+
+    # These fields apply to replies only #
+
+    reply_to = models.PositiveIntegerField(blank=True, null=True)
+
     def was_edited(self):
-        return True if edit_date != None else False
+        return True if self.edit_date is not None else False
     
     def __str__(self):
-        return "Post" if self.title == None else self.title
-    
+        return "Post" if self.title is None else self.title
+
+
 class Tag(models.Model):
     name = models.CharField(max_length=40)
     # Hex colours will be converted to an integer here for convenience
@@ -37,4 +38,3 @@ class Tag(models.Model):
     
     def __str__(self):
         return self.name
-    
