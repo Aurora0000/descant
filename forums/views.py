@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, DjangoObjectPermissions
+from rest_framework.throttling import UserRateThrottle
 from guardian.shortcuts import assign_perm
 
 from .models import Post, Tag
@@ -14,9 +15,13 @@ class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
     authenticated_users_only = False
 
 
+class StandardThrottle(UserRateThrottle):
+    rate = '15/min'  # 1 per 4 seconds
+
 class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    throttle_classes = (StandardThrottle,)
 
 
 class TopicList(generics.ListCreateAPIView):
@@ -24,6 +29,7 @@ class TopicList(generics.ListCreateAPIView):
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, is_topic=True)
@@ -42,6 +48,7 @@ class ReplyList(generics.ListCreateAPIView):
     queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
+    throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, reply_to=self.kwargs['reply_to'])
@@ -56,9 +63,11 @@ class ReplyDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
+    throttle_classes = (StandardThrottle,)
