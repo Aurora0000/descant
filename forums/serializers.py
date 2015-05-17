@@ -5,23 +5,31 @@ from .models import Post, Tag
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'author', 'contents',
                   'post_date', 'edit_date', 'reply_to')
 
+    def get_author_name(self, obj):
+        return User.objects.get(id=obj.author.id).username
+
 
 class TopicSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
+    author_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'tag_ids', 'author', 'contents',
-                  'post_date', 'edit_date', 'reply_count')
+        fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
+                  'contents', 'post_date', 'edit_date', 'reply_count')
 
     def get_reply_count(self, obj):
         return len(Post.objects.all().filter(reply_to=obj.id))
+
+    def get_author_name(self, obj):
+        return User.objects.get(id=obj.author.id).username
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
