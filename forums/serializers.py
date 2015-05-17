@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-
 from rest_framework import serializers
 
 from .models import Post, Tag
@@ -9,7 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'author_id', 'contents',
+        fields = ('id', 'author', 'contents',
                   'post_date', 'edit_date', 'reply_to')
 
 
@@ -18,7 +17,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'tag_ids', 'author_id', 'contents',
+        fields = ('id', 'title', 'tag_ids', 'author', 'contents',
                   'post_date', 'edit_date', 'reply_count')
 
     def get_reply_count(self, obj):

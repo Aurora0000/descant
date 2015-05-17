@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
-    author_id = models.ForeignKey('auth.User', related_name='posts', editable=False)
+    author = models.ForeignKey('auth.User', related_name='posts', editable=False)
 
     contents = models.TextField()
     

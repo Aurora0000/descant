@@ -33,12 +33,12 @@ class SerializerReplyTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
         u = User.objects.get_by_natural_key('admin')
-        Post.objects.create(author_id=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
-        Post.objects.create(author_id=u, contents='Cool post!', reply_to=1)
-        Post.objects.create(author_id=u, contents='Cool post!', reply_to=1)
-        Post.objects.create(author_id=u, contents='test', is_topic=True, title='This is a different thread',
+        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
+        Post.objects.create(author=u, contents='Cool post!', reply_to=1)
+        Post.objects.create(author=u, contents='Cool post!', reply_to=1)
+        Post.objects.create(author=u, contents='test', is_topic=True, title='This is a different thread',
                             tag_ids='1')
-        Post.objects.create(author_id=u, contents='This post shouldn\'t count!', reply_to=4)
+        Post.objects.create(author=u, contents='This post shouldn\'t count!', reply_to=4)
 
     def test_count_is_correct(self):
         topic = Post.objects.get(id=1)
@@ -58,7 +58,7 @@ class LoadTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
         u = User.objects.get_by_natural_key('admin')
-        Post.objects.create(author_id=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
+        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
 
     def test_10k_replies(self):
         i = 0
@@ -66,7 +66,7 @@ class LoadTestCase(TestCase):
         while i < 10000:
             if i % 1000 == 0:
                 print("Test 10,000 replies: At iteration {}".format(i))
-            Post.objects.create(author_id=u, contents='test', reply_to=1)
+            Post.objects.create(author=u, contents='test', reply_to=1)
             i += 1
 
         topic = Post.objects.get(id=1)
