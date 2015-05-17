@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
-
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 from .models import Post, Tag
@@ -49,7 +48,27 @@ class SerializerReplyTestCase(TestCase):
     def test_api_is_correct(self):
         factory = APIRequestFactory()
         request = factory.get('/topics/1/', format='json')
-        force_authenticate(request, user='admin')
+        force_authenticate(request, user=User.objects.get_by_natural_key('admin'))
         view = TopicDetail.as_view()
         response = view(request, pk=1)
         self.assertEqual(response.data['reply_count'], 2)
+
+
+class LoadTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
+        u = User.objects.get_by_natural_key('admin')
+        Post.objects.create(author_id=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
+
+    def test_10k_replies(self):
+        i = 0
+        u = User.objects.get_by_natural_key('admin')
+        while i < 10000:
+            if i % 1000 == 0:
+                print("Test 10,000 replies: At iteration {}".format(i))
+            Post.objects.create(author_id=u, contents='test', reply_to=1)
+            i += 1
+
+        topic = Post.objects.get(id=1)
+        serializer = TopicSerializer(topic)
+        self.assertEqual(serializer.get_reply_count(topic), 10000)
