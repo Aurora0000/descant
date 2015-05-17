@@ -37,7 +37,6 @@ class TopicList(generics.ListCreateAPIView):
         assign_perm('forums.delete_post', self.request.user, serializer.instance)
 
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
-    # TODO: some logic with the PUT to verify things aren't changed in a hostile way.
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
