@@ -2,9 +2,9 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
-    author_id = models.ForeignKey('auth.User', related_name='posts')
-    
-    contents = models.CharField(max_length=5000)
+    author_id = models.ForeignKey('auth.User', related_name='posts', editable=False)
+
+    contents = models.TextField()
     
     post_date = models.DateTimeField(default=timezone.now, editable=False)
     
@@ -22,14 +22,14 @@ class Post(models.Model):
 
     # These fields apply to replies only #
 
-    reply_to = models.PositiveIntegerField(blank=True, null=True)
+    reply_to = models.PositiveIntegerField(blank=True, null=True, editable=False)
 
     def was_edited(self):
         return True if self.edit_date is not None else False
     
     def __str__(self):
         return "Reply to Topic {} (ID {})".format(str(self.reply_to), str(self.id)) if (self.title is None) or (
-        self.title == "") else self.title
+            self.title == "") else self.title
 
 
 class Tag(models.Model):
