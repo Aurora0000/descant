@@ -26,6 +26,7 @@ class TopicSerializer(serializers.ModelSerializer):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
+        fields = ('id', 'name', 'colour', 'posts')
 
 
 class UserSerializer(serializers.ModelSerializer):

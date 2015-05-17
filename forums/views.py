@@ -76,6 +76,7 @@ class UserList(generics.ListAPIView):
 
 @receiver(user_activated)
 def add_user_to_group(sender, **kwargs):
+    ### TODO: ACTUALLY CREATE THIS GROUP ON MIGRATE!!!
     grp = Group.objects.get(name='registered')
     print (kwargs['user'])
     grp.user_set.add(kwargs['user'])
