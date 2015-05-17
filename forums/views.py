@@ -1,8 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.dispatch import receiver
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny, DjangoObjectPermissions
+from rest_framework.permissions import AllowAny, DjangoObjectPermissions
 from rest_framework.throttling import UserRateThrottle
 from guardian.shortcuts import assign_perm
+from djoser.signals import user_activated
 
 from .models import Post, Tag
 from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer
@@ -28,7 +30,7 @@ class TopicList(generics.ListCreateAPIView):
     # TODO: logic to set is_topic to true, etc.
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
     throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
@@ -46,7 +48,7 @@ class ReplyList(generics.ListCreateAPIView):
     # TODO: Edit creation logic.
     queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
     throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
@@ -70,3 +72,10 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
     throttle_classes = (StandardThrottle,)
+
+
+@receiver(user_activated)
+def add_user_to_group(sender, **kwargs):
+    grp = Group.objects.get(name='registered')
+    print (kwargs['user'])
+    grp.user_set.add(kwargs['user'])

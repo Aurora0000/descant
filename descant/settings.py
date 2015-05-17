@@ -111,7 +111,8 @@ DJOSER = {
 }
 
 if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = '/tmp/descant-emails'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
