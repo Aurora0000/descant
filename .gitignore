@@ -14,3 +14,7 @@ pids
 
 # Damnit, gedit
 *.*~
+
+# pycharm
+.idea
+.idea/*

@@ -9,6 +9,7 @@ from .views import TagList, TopicDetail
 
 class TagTestCase(TestCase):
     def setUp(self):
+        User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
         Tag.objects.create(name='test', colour=0xFFFFFF)
         Tag.objects.create(name='\\#231[][=-', colour=0xDEAD12)
 
@@ -22,7 +23,7 @@ class TagTestCase(TestCase):
     def test_api_is_correct(self):
         factory = APIRequestFactory()
         request = factory.get('/tags/1/', format='json')
-        force_authenticate(request, user='admin')
+        force_authenticate(request, user=User.objects.get_by_natural_key('admin'))
         view = TagList.as_view()
         response = view(request)
         self.assertEqual(response.data[0]['name'], 'test')
@@ -33,12 +34,13 @@ class SerializerReplyTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
         u = User.objects.get_by_natural_key('admin')
-        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
-        Post.objects.create(author=u, contents='Cool post!', reply_to=1)
-        Post.objects.create(author=u, contents='Cool post!', reply_to=1)
-        Post.objects.create(author=u, contents='test', is_topic=True, title='This is a different thread',
-                            tag_ids='1')
-        Post.objects.create(author=u, contents='This post shouldn\'t count!', reply_to=4)
+        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...')
+        p = Post.objects.get(id=1)
+        Post.objects.create(author=u, contents='Cool post!', reply_to=p)
+        Post.objects.create(author=u, contents='Cool post!', reply_to=p)
+        Post.objects.create(author=u, contents='test', is_topic=True, title='This is a different thread')
+        p2 = Post.objects.get(id=4)
+        Post.objects.create(author=u, contents='This post shouldn\'t count!', reply_to=p2)
 
     def test_count_is_correct(self):
         topic = Post.objects.get(id=1)
@@ -58,15 +60,16 @@ class LoadTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
         u = User.objects.get_by_natural_key('admin')
-        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...', tag_ids='1')
+        Post.objects.create(author=u, contents='test', is_topic=True, title='Testing...')
 
     def test_10k_replies(self):
         i = 0
         u = User.objects.get_by_natural_key('admin')
+        t = Post.objects.get(id=1)
         while i < 10000:
             if i % 1000 == 0:
                 print("Test 10,000 replies: At iteration {}".format(i))
-            Post.objects.create(author=u, contents='test', reply_to=1)
+            Post.objects.create(author=u, contents='test', reply_to=t)
             i += 1
 
         topic = Post.objects.get(id=1)
