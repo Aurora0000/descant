@@ -26,10 +26,10 @@ class TopicSerializer(serializers.ModelSerializer):
                   'contents', 'post_date', 'edit_date', 'reply_count')
 
     def get_reply_count(self, obj):
-        return len(Post.objects.all().filter(reply_to=obj.id))
+        return Post.objects.all().filter(reply_to=obj.id).count()
 
     def get_author_name(self, obj):
-        return User.objects.get(id=obj.author.id).username
+        return obj.author.username
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
