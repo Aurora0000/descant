@@ -33,6 +33,18 @@ class TopicSerializer(serializers.ModelSerializer):
     def get_author_name(self, obj):
         return obj.author.username
 
+
+class PostOrTopicSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'author', 'author_name', 'contents',
+                  'post_date', 'edit_date', 'is_topic')
+
+    def get_author_name(self, obj):
+        return obj.author.username
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag

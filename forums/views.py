@@ -7,7 +7,8 @@ from guardian.shortcuts import assign_perm
 from djoser.signals import user_activated
 
 from .models import Post, Tag
-from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer, UserGravatarSerializer
+from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer, UserGravatarSerializer, \
+    PostOrTopicSerializer
 
 
 class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
@@ -63,6 +64,13 @@ class ReplyList(generics.ListCreateAPIView):
 class ReplyDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
+
+
+class AnyPostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostOrTopicSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
     throttle_classes = (StandardThrottle,)
 
