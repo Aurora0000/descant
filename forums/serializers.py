@@ -13,7 +13,7 @@ class PostSerializer(serializers.ModelSerializer):
                   'post_date', 'edit_date', 'reply_to')
 
     def get_author_name(self, obj):
-        return User.objects.get(id=obj.author.id).username
+        return obj.author.username
 
 
 class TopicSerializer(serializers.ModelSerializer):
