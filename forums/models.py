@@ -31,7 +31,7 @@ class Post(models.Model):
 
     # These fields apply to replies only #
 
-    reply_to = models.PositiveIntegerField(blank=True, null=True, editable=False)
+    reply_to = models.ForeignKey('Post', related_name='replies', blank=True, null=True, editable=False)
 
     def was_edited(self):
         return True if self.edit_date is not None else False
