@@ -7,7 +7,7 @@ from guardian.shortcuts import assign_perm
 from djoser.signals import user_activated
 
 from .models import Post, Tag
-from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer
+from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer, UserGravatarSerializer
 
 
 class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
@@ -73,6 +73,12 @@ class UserList(generics.ListAPIView):
     permission_classes = (AllowAny,)
     throttle_classes = (StandardThrottle,)
 
+
+class GravatarLink(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserGravatarSerializer
+    permission_classes = (AllowAny,)
+    throttle_classes = (StandardThrottle,)
 
 @receiver(user_activated)
 def add_user_to_group(sender, **kwargs):

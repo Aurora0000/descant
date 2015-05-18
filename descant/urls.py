@@ -22,5 +22,5 @@ from forums import urls as forum_urls
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/v0.1/', include(forum_urls)),
-    url(r'^api/auth/', include('djoser.urls')),
+    url(r'^api/auth/', include('djoser.urls'))
 ]

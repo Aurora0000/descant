@@ -1,3 +1,5 @@
+from hashlib import md5
+
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -41,3 +43,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'posts')
+
+
+class UserGravatarSerializer(serializers.ModelSerializer):
+    gravatar_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('gravatar_url',)
+
+    def get_gravatar_url(self, obj):
+        emailhash = md5(obj.email.strip().lower()).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)

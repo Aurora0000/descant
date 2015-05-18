@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^posts/(?P<pk>[0-9]+)/$', ReplyDetail.as_view()),
     url(r'tags/', TagList.as_view()),
     url(r'users/', UserList.as_view()),
+    url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view())
 ]
 
