@@ -28,7 +28,6 @@ class TagList(generics.ListCreateAPIView):
 
 
 class TopicList(generics.ListCreateAPIView):
-    # TODO: logic to set is_topic to true, etc.
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
@@ -46,7 +45,6 @@ class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ReplyList(generics.ListCreateAPIView):
-    # TODO: Edit creation logic.
     queryset = Post.objects.all().filter(is_topic=False)
     serializer_class = PostSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
@@ -90,7 +88,6 @@ class GravatarLink(generics.RetrieveAPIView):
 
 @receiver(user_activated)
 def add_user_to_group(sender, **kwargs):
-    ### TODO: ACTUALLY CREATE THIS GROUP ON MIGRATE!!!
     grp = Group.objects.get(name='registered')
     print (kwargs['user'])
     grp.user_set.add(kwargs['user'])
