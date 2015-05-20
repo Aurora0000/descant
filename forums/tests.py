@@ -4,7 +4,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 
 from .models import Post, Tag
 from .serializers import TopicSerializer
-from .views import TagList, TopicDetail
+from .views import TagList, TopicDetail, AnyPostDetail
 
 
 class TagTestCase(TestCase):
@@ -54,6 +54,14 @@ class SerializerReplyTestCase(TestCase):
         view = TopicDetail.as_view()
         response = view(request, pk=1)
         self.assertEqual(response.data['reply_count'], 2)
+
+    def test_any_post_view(self):
+        factory = APIRequestFactory()
+        request = factory.get('/posts/3/', format='json')
+        force_authenticate(request, user=User.objects.get_by_natural_key('admin'))
+        view = AnyPostDetail.as_view()
+        response = view(request, pk=3)
+        self.assertEqual(response.data['contents'], 'Cool post!')
 
 
 class LoadTestCase(TestCase):
