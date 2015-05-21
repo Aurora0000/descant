@@ -51,7 +51,7 @@ class ReplyList(generics.ListCreateAPIView):
     throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, reply_to=self.kwargs['reply_to'])
+        serializer.save(author=self.request.user, reply_to=Post.objects.get(id=self.kwargs['reply_to'], is_topic=True))
         assign_perm('forums.change_post', self.request.user, serializer.instance)
         assign_perm('forums.delete_post', self.request.user, serializer.instance)
 

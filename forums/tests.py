@@ -73,7 +73,7 @@ class LoadTestCase(TestCase):
     def test_10k_replies(self):
         i = 0
         u = User.objects.get_by_natural_key('admin')
-        t = Post.objects.get(id=1)
+        t = Post.objects.ghet(id=1)
         while i < 10000:
             if i % 1000 == 0:
                 print("Test 10,000 replies: At iteration {}".format(i))
