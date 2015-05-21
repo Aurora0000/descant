@@ -1,0 +1,3 @@
+django
+djangorestframework
+git+git://github.com/sunscrapers/djoser@c54d9f5998a9b542d31b74594acc863cbc01b9ae
