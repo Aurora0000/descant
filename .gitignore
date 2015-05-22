@@ -18,3 +18,5 @@ pids
 # pycharm
 .idea
 .idea/*
+
+htmlcov/*
