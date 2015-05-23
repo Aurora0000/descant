@@ -1,0 +1,11 @@
+FROM ubuntu:14.04
+MAINTAINER Aurora01 (descant)
+RUN apt-get update
+RUN apt-get install -y git nano python3 python3-pip
+RUN git clone -b backend https://github.com/Aurora0000/descant.git
+WORKDIR /descant
+EXPOSE 8000
+RUN pip3 install -r requirements.txt
+RUN yes | pip3 install gunicorn
+RUN python3 manage.py migrate
+CMD gunicorn -b 0.0.0.0:8000 descant.wsgi
