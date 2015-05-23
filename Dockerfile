@@ -8,4 +8,4 @@ EXPOSE 8000
 RUN pip3 install -r requirements.txt
 RUN yes | pip3 install gunicorn
 RUN python3 manage.py migrate
-CMD gunicorn -b 0.0.0.0:8000 descant.wsgi
+CMD gunicorn --bind 0.0.0.0:8001 descant.wsgi
