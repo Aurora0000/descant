@@ -1,0 +1,10 @@
+<div>
+  <p>ID: {{ topics.id }}</p>
+  <ul class="box topics-list">
+    <li ng-click="topics.openTopic(topic.id)" ng-repeat="topic in topics.list">
+      <div class="topics-avatar"></div>
+      <div class="topics-title">{{ topic.title }}</div>
+      <div class="topics-stats">{{ topic.author_name }} <span class="topics-time">posted {{ topic.post_date | date }} / {{ topic.reply_count }} replies</span></div>
+    </li>
+  </ul>
+</div>

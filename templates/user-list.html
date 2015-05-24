@@ -1,0 +1,9 @@
+<div>
+  <ul class="box users-list">
+    <li ng-repeat="user in users.list">
+      <div class="users-avatar"></div>
+      <div class="users-title">{{ user.username }}</div>
+      <div class="users-stats"><span class="users-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
+    </li>
+  </ul>
+</div>

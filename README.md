@@ -1,2 +1,2 @@
 # descant
-Free, open-source forum software powered by Angular and Node.js.
+Free, open-source forum software powered by Angular.js and Django.
