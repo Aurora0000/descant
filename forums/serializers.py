@@ -8,24 +8,31 @@ from .models import Post, Tag
 
 class PostSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    was_edited = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
-                  'post_date', 'last_edit_date', 'reply_to')
+                  'post_date', 'last_edit_date', 'reply_to',
+                  'was_edited')
 
     def get_author_name(self, obj):
         return obj.author.username
+
+    def get_was_edited(self, obj):
+        return obj.was_edited()
 
 
 class TopicSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
     author_name = serializers.SerializerMethodField()
+    was_edited = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
-                  'contents', 'post_date', 'last_edit_date', 'reply_count', 'replies')
+                  'contents', 'post_date', 'last_edit_date', 'reply_count',
+                  'replies', 'was_edited')
 
     def get_reply_count(self, obj):
         return Post.objects.all().filter(reply_to=obj).count()
@@ -33,9 +40,13 @@ class TopicSerializer(serializers.ModelSerializer):
     def get_author_name(self, obj):
         return obj.author.username
 
+    def get_was_edited(self, obj):
+        return obj.was_edited()
+
 
 class PostOrTopicSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    was_edited = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -44,6 +55,9 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
 
     def get_author_name(self, obj):
         return obj.author.username
+
+    def get_was_edited(self, obj):
+        return obj.was_edited()
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:

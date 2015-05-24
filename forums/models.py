@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)
@@ -15,9 +15,9 @@ class Post(models.Model):
 
     contents = models.TextField()
 
-    post_date = models.DateTimeField(auto_now_add=True)
+    post_date = models.DateTimeField(editable=False)
 
-    last_edit_date = models.DateTimeField(auto_now=True)
+    last_edit_date = models.DateTimeField(blank=True)
     
     # These fields apply to topics only #
     
@@ -39,3 +39,9 @@ class Post(models.Model):
         return "Reply to Topic {} (ID {})".format(str(self.reply_to), str(self.id)) if (self.title is None) or (
             self.title == "") else self.title
 
+    def save(self, *args, **kwargs):
+        now = timezone.now()
+        if not self.id:
+            self.post_date = now
+        self.last_edit_date = now
+        return super(Post, self).save(*args, **kwargs)
