@@ -20,3 +20,5 @@ pids
 .idea/*
 
 htmlcov/*
+
+.vagrant/*

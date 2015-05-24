@@ -17,8 +17,8 @@ class Post(models.Model):
     contents = models.TextField()
     
     post_date = models.DateTimeField(default=timezone.now, editable=False)
-    
-    edit_date = models.DateTimeField(blank=True, null=True)
+
+    last_edit_date = models.DateTimeField(default=timezone.now, blank=True)
     
     # These fields apply to topics only #
     
@@ -34,7 +34,7 @@ class Post(models.Model):
     reply_to = models.ForeignKey('Post', related_name='replies', blank=True, null=True, editable=False)
 
     def was_edited(self):
-        return True if self.edit_date is not None else False
+        return True if self.last_edit_date != self.post_date else False
     
     def __str__(self):
         return "Reply to Topic {} (ID {})".format(str(self.reply_to), str(self.id)) if (self.title is None) or (

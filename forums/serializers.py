@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
-                  'post_date', 'edit_date', 'reply_to')
+                  'post_date', 'last_edit_date', 'reply_to')
 
     def get_author_name(self, obj):
         return obj.author.username
@@ -25,7 +25,7 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
-                  'contents', 'post_date', 'edit_date', 'reply_count', 'replies')
+                  'contents', 'post_date', 'last_edit_date', 'reply_count', 'replies')
 
     def get_reply_count(self, obj):
         return Post.objects.all().filter(reply_to=obj).count()
@@ -40,7 +40,7 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
-                  'post_date', 'edit_date', 'is_topic')
+                  'post_date', 'last_edit_date', 'is_topic')
 
     def get_author_name(self, obj):
         return obj.author.username
