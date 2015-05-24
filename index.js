@@ -41,11 +41,11 @@ app.controller('topicsCtrl', function($http) {
 
 app.controller('usersCtrl', function($http) {
 	var usersCtrl = this;
-	$http.get("download.php?api=http://django-descant.rhcloud.com/api/v0.1/users").success(function (data) {
+	$http.get("//django-descant.rhcloud.com/api/v0.1/users").success(function (data) {
 		usersCtrl.list = data;
 	});
 });
 
 app.controller('forumCtrl', function() {
-	
+
 });
