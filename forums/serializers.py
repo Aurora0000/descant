@@ -65,5 +65,5 @@ class UserGravatarSerializer(serializers.ModelSerializer):
         fields = ('gravatar_url',)
 
     def get_gravatar_url(self, obj):
-        emailhash = md5(obj.email.strip().lower()).hexdigest()
+        emailhash = md5(obj.email.strip().lower().encode('utf-8')).hexdigest()
         return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
