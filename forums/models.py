@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 
 class Tag(models.Model):
@@ -15,10 +14,10 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', related_name='posts', editable=False)
 
     contents = models.TextField()
-    
-    post_date = models.DateTimeField(default=timezone.now, editable=False)
 
-    last_edit_date = models.DateTimeField(default=timezone.now, blank=True)
+    post_date = models.DateTimeField(auto_now_add=True)
+
+    last_edit_date = models.DateTimeField(auto_now=True)
     
     # These fields apply to topics only #
     
