@@ -3,53 +3,22 @@
 	<head>
 		<link rel="stylesheet" href="//rawgit.com/Tel-Aviv/CSS-Framework/master/framework.css">
 		<link rel="stylesheet" href="forum.css">
-		<script src="angular.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-animate.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
 		<script src="index.js"></script>
 	</head>
 	<body class="width">
-		<div ng-controller="pageCtrl as page">
+		<div>
 			<!--Nav-->
 			<div class="nav-tabs" style="margin-bottom: 0;">
-				<a ng-class="{ active: page.isPage('topics') }" ng-click="page.setPage('topics')" href>Topics</a>
-				<a ng-class="{ active: page.isPage('users') }" ng-click="page.setPage('users')" href>Users</a>
-				<a ng-class="{ active: page.isPage('admin') }" ng-click="page.setPage('admin')" href>Admin</a>
-				<a ng-class="{ active: page.isPage('chat') }" ng-click="page.setPage('chat')" href>Chat</a>
+				<a href="#topics">Topics</a>
+				<a href="#users">Users</a>
+				<a href="#admin">Admin</a>
+				<a href="#chat">Chat</a>
 			</div>
 			<!--Pages-->
-
-			<!-- Topics Page -->
-			<reply-box ng-show="page.isPage('topics')"></reply-box>
-			<topic-list ng-show="page.isPage('topics')"></topic-list>
-			<!-- End Topics Page -->
-
-			<!-- Users Page -->
-			<user-list ng-show="page.isPage('users')"></user-list>
-			<!-- End Users Page -->
-
-			<!-- Admin Page -->
-			<div ng-show="page.isPage('admin')">
-				<p>
-					<textarea></textarea>
-				</p>
-			</div>
-			<!--End Admin Page-->
-
-			<!-- Chat Page-->
-			<div ng-show="page.isPage('chat')">
-				<div class="panel">
-					<div class="end">
-						<textarea placeholder="Message" rows="1" class="full"></textarea>
-					</div>
-					<div class="body">
-						<p>Aviv: I like pie</p>
-						<p>TheTimeKeeper: No</p>
-						<p>TheTimeKeeper: I like cake</p>
-						<p>Aurora01: Grunty like pie</p>
-						<p>TheTimeKeeper: No</p>
-					</div>
-				</div>
-			</div>
-			<!--End Chat Page-->
+			<div id="main" ng-view></div>
 		</div>
 	</body>
 </html>

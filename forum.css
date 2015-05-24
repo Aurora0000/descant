@@ -29,3 +29,11 @@
 }
 
 .topics-list>li:before, .users-list>li:before, .topics-list>li:after, .users-list>li:after { content: ""; display: table; } .topics-list>li:after, .topics-list>li:after { clear: both; }
+
+.ng-enter {
+	transition:0.75s ease-in all;
+  opacity:0;
+}
+.ng-enter.ng-enter-active {
+  opacity:1;
+}

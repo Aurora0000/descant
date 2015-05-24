@@ -1,37 +1,43 @@
-var app = angular.module('descant', []);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute']);
 
-app.controller('pageCtrl', function() {
-	if (location.hash == '') {
-		location.hash = '/topics';
-	}
-	this.hashPage = location.hash.replace('#/', '');
-	this.currentPage = this.hashPage;
-	this.currentPage = this.hashPage;
-	this.isPage = function(page) {
-		return this.currentPage === page;
-	};
-	this.setPage = function(page) {
-		location.hash = '/'+page;
-		this.currentPage = page;
-	};
+app.config(function($routeProvider, $locationProvider) {
+		$routeProvider
+    	.when('/', {
+    		templateUrl: 'pages/topics.html'
+    	})
+			.when('/topics', {
+				templateUrl: 'pages/topics.html'
+			})
+    	.when('/users', {
+    		templateUrl: 'pages/users.html'
+    	})
+    	.when('/admin', {
+    		templateUrl: 'pages/admin.html'
+    	})
+			.when('/chat', {
+				templateUrl: 'pages/chat.html'
+			});
+
 });
+
+var topicsCtrl = function($http) {
+	var topicsCtrl = this;
+	$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
+		topicsCtrl.list = data;
+	});
+	this.openTopic = function(id) {
+		this.id = id;
+		$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
+			topicsCtrl.postList = data;
+		});
+	};
+};
 
 app.directive('topicList', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topic-list.html',
-		controller: function($http) {
-			var topicsCtrl = this;
-			$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
-				topicsCtrl.list = data;
-			});
-			this.openTopic = function(id) {
-				this.id = id;
-				$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
-					topicsCtrl.postList = data;
-				});
-			};
-		},
+		controller: topicsCtrl,
 		controllerAs: 'topics'
 	}
 });
@@ -63,5 +69,17 @@ app.directive('replyBox', function() {
 			};
 		},
 		controllerAs: 'replyCtrl'
+	}
+});
+app.directive('chatBox', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/chat-box.html'
+	}
+});
+app.directive('adminPanel', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/admin-panel.html'
 	}
 });
