@@ -36,7 +36,7 @@ var topicsCtrl = function($http) {
 app.directive('topicList', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topic-list.html',
+		templateUrl: 'templates/topics/topic-list.html',
 		controller: topicsCtrl,
 		controllerAs: 'topics'
 	}
@@ -44,7 +44,7 @@ app.directive('topicList', function() {
 app.directive('userList', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/user-list.html',
+		templateUrl: 'templates/users/user-list.html',
 		controller: function($http) {
 			var usersCtrl = this;
 			$http.get("//django-descant.rhcloud.com/api/v0.1/users").success(function (data) {
@@ -57,7 +57,7 @@ app.directive('userList', function() {
 app.directive('newTopicBox', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/new-topic-box.html',
+		templateUrl: 'templates/topics/new-topic-box.html',
 		controller: function() {
 			this.showNTP = false;
 			this.toggleNTP = function() {
@@ -74,13 +74,13 @@ app.directive('newTopicBox', function() {
 app.directive('chatBox', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/chat-box.html'
+		templateUrl: 'templates/chat/chat-box.html'
 	}
 });
 app.directive('adminPanel', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/admin-panel.html'
+		templateUrl: 'templates/admin/admin-panel.html'
 	}
 });
 app.run(function ($rootScope, $timeout, $window) {
@@ -99,7 +99,7 @@ app.directive('navTab', function() {
       routeUrl: '@',
 			routeName: '@'
     },
-    template: '<a href="#{{routeUrl}}" ng-class="{active:isActive(\'{{routeUrl}}\')}">{{routeName}}</a>',
+    templateUrl: 'templates/nav/nav-tab.html',
 		controller: function($scope, $location) {
 		    $scope.isActive = function(route) {
 		        return route === $location.path();
