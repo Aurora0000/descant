@@ -90,8 +90,21 @@ app.run(function ($rootScope, $timeout, $window) {
     }, 500);
   });
 });
-app.controller('TabController', function($scope, $location) {
-    $scope.isActive = function(route) {
-        return route === $location.path();
-    }
+
+app.directive('navTab', function() {
+  return {
+    restrict: 'E',
+    require: '^routeUrl',
+    scope: {
+      routeUrl: '@',
+			routeName: '@'
+    },
+    template: '<a href="#{{routeUrl}}" ng-class="{active:isActive(\'{{routeUrl}}\')}">{{routeName}}</a>',
+		controller: function($scope, $location) {
+		    $scope.isActive = function(route) {
+		        return route === $location.path();
+		    }
+		},
+		controllerAs: "tabCtrl"
+  }
 });
