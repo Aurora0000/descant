@@ -115,12 +115,26 @@ app.directive('postList', function() {
 		restrict: 'E',
 		templateUrl: 'templates/posts/reply-list.html',
 		controller: function($http, $scope) {
-			var topicsCtrl = this;
+			var postsCtrl = this;
 			// Hacky. TODO: improve.
-			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies").success(function (data) {
-				topicsCtrl.list = data;
+			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies/").success(function (data) {
+				postsCtrl.list = data;
 			});
 		},
 		controllerAs: 'posts'
+	}
+});
+app.directive('topicFirstpost', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/topics/topic-firstpost.html',
+		controller: function($http, $scope) {
+			var topicCtrl = this;
+			// Hacky. TODO: improve.
+			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/").success(function (data) {
+				topicCtrl.post = data;
+			});
+		},
+		controllerAs: 'topic'
 	}
 });
