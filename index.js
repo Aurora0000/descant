@@ -90,3 +90,8 @@ app.run(function ($rootScope, $timeout, $window) {
     }, 500);
   });
 });
+app.run(function ($rootScope) {
+    $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+        console.log(current.$$route.originalPath);
+    });
+});
