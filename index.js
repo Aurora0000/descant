@@ -5,18 +5,18 @@ app.config(function($routeProvider, $locationProvider) {
     	.when('/', {
     		templateUrl: 'pages/topics.html'
     	})
-			.when('/topics', {
-				templateUrl: 'pages/topics.html'
-			})
+		.when('/topics', {
+			templateUrl: 'pages/topics.html'
+		})
     	.when('/users', {
     		templateUrl: 'pages/users.html'
     	})
     	.when('/admin', {
     		templateUrl: 'pages/admin.html'
     	})
-			.when('/chat', {
-				templateUrl: 'pages/chat.html'
-			});
+		.when('/chat', {
+			templateUrl: 'pages/chat.html'
+		});
 
 });
 
@@ -54,10 +54,10 @@ app.directive('userList', function() {
 		controllerAs: 'users'
 	}
 });
-app.directive('replyBox', function() {
+app.directive('newTopicBox', function() {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/reply-box.html',
+		templateUrl: 'templates/new-topic-box.html',
 		controller: function() {
 			this.showNTP = false;
 			this.toggleNTP = function() {
@@ -68,7 +68,7 @@ app.directive('replyBox', function() {
 				}
 			};
 		},
-		controllerAs: 'replyCtrl'
+		controllerAs: 'newTopicCtrl'
 	}
 });
 app.directive('chatBox', function() {
@@ -84,11 +84,11 @@ app.directive('adminPanel', function() {
 	}
 });
 app.run(function ($rootScope, $timeout, $window) {
-  $rootScope.$on('$routeChangeSuccess', function () {
-    $timeout(function () {
-      $window.scrollTo(0,0);
-    }, 500);
-  });
+	$rootScope.$on('$routeChangeSuccess', function () {
+		$timeout(function () {
+			$window.scrollTo(0,0);
+		}, 500);
+	});
 });
 
 app.directive('navTab', function() {

@@ -11,11 +11,19 @@
 	<body class="width">
 		<div class="body">
 			<!--Nav-->
+<<<<<<< HEAD
 			<div class="nav-tabs" style="margin-bottom: 0;">
 				<nav-tab route-url="/topics" route-name="Topics"></nav-tab>
 				<nav-tab route-url="/users" route-name="Users"></nav-tab>
 				<nav-tab route-url="/admin" route-name="Admin"></nav-tab>
 				<nav-tab route-url="/chat" route-name="Chat"></nav-tab>
+=======
+			<div class="nav-tabs" ng-controller="TabController as tabCtrl" style="margin-bottom: 0;">
+				<a href="#topics" ng-class="{ active:isActive('/topics') }">Topics</a>
+				<a href="#users" ng-class="{ active:isActive('/users') }">Users</a>
+				<a href="#admin" ng-class="{ active:isActive('/admin') }">Admin</a>
+				<a href="#chat" ng-class="{ active:isActive('/chat') }">Chat</a>
+>>>>>>> ccf389ad97977665c057a1c8928c636a39bc3e89
 			</div>
 			<!--Pages-->
 			<div class="container">
