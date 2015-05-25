@@ -83,3 +83,10 @@ app.directive('adminPanel', function() {
 		templateUrl: 'templates/admin-panel.html'
 	}
 });
+app.run(function ($rootScope, $timeout, $window) {
+  $rootScope.$on('$routeChangeSuccess', function () {
+    $timeout(function () {
+      $window.scrollTo(0,0);
+    }, 500);
+  });
+});

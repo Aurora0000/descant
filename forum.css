@@ -30,10 +30,32 @@
 
 .topics-list>li:before, .users-list>li:before, .topics-list>li:after, .users-list>li:after { content: ""; display: table; } .topics-list>li:after, .topics-list>li:after { clear: both; }
 
-.ng-enter {
-	transition:0.75s ease-in all;
-  opacity:0;
+div.container {
+	position: relative;
 }
-.ng-enter.ng-enter-active {
-  opacity:1;
+
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
+}
+#main.ng-enter,
+#main.ng-leave {
+    -webkit-transition: all 1.5s ease;
+    transition: all 1.5s ease;
+}
+#main.ng-enter {
+    opacity: 0;
+}
+#main.ng-enter-active {
+    opacity: 1;
+}
+#main.ng-leave {
+    opacity: 1;
+}
+#main.ng-leave-active {
+    opacity: 0;
 }

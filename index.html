@@ -9,7 +9,7 @@
 		<script src="index.js"></script>
 	</head>
 	<body class="width">
-		<div>
+		<div class="body">
 			<!--Nav-->
 			<div class="nav-tabs" style="margin-bottom: 0;">
 				<a href="#topics">Topics</a>
@@ -18,7 +18,9 @@
 				<a href="#chat">Chat</a>
 			</div>
 			<!--Pages-->
-			<div id="main" ng-view></div>
+			<div class="container">
+				<div id="main" ng-view></div>
+			</div>
 		</div>
 	</body>
 </html>
