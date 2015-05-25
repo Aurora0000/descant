@@ -38,12 +38,6 @@ app.directive('topicList', function() {
 			$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
 				topicsCtrl.list = data;
 			});
-			this.openTopic = function(id) {
-				this.id = id;
-				$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
-					topicsCtrl.postList = data;
-				});
-			};
 		},
 		controllerAs: 'topics'
 	}
@@ -126,12 +120,6 @@ app.directive('postList', function() {
 			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies").success(function (data) {
 				topicsCtrl.list = data;
 			});
-			this.openTopic = function(id) {
-				this.id = id;
-				$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies").success(function (data) {
-					topicsCtrl.postList = data;
-				});
-			};
 		},
 		controllerAs: 'posts'
 	}
