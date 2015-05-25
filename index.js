@@ -14,30 +14,37 @@ app.config(function($routeProvider, $locationProvider) {
     	.when('/admin', {
     		templateUrl: 'pages/admin.html'
     	})
+			.when('/topic/:topicId', {
+				templateUrl: 'pages/post-view.html',
+				controller: 'PostViewController'
+			})
 		.when('/chat', {
 			templateUrl: 'pages/chat.html'
 		});
 
 });
 
-var topicsCtrl = function($http) {
-	var topicsCtrl = this;
-	$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
-		topicsCtrl.list = data;
-	});
-	this.openTopic = function(id) {
-		this.id = id;
-		$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
-			topicsCtrl.postList = data;
-		});
-	};
-};
+app.controller('PostViewController', function($scope, $routeParams) {
+	$scope.topicId = $routeParams.topicId;
+});
+
 
 app.directive('topicList', function() {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-list.html',
-		controller: topicsCtrl,
+		controller: function($http) {
+			var topicsCtrl = this;
+			$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
+				topicsCtrl.list = data;
+			});
+			this.openTopic = function(id) {
+				this.id = id;
+				$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
+					topicsCtrl.postList = data;
+				});
+			};
+		},
 		controllerAs: 'topics'
 	}
 });
@@ -105,6 +112,27 @@ app.directive('navTab', function() {
 		        return route === $location.path();
 		    }
 		},
-		controllerAs: "tabCtrl"
+		controllerAs: 'tabCtrl'
   }
+});
+
+app.directive('postList', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/posts/reply-list.html',
+		controller: function($http, $scope) {
+			var topicsCtrl = this;
+			// Hacky. TODO: improve.
+			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies").success(function (data) {
+				topicsCtrl.list = data;
+			});
+			this.openTopic = function(id) {
+				this.id = id;
+				$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies").success(function (data) {
+					topicsCtrl.postList = data;
+				});
+			};
+		},
+		controllerAs: 'posts'
+	}
 });
