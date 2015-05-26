@@ -24,6 +24,9 @@ app.config(function($routeProvider, $locationProvider) {
 		.when('/login', {
 			templateUrl: 'pages/login.html'
 		})
+		.when('/logout', {
+			templateUrl: 'pages/logout.html'
+		})
 		.when('/404', {
 			templateUrl: 'pages/404.html'
 		})
@@ -55,18 +58,18 @@ app.directive('userList', function(descantConfig) {
 		templateUrl: 'templates/users/user-list.html',
 		controller: function($http) {
 			var usersCtrl = this;
-			$http.get(descantConfig.backend + "/api/v0.1/users").success(function (data) {
+			$http.get(descantConfig.backend + "/api/v0.1/users/").success(function (data) {
 				usersCtrl.list = data;
 			});
 		},
 		controllerAs: 'users'
 	}
 });
-app.directive('newTopicBox', function() {
+app.directive('newTopicBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function() {
+		controller: function($http, descantConfig) {
 			this.showNTP = false;
 			this.toggleNTP = function() {
 				if (this.showNTP == true) {
@@ -74,6 +77,14 @@ app.directive('newTopicBox', function() {
 				} else {
 					this.showNTP = true;
 				}
+			};
+			this.addTopic = function(title, contents, tag_ids) {
+				$http.post(descantConfig.backend + "/api/v0.1/topics/", {"title": title, "contents": contents, "tag_ids": [1]}).success(function(data){
+					$location.path('/topics');
+				})
+				.error(function(data) {
+					alert("Error adding topic.");
+				});
 			};
 		},
 		controllerAs: 'newTopicCtrl'
@@ -157,32 +168,68 @@ app.directive('authStatus', ['$http', 'tokenService', 'descantConfig', function(
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/users/auth-status.html',
-		controller: function($http, $scope) {
+		controller: ['$http', '$scope', 'tokenService', function($http, $scope, tokenService) {
+			this.tryAuth = function() {
+				var req = $http.get(descantConfig.backend + "/api/auth/me/");
+				req.success(function (data) {
+					authCtrl.user = data;
+					authCtrl.fail = false;
+				});
+				req.error(function(data) {
+					authCtrl.user = null;
+					authCtrl.fail = true;
+				});
+			};
+
+			$scope.tokenServ = tokenService;
 			var authCtrl = this;
-			$http.defaults.headers.common.Authorization = 'Token ' + tokenService.getToken();
-			var req = $http.get(descantConfig.backend + "/api/auth/me/");
-			req.success(function (data) {
-				authCtrl.user = data;
+			$scope.$on('auth:statusChange', function(event, data) {
+				authCtrl.tryAuth();
 			});
-			req.error(function(data) {
-				authCtrl.fail = true;
-			});
-		},
+			authCtrl.tryAuth();
+		}],
 		controllerAs: 'auth'
 	}
 }]);
 
 
-app.directive('loginBox', ['tokenService', function(tokenService) {
+app.directive('loginBox', ['tokenService', '$location', function(tokenService, $location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/users/login-box.html',
-		controller: function($scope) {
+		controller: function() {
 			this.login = function(user, pass) {
-				tokenService.login(user, pass);
-
+				tokenService.login(user, pass).then(function(data){
+					$location.path('/');
+				}, function(data) {
+					alert("Invalid user/password!");
+				});
 			};
 		},
 		controllerAs: 'loginCtrl'
+	}
+}]);
+
+app.directive('logout', ['tokenService', '$location', function(tokenService, $location) {
+	return {
+		restrict: 'E',
+		template: '',
+		controller: function($location) {
+			tokenService.logout().then(function(data){
+				$location.path('/');
+			}, function(data){
+				alert("Cannot log out.");
+			});
+		}
+	}
+}]);
+
+app.directive('emitToken', ['tokenService', function(tokenService) {
+	return {
+		restrict: 'E',
+		template: '',
+		controller: function() {
+			tokenService.setHeader();
+		}
 	}
 }]);

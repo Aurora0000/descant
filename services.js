@@ -1,32 +1,45 @@
 app = angular.module('descant.services', ['descant.config', 'LocalStorageModule']);
 
-app.service('tokenService', function($http, descantConfig, localStorageService) {
+app.service('tokenService', function($http, $q, $rootScope, descantConfig, localStorageService) {
 	this.authenticated = false;
 	this.token = '';
 	this.login = function(user, pass) {
 		this.authenticated = false;
 		this.token = "";
+		var serv = this;
 		var req = $http.post(descantConfig.backend + '/api/auth/login/', {'username': user, 'password': pass});
-		req.success(function(data) {
-			this.token = data['auth_token'];
-			this.authenticated = true;
-  		localStorageService.set('authToken', this.token);
+		req.then(function(data) {
+			serv.token = data.data['auth_token'];
+			serv.authenticated = true;
+  		localStorageService.set('authToken', serv.token);
+			serv.setHeader();
+			$rootScope.$broadcast('auth:statusChange');
+			return data;
+		},
+		function(data){
+			serv.token = "";
+			serv.authenticated = false;
+  		localStorageService.remove('authToken');
+			return $q.reject(data);
 		});
-		req.error(function(data){
-			this.token = "";
-			this.authenticated = false;
-		});
+		return req;
 	};
 	this.logout = function() {
-    $http.defaults.headers.common.Authorization = 'Token ' + this.token;
 		var req = $http.post(descantConfig.backend + "/api/auth/logout/", {});
-		req.success(function(data) {
-			this.authenticated = false;
-			this.token = "";
+		var serv = this;
+		req.then(function(data) {
+			serv.authenticated = false;
+			serv.token = "";
+  		localStorageService.remove('authToken');
+			serv.setHeader();
+			$rootScope.$broadcast('auth:statusChange');
+			return data;
+		},
+		function(data) {
+			serv.authenticated = true;
+			return $q.reject(data);
 		});
-		req.error(function(data) {
-			this.authenticated = true;
-		});
+		return req;
 	};
 	this.getToken = function() {
 		if (this.authenticated) {
@@ -40,6 +53,15 @@ app.service('tokenService', function($http, descantConfig, localStorageService) 
 		}
 		else {
 			return false;
+		}
+	};
+	this.setHeader = function() {
+		var tok = this.getToken();
+		if (tok != false) {
+			$http.defaults.headers.common.Authorization = 'Token ' + tok;
+		}
+		else {
+			$http.defaults.headers.common.Authorization = null;
 		}
 	};
 });

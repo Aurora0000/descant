@@ -10,16 +10,16 @@
 		<div class="margin-fix">
 			<form>
 			<p>
-				<input class="full" placeholder="Title" />
+				<input class="full" placeholder="Title" ng-model="title" />
 			</p>
 			<p>
-				<textarea class="full" placeholder="Post"></textarea>
+				<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
 			</p>
 			<p>
-				<input class="full" placeholder="Tags" />
+				<input class="full" placeholder="Tags" ng-model="tag_ids" />
 			</p>
 			<p>
-				<button class="highlight">Post</button>
+				<button class="highlight" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)">Post</button>
 			</p>
 			</form>
 		</div>
