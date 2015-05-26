@@ -46,7 +46,7 @@ app.directive('topicList', function(descantConfig) {
 		controller: function($http) {
 			var topicsCtrl = this;
 			$http.get(descantConfig.backend + "/api/v0.1/topics/").success(function (data) {
-				topicsCtrl.list = data;
+				topicsCtrl.list = data.reverse();
 			});
 		},
 		controllerAs: 'topics'
@@ -79,8 +79,14 @@ app.directive('newTopicBox', function($location) {
 				}
 			};
 			this.addTopic = function(title, contents, tag_ids) {
-				$http.post(descantConfig.backend + "/api/v0.1/topics/", {"title": title, "contents": contents, "tag_ids": [1]}).success(function(data){
+				tag_ids = tag_ids.split(',');
+				for (i = 0; i < tag_ids.length; i++) {
+					tag_ids[i] = parseInt(tag_ids[i]);
+				}
+				var ntb = this;
+				$http.post(descantConfig.backend + "/api/v0.1/topics/", {"title": title, "contents": contents, "tag_ids": tag_ids}).success(function(data){
 					$location.path('/topics');
+					ntb.toggleNTP();
 				})
 				.error(function(data) {
 					alert("Error adding topic.");
