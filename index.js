@@ -20,7 +20,11 @@ app.config(function($routeProvider, $locationProvider) {
 			})
 		.when('/chat', {
 			templateUrl: 'pages/chat.html'
-		});
+		})
+		.when('/404', {
+			templateUrl: 'pages/404.html'
+		})
+		.otherwise('/404');
 
 });
 
@@ -98,7 +102,8 @@ app.directive('navTab', function() {
     require: '^routeUrl',
     scope: {
       routeUrl: '@',
-			routeName: '@'
+			routeName: '@',
+			routeIcon: '@'
     },
     templateUrl: 'templates/nav/nav-tab.html',
 		controller: function($scope, $location) {
@@ -117,8 +122,12 @@ app.directive('postList', function() {
 		controller: function($http, $scope) {
 			var postsCtrl = this;
 			// Hacky. TODO: improve.
-			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies/").success(function (data) {
+			var req = $http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies/");
+			req.success(function (data) {
 				postsCtrl.list = data;
+			});
+			req.error(function(data) {
+				postsCtrl.failed = true;
 			});
 		},
 		controllerAs: 'posts'
@@ -136,5 +145,23 @@ app.directive('topicFirstpost', function() {
 			});
 		},
 		controllerAs: 'topic'
+	}
+});
+
+app.directive('authStatus', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/users/auth-status.html',
+		controller: function($http, $scope) {
+			var authCtrl = this;
+			var req = $http.get("//django-descant.rhcloud.com/api/auth/me/")
+			req.success(function (data) {
+				authCtrl.user = data;
+			});
+			req.error(function(data) {
+				authCtrl.fail = true;
+			});
+		},
+		controllerAs: 'auth'
 	}
 });

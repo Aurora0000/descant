@@ -35,30 +35,31 @@ div.container {
 }
 
 #main {
-	opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
 }
 #main.ng-enter,
 #main.ng-leave {
-	-webkit-transition: all 1.5s ease;
-	transition: all 1.5s ease;
+    -webkit-transition: all 1.5s ease;
+    transition: all 1.5s ease;
 }
 #main.ng-enter {
-	opacity: 0;
-	position: absolute;
-	width: 100%;
+    opacity: 0;
 }
 #main.ng-enter-active {
-	opacity: 1;
-	position: absolute;
-	width: 100%;
+    opacity: 1;
 }
 #main.ng-leave {
-	opacity: 1;
-	position: absolute;
-	width: 100%;
+    opacity: 1;
 }
 #main.ng-leave-active {
-	opacity: 0;
-	position: absolute;
-	width: 100%;
+    opacity: 0;
+}
+
+.auth-login, .auth-hi {
+	text-decoration: none;
 }
