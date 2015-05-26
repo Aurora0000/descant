@@ -43,10 +43,23 @@ app.directive('topicList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-list.html',
-		controller: function($http) {
+		controller: function($http, $interval, $rootScope) {
 			var topicsCtrl = this;
-			$http.get(descantConfig.backend + "/api/v0.1/topics/").success(function (data) {
-				topicsCtrl.list = data.reverse();
+
+			this.updateList = function() {
+				$http.get(descantConfig.backend + "/api/v0.1/topics/").success(function (data) {
+					topicsCtrl.list = data.reverse();
+				});
+			};
+			this.updateList();
+
+			// Update once per minute.
+			this.stopUpdateList = $interval(this.updateList, 60000);
+
+			// listen on DOM destroy (removal) event, and cancel the next UI update
+			// to prevent updating time after the DOM element was removed.
+			$rootScope.$on('$destroy', function() {
+				$interval.cancel(topicsCtrl.stopUpdateList);
 			});
 		},
 		controllerAs: 'topics'
