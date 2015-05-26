@@ -11,16 +11,15 @@
 		<script src="services.js"></script>
 		<script src="index.js"></script>
 	</head>
-	<body class="width">
+	<body class="width hasnav">
 			<emit-token></emit-token>
 			<auth-status></auth-status>
-			<br />
 			<!--Nav-->
-			<div class="nav-tabs" style="margin-bottom: 0;">
-				<nav-tab route-url="topics" route-name="Topics" route-icon="fa-th-list"></nav-tab>
-				<nav-tab route-url="users" route-name="Users" route-icon="fa-users"></nav-tab>
-				<nav-tab route-url="admin" route-name="Admin" route-icon="fa-wrench"></nav-tab>
-				<nav-tab route-url="chat" route-name="Chat" route-icon="fa-comments"></nav-tab>
+			<div class="nav" style="margin-bottom: 0;">
+				<nav-btn route-url="topics" route-name="Topics" route-icon="fa-th-list"></nav-btn>
+				<nav-btn route-url="users" route-name="Users" route-icon="fa-users"></nav-btn>
+				<nav-btn route-url="admin" route-name="Admin" route-icon="fa-wrench"></nav-btn>
+				<nav-btn route-url="chat" route-name="Chat" route-icon="fa-comments"></nav-btn>
 			</div>
 			<!--Pages-->
 			<div class="container">

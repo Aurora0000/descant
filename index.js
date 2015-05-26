@@ -129,7 +129,7 @@ app.run(function ($rootScope, $timeout, $window) {
 	});
 });
 
-app.directive('navTab', function() {
+app.directive('navBtn', function() {
   return {
     restrict: 'E',
     require: '^routeUrl',
@@ -138,13 +138,13 @@ app.directive('navTab', function() {
 			routeName: '@',
 			routeIcon: '@'
     },
-    templateUrl: 'templates/nav/nav-tab.html',
+    templateUrl: 'templates/nav/nav-btn.html',
 		controller: function($scope, $location) {
 		    $scope.isActive = function(route) {
 		        return route === $location.path();
 		    }
 		},
-		controllerAs: 'tabCtrl'
+		controllerAs: 'navCtrl'
   }
 });
 
