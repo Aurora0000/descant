@@ -35,31 +35,59 @@ div.container {
 }
 
 #main {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    opacity: 1;
+	opacity: 1;
 }
-#main.ng-enter,
-#main.ng-leave {
-    -webkit-transition: all 1.5s ease;
-    transition: all 1.5s ease;
+#main.ng-enter, #main.ng-leave {
+	-webkit-transition: all 1.5s ease;
+	transition: all 1.5s ease;
 }
 #main.ng-enter {
-    opacity: 0;
+	opacity: 0;
 }
 #main.ng-enter-active {
-    opacity: 1;
+	opacity: 1;
 }
 #main.ng-leave {
-    opacity: 1;
+	opacity: 1;
 }
 #main.ng-leave-active {
-    opacity: 0;
+	opacity: 0;
 }
 
 .auth-login, .auth-hi {
 	text-decoration: none;
+}
+
+.nav {
+	background-color: #2e2e2e;
+	position: fixed;
+	width: 100%;
+	left: 0;
+	z-index: 100000;
+	top: 0;
+	height: 40px;
+	cursor: default;
+}
+
+.nav * {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	text-decoration: none;
+	color: white;
+	padding: 0;
+	cursor: pointer;
+}
+
+.nav>nav-btn, .nav>auth-status {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	text-decoration: none;
+	color: white;
+	padding: 10px 20px;
+	display: inline-block;
+	cursor: pointer;
 }
