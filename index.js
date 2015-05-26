@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute']);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -33,26 +33,26 @@ app.controller('PostViewController', function($scope, $routeParams) {
 });
 
 
-app.directive('topicList', function() {
+app.directive('topicList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-list.html',
 		controller: function($http) {
 			var topicsCtrl = this;
-			$http.get("//django-descant.rhcloud.com/api/v0.1/topics").success(function (data) {
+			$http.get(descantConfig.backend + "/api/v0.1/topics").success(function (data) {
 				topicsCtrl.list = data;
 			});
 		},
 		controllerAs: 'topics'
 	}
 });
-app.directive('userList', function() {
+app.directive('userList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/users/user-list.html',
 		controller: function($http) {
 			var usersCtrl = this;
-			$http.get("//django-descant.rhcloud.com/api/v0.1/users").success(function (data) {
+			$http.get(descantConfig.backend + "/api/v0.1/users").success(function (data) {
 				usersCtrl.list = data;
 			});
 		},
@@ -115,14 +115,14 @@ app.directive('navTab', function() {
   }
 });
 
-app.directive('postList', function() {
+app.directive('postList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/posts/reply-list.html',
 		controller: function($http, $scope) {
 			var postsCtrl = this;
 			// Hacky. TODO: improve.
-			var req = $http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/replies/");
+			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/");
 			req.success(function (data) {
 				postsCtrl.list = data;
 			});
@@ -133,28 +133,30 @@ app.directive('postList', function() {
 		controllerAs: 'posts'
 	}
 });
-app.directive('topicFirstpost', function() {
+app.directive('topicFirstpost', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-firstpost.html',
 		controller: function($http, $scope) {
 			var topicCtrl = this;
+			topicCtrl.loaded = false;
 			// Hacky. TODO: improve.
-			$http.get("//django-descant.rhcloud.com/api/v0.1/topics/" + $scope.topicId + "/").success(function (data) {
+			$http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/").success(function (data) {
 				topicCtrl.post = data;
+				topicCtrl.loaded = true;
 			});
 		},
 		controllerAs: 'topic'
 	}
 });
 
-app.directive('authStatus', function() {
+app.directive('authStatus', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/users/auth-status.html',
 		controller: function($http, $scope) {
 			var authCtrl = this;
-			var req = $http.get("//django-descant.rhcloud.com/api/auth/me/")
+			var req = $http.get(descantConfig.backend + "/api/auth/me/");
 			req.success(function (data) {
 				authCtrl.user = data;
 			});
