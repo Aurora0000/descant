@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config']);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -21,6 +21,9 @@ app.config(function($routeProvider, $locationProvider) {
 		.when('/chat', {
 			templateUrl: 'pages/chat.html'
 		})
+		.when('/login', {
+			templateUrl: 'pages/login.html'
+		})
 		.when('/404', {
 			templateUrl: 'pages/404.html'
 		})
@@ -39,7 +42,7 @@ app.directive('topicList', function(descantConfig) {
 		templateUrl: 'templates/topics/topic-list.html',
 		controller: function($http) {
 			var topicsCtrl = this;
-			$http.get(descantConfig.backend + "/api/v0.1/topics").success(function (data) {
+			$http.get(descantConfig.backend + "/api/v0.1/topics/").success(function (data) {
 				topicsCtrl.list = data;
 			});
 		},
@@ -150,12 +153,13 @@ app.directive('topicFirstpost', function(descantConfig) {
 	}
 });
 
-app.directive('authStatus', function(descantConfig) {
+app.directive('authStatus', ['$http', 'tokenService', 'descantConfig', function($http, tokenService, descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/users/auth-status.html',
 		controller: function($http, $scope) {
 			var authCtrl = this;
+			$http.defaults.headers.common.Authorization = 'Token ' + tokenService.getToken();
 			var req = $http.get(descantConfig.backend + "/api/auth/me/");
 			req.success(function (data) {
 				authCtrl.user = data;
@@ -166,4 +170,19 @@ app.directive('authStatus', function(descantConfig) {
 		},
 		controllerAs: 'auth'
 	}
-});
+}]);
+
+
+app.directive('loginBox', ['tokenService', function(tokenService) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/users/login-box.html',
+		controller: function($scope) {
+			this.login = function(user, pass) {
+				tokenService.login(user, pass);
+
+			};
+		},
+		controllerAs: 'loginCtrl'
+	}
+}]);
