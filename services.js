@@ -64,4 +64,7 @@ app.service('tokenService', function($http, $q, $rootScope, descantConfig, local
 			$http.defaults.headers.common.Authorization = null;
 		}
 	};
+	this.purgeToken = function () {
+		localStorageService.remove('authToken');
+	};
 });

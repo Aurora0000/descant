@@ -38,6 +38,9 @@ app.config(function($routeProvider, $locationProvider) {
 			template: '',
 			controller: 'ActivateController'
 		})
+		.when('/registered', {
+			templateUrl: 'pages/registration-done.html'
+		})
 		.when('/404', {
 			templateUrl: 'pages/404.html'
 		})
@@ -362,7 +365,7 @@ app.directive('registerBox', function($location) {
 			this.register = function(user, email, pass) {
 				var req = $http.post(descantConfig.backend + "/api/auth/register/", {"email": email, "username": user, "password": pass});
 				req.success(function(data) {
-					$location.path('/login');
+					$location.path('/registered');
 				});
 				req.error(function(data) {
 					alert("There was an error while trying to register.");
@@ -383,6 +386,7 @@ app.directive('logout', ['tokenService', '$location', function(tokenService, $lo
 				$location.path('/');
 			}, function(data){
 				alert("Cannot log out.");
+				tokenService.purgeToken();
 			});
 		}
 	}
