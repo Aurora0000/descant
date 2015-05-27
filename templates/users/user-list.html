@@ -1,4 +1,6 @@
 <div>
+	<div class="load-error" ng-show="users.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
+	<div class="loading" ng-hide="users.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 	<ul class="box users-list">
 		<li ng-repeat="user in users.list">
 			<div class="users-avatar"></div>

@@ -95,6 +95,7 @@ app.directive('topicList', function(descantConfig) {
 				});
 				req.error(function(data) {
 					topicsCtrl.loaded = true;
+					topicsCtrl.error = true;
 				});
 			};
 			this.updateList();
@@ -134,6 +135,7 @@ app.directive('tagTopicList', function(descantConfig) {
 				});
 				req.error(function(data) {
 					topicsCtrl.loaded = true;
+					topicsCtrl.error = true;
 				});
 			};
 			this.updateList();
@@ -161,8 +163,14 @@ app.directive('userList', function(descantConfig) {
 		templateUrl: 'templates/users/user-list.html',
 		controller: function($http) {
 			var usersCtrl = this;
-			$http.get(descantConfig.backend + "/api/v0.1/users/").success(function (data) {
+			var req = $http.get(descantConfig.backend + "/api/v0.1/users/");
+			req.success(function (data) {
 				usersCtrl.list = data;
+				usersCtrl.loaded = true;
+			});
+			req.error(function(data){
+				usersCtrl.loaded = true;
+				usersCtrl.error = true;
 			});
 		},
 		controllerAs: 'users'
@@ -286,9 +294,11 @@ app.directive('postList', function(descantConfig) {
 				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/");
 				req.success(function (data) {
 					postsCtrl.list = data;
+					postsCtrl.loaded = true;
 				});
 				req.error(function(data) {
-					postsCtrl.failed = true;
+					postsCtrl.loaded = true;
+					postsCtrl.error = true;
 				});
 			};
 			this.updateList();
@@ -317,11 +327,15 @@ app.directive('topicFirstpost', function(descantConfig) {
 		controller: function($http, $scope) {
 			var topicCtrl = this;
 			topicCtrl.loaded = false;
-			// Hacky. TODO: improve.
-			$http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/").success(function (data) {
+			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/");
+			req.success(function (data) {
 				topicCtrl.post = data;
 				topicCtrl.loaded = true;
 				document.title = topicCtrl.post.title + " | " + descantConfig.forumName;
+			});
+			req.error(function(data) {
+				topicCtrl.loaded = true;
+				topicCtrl.error = true;
 			});
 		},
 		controllerAs: 'topic'
@@ -337,11 +351,12 @@ app.directive('authStatus', ['$http', 'tokenService', 'descantConfig', function(
 				var req = $http.get(descantConfig.backend + "/api/auth/me/");
 				req.success(function (data) {
 					authCtrl.user = data;
-					authCtrl.fail = false;
+					authCtrl.loaded = true;
+					authCtrl.error = false;
 				});
 				req.error(function(data) {
-					authCtrl.user = null;
-					authCtrl.fail = true;
+					authCtrl.loaded = true;
+					authCtrl.error = true;
 				});
 			};
 

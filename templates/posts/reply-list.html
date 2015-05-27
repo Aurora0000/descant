@@ -1,6 +1,6 @@
 <div>
-	<span class="post-no-items" ng-hide="posts.list.length > 0 || posts.failed">No replies available.</span>
-	<span class="post-error" ng-show="posts.failed">There was an unexpected error.</span>
+	<div class="load-error" ng-show="posts.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
+	<div class="loading" ng-hide="posts.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 	<ul class="box posts-list">
 		<li class="post-item" ng-repeat="post in posts.list">
 			<div class="post-avatar"></div>

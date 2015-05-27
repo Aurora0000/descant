@@ -1,4 +1,5 @@
 <div>
+	<div class="load-error" ng-show="topics.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
 	<div class="loading" ng-hide="topics.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 	<ul class="box topics-list" ng-show="topics.loaded">
 		<li class="topic-item" ng-repeat="topic in topics.list">

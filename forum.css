@@ -9,9 +9,6 @@
 	float: left;
 }
 
-.topics-stats, .users-stats {
-}
-
 .topics-title, .users-title {
 	font-weight: 600;
 }
@@ -77,6 +74,6 @@ ul.tag-list {
 	padding: 5px;
 }
 
-div.loading {
+div.loading, div.load-error {
 	text-align: center;
 }

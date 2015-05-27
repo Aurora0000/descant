@@ -1,5 +1,7 @@
-<div class="topic-op loading" ng-hide="topic.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
-<div class="topic-op" ng-show="topic.loaded">
+<div class="load-error" ng-show="topic.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
+<div class="loading" ng-hide="topic.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
+	
+<div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
   <div class="topics-avatar"></div>
   <div class="topics-stats">{{ topic.post.author_name }} <span class="topics-time">posted {{ topic.post.post_date | relativeDate }} / {{ topic.post.reply_count }} replies</span></div>
   <div class="topics-title">{{ topic.post.topic.title }}</div>
