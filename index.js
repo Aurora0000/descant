@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services']);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services', 'ngTagsInput']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -23,6 +23,9 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 		.when('/login', {
 			templateUrl: 'pages/login.html'
+		})
+		.when('/register', {
+			templateUrl: 'pages/register.html'
 		})
 		.when('/logout', {
 			templateUrl: 'pages/logout.html'
@@ -54,7 +57,11 @@ app.directive('topicList', function(descantConfig) {
 			this.updateList();
 
 			// Update once per minute.
-			this.stopUpdateList = $interval(this.updateList, 60000);
+			this.stopUpdateList = $interval(this.updateList, 45000);
+
+			$rootScope.$on('topics:refresh', function() {
+				topicsCtrl.updateList();
+			});
 
 			// listen on DOM destroy (removal) event, and cancel the next UI update
 			// to prevent updating time after the DOM element was removed.
@@ -82,7 +89,7 @@ app.directive('newTopicBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function($http, descantConfig) {
+		controller: function($rootScope, $http, descantConfig) {
 			this.showNTP = false;
 			this.toggleNTP = function() {
 				if (this.showNTP == true) {
@@ -92,23 +99,56 @@ app.directive('newTopicBox', function($location) {
 				}
 			};
 			this.addTopic = function(title, contents, tag_ids) {
-				tag_ids = tag_ids.split(',');
 				for (i = 0; i < tag_ids.length; i++) {
-					tag_ids[i] = parseInt(tag_ids[i]);
+					tag_ids[i] = parseInt(tag_ids[i]['id']);
 				}
 				var ntb = this;
 				$http.post(descantConfig.backend + "/api/v0.1/topics/", {"title": title, "contents": contents, "tag_ids": tag_ids}).success(function(data){
 					$location.path('/topics');
 					ntb.toggleNTP();
+					$rootScope.$broadcast('topics:refresh')
+				})
+				.error(function(data) {
+					alert("Error adding topic.");
+				});
+			};
+
+			this.loadTags = function() {
+				return $http.get(descantConfig.backend + "/api/v0.1/tags/");
+			};
+		},
+		controllerAs: 'newTopicCtrl'
+	}
+});
+app.directive('newPostBox', function($location) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/posts/new-post-box.html',
+		controller: function($rootScope, $http, descantConfig) {
+			this.showNTP = false;
+			this.toggleNTP = function() {
+				if (this.showNTP == true) {
+					this.showNTP = false;
+				} else {
+					this.showNTP = true;
+				}
+			};
+			this.addReply = function(contents, post_id) {
+				var npb = this;
+				$http.post(descantConfig.backend + "/api/v0.1/topics/" + post_id + "/replies/", {"contents": contents}).success(function(data){
+					$location.path("/topic/" + post_id);
+					npb.toggleNTP();
+					$rootScope.$broadcast('topic:refresh');
 				})
 				.error(function(data) {
 					alert("Error adding topic.");
 				});
 			};
 		},
-		controllerAs: 'newTopicCtrl'
+		controllerAs: 'newPostCtrl'
 	}
 });
+
 app.directive('chatBox', function() {
 	return {
 		restrict: 'E',
@@ -152,16 +192,34 @@ app.directive('postList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/posts/reply-list.html',
-		controller: function($http, $scope) {
+		controller: function($http, $interval, $rootScope, $scope) {
 			var postsCtrl = this;
 			// Hacky. TODO: improve.
-			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/");
-			req.success(function (data) {
-				postsCtrl.list = data;
+
+			this.updateList = function() {
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/");
+				req.success(function (data) {
+					postsCtrl.list = data;
+				});
+				req.error(function(data) {
+					postsCtrl.failed = true;
+				});
+			};
+			this.updateList();
+
+			// Update once per minute.
+			this.stopUpdateList = $interval(this.updateList, 45000);
+
+			$rootScope.$on('topic:refresh', function() {
+				postsCtrl.updateList();
 			});
-			req.error(function(data) {
-				postsCtrl.failed = true;
+
+			// listen on DOM destroy (removal) event, and cancel the next UI update
+			// to prevent updating time after the DOM element was removed.
+			$rootScope.$on('$destroy', function() {
+				$interval.cancel(postsCtrl.stopUpdateList);
 			});
+
 		},
 		controllerAs: 'posts'
 	}
@@ -228,6 +286,26 @@ app.directive('loginBox', ['tokenService', '$location', function(tokenService, $
 		controllerAs: 'loginCtrl'
 	}
 }]);
+
+app.directive('registerBox', function($location) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/users/register-box.html',
+		controller: function($http, descantConfig) {
+			this.register = function(user, email, pass) {
+				var req = $http.post(descantConfig.backend + "/api/auth/register/", {"email": email, "username": user, "password": pass});
+				req.success(function(data) {
+					$location.path('/login');
+				});
+				req.error(function(data) {
+					alert("There was an error while trying to register.");
+				});
+			};
+		},
+		controllerAs: 'registerCtrl'
+	}
+});
+
 
 app.directive('logout', ['tokenService', '$location', function(tokenService, $location) {
 	return {
