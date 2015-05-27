@@ -55,10 +55,16 @@ app.directive('topicList', function(descantConfig) {
 		templateUrl: 'templates/topics/topic-list.html',
 		controller: function($http, $interval, $rootScope) {
 			var topicsCtrl = this;
+			this.loaded = false;
 
 			this.updateList = function() {
-				$http.get(descantConfig.backend + "/api/v0.1/topics/").success(function (data) {
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/");
+				req.success(function (data) {
 					topicsCtrl.list = data.reverse();
+					topicsCtrl.loaded = true;
+				});
+				req.error(function(data) {
+					topicsCtrl.loaded = true;
 				});
 			};
 			this.updateList();
@@ -88,10 +94,16 @@ app.directive('tagTopicList', function(descantConfig) {
     },
 		controller: function($http, $scope, $interval, $rootScope) {
 			var topicsCtrl = this;
+			this.loaded = false;
 
 			this.updateList = function() {
-				$http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/").success(function (data) {
+				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/");
+				req.success(function (data) {
 					topicsCtrl.list = data.reverse();
+					topicsCtrl.loaded = true;
+				});
+				req.error(function(data) {
+					topicsCtrl.loaded = true;
 				});
 			};
 			this.updateList();

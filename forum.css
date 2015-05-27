@@ -76,3 +76,7 @@ auth-status>span>a {
 ul.tag-list {
 	padding: 5px;
 }
+
+div.loading {
+	text-align: center;
+}

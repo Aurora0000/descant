@@ -1,5 +1,6 @@
 <div>
-	<ul class="box topics-list">
+	<div class="loading" ng-hide="topics.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
+	<ul class="box topics-list" ng-show="topics.loaded">
 		<li class="topic-item" ng-repeat="topic in topics.list">
 			<div class="topics-avatar"></div>
 			<div class="topics-title"><a ng-href="#/topic/{{topic.id}}">{{ topic.title }}</a></div>
