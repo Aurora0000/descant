@@ -233,7 +233,7 @@ app.directive('newPostBox', function($location) {
 					$rootScope.$broadcast('topic:refresh');
 				})
 				.error(function(data) {
-					alert("Error adding topic.");
+					alert("Error adding post.");
 				});
 			};
 		},
