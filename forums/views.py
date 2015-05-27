@@ -19,7 +19,18 @@ class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
 
 
 class StandardThrottle(UserRateThrottle):
-    rate = '15/min'  # 1 per 4 seconds
+    rate = '20/min'  # 1 per 3 seconds
+
+
+class TagDetail(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = TopicSerializer
+    throttle_classes = (StandardThrottle,)
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+
+    def get_queryset(self):
+        tag = Tag.objects.get(pk=self.kwargs['id'])
+        return Post.objects.all().filter(pk__in=tag.posts.all())
 
 class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
@@ -42,6 +53,7 @@ class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
 
 
 class ReplyList(generics.ListCreateAPIView):

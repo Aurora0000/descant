@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^topics/(?P<pk>[0-9]+)/$', TopicDetail.as_view()),
     url(r'^topics/$', TopicList.as_view()),
     url(r'^posts/(?P<pk>[0-9]+)/$', AnyPostDetail.as_view()),
+    url(r'tags/(?P<id>[0-9]+)/$', TagDetail.as_view()),
     url(r'tags/', TagList.as_view()),
     url(r'users/', UserList.as_view()),
     url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view())
