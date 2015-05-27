@@ -34,6 +34,10 @@ app.config(function($routeProvider, $locationProvider) {
 		.when('/logout', {
 			templateUrl: 'pages/logout.html'
 		})
+		.when('/activate', {
+			template: '',
+			controller: 'ActivateController'
+		})
 		.when('/404', {
 			templateUrl: 'pages/404.html'
 		})
@@ -47,6 +51,16 @@ app.controller('PostViewController', function($scope, $routeParams) {
 
 app.controller('TagTopicViewController', function($scope, $routeParams) {
 	$scope.tagId = $routeParams.tagId;
+});
+
+app.controller('ActivateController', function($http, descantConfig, $location, $routeParams) {
+	var req = $http.post(descantConfig.backend + "/api/auth/activate/", {"uid": $routeParams.uid, "token": $routeParams.token});
+	req.success(function(data) {
+		$location.path('/login');
+	});
+	req.error(function(data) {
+		alert("Error while activating account!");
+	});
 });
 
 app.directive('topicList', function(descantConfig) {
