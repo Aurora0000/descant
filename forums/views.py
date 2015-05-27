@@ -25,7 +25,7 @@ class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     throttle_classes = (StandardThrottle,)
-
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
 
 class TopicList(generics.ListCreateAPIView):
     queryset = Post.objects.all().filter(is_topic=True)

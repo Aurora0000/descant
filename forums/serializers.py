@@ -32,7 +32,9 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
                   'contents', 'post_date', 'last_edit_date', 'reply_count',
-                  'replies', 'was_edited')
+                  'was_edited')
+
+        read_only_fields = ('replies',)
 
     def get_reply_count(self, obj):
         return Post.objects.all().filter(reply_to=obj).count()
