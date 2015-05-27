@@ -1,11 +1,11 @@
 <div>
 	<div class="load-error" ng-show="users.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
 	<div class="loading" ng-hide="users.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
-	<ul class="box users-list">
+	<ul class="box list-list highlight">
 		<li ng-repeat="user in users.list">
-			<div class="users-avatar"></div>
-			<div class="users-title">{{ user.username }}</div>
-			<div class="users-stats"><span class="users-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
+			<div class="list-avatar"></div>
+			<div class="list-title">{{ user.username }}</div>
+			<div class="list-stats"><span class="list-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
 		</li>
 	</ul>
 </div>
