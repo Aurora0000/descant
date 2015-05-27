@@ -3,7 +3,7 @@
 		<li class="topic-item" ng-repeat="topic in topics.list">
 			<div class="topics-avatar"></div>
 			<div class="topics-title"><a ng-href="#/topic/{{topic.id}}">{{ topic.title }}</a></div>
-			<div class="topics-stats">{{ topic.author_name }} <span class="topics-time">posted {{ topic.post_date | date }} / {{ topic.reply_count }} replies</span></div>
+			<div class="topics-stats">{{ topic.author_name }} <span class="topics-time">posted {{ topic.post_date | relativeDate }} / {{ topic.reply_count }} replies</span></div>
 		</li>
 	</ul>
 </div>

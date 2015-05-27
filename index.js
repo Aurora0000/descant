@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services', 'ngTagsInput']);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services', 'ngTagsInput', 'relativeDate']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
