@@ -1,6 +1,6 @@
 <p>
 	<button ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i class="fa" ng-class="{ 'fa-minus': newTopicCtrl.showNTP, 'fa-plus': newTopicCtrl.showNTP == false }"></i> New Topic</button>
-	<button><i class="fa fa-tags"></i> Tags</button>
+	<tag-list></tag-list>
 </p>
 <div ng-show="newTopicCtrl.showNTP" class="panel">
 	<div class="end">

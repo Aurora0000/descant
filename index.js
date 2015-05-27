@@ -18,6 +18,10 @@ app.config(function($routeProvider, $locationProvider) {
 				templateUrl: 'pages/post-view.html',
 				controller: 'PostViewController'
 			})
+			.when('/topics/:tagId', {
+				templateUrl: 'pages/tag-topics.html',
+				controller: 'TagTopicViewController'
+			})
 		.when('/chat', {
 			templateUrl: 'pages/chat.html'
 		})
@@ -41,6 +45,9 @@ app.controller('PostViewController', function($scope, $routeParams) {
 	$scope.topicId = $routeParams.topicId;
 });
 
+app.controller('TagTopicViewController', function($scope, $routeParams) {
+	$scope.tagId = $routeParams.tagId;
+});
 
 app.directive('topicList', function(descantConfig) {
 	return {
@@ -72,6 +79,40 @@ app.directive('topicList', function(descantConfig) {
 		controllerAs: 'topics'
 	}
 });
+app.directive('tagTopicList', function(descantConfig) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/topics/topic-list.html',
+		scope: {
+      tagId: '@'
+    },
+		controller: function($http, $scope, $interval, $rootScope) {
+			var topicsCtrl = this;
+
+			this.updateList = function() {
+				$http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/").success(function (data) {
+					topicsCtrl.list = data.reverse();
+				});
+			};
+			this.updateList();
+
+			// Update once per minute.
+			this.stopUpdateList = $interval(this.updateList, 45000);
+
+			$rootScope.$on('topics:refresh', function() {
+				topicsCtrl.updateList();
+			});
+
+			// listen on DOM destroy (removal) event, and cancel the next UI update
+			// to prevent updating time after the DOM element was removed.
+			$rootScope.$on('$destroy', function() {
+				$interval.cancel(topicsCtrl.stopUpdateList);
+			});
+		},
+		controllerAs: 'topics'
+	}
+});
+
 app.directive('userList', function(descantConfig) {
 	return {
 		restrict: 'E',
@@ -330,3 +371,30 @@ app.directive('emitToken', ['tokenService', function(tokenService) {
 		}
 	}
 }]);
+app.directive('tagList', function($location) {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/topics/tag-list.html',
+		controller: function($rootScope, $http, descantConfig) {
+			this.showTags = false;
+			this.toggleBox = function() {
+				if (this.showTags == true) {
+					this.showTags = false;
+				} else {
+					this.showTags = true;
+				}
+			};
+
+			var tagCtrl = this;
+			this.updateList = function() {
+				$http.get(descantConfig.backend + "/api/v0.1/tags/").success(function (data) {
+					tagCtrl.list = data;
+				});
+			};
+
+			this.updateList();
+
+		},
+		controllerAs: 'tagCtrl'
+	}
+});

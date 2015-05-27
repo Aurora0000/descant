@@ -72,3 +72,7 @@ nav-btn>a {
 auth-status>span>a {
 		color: #ffffff;
 }
+
+ul.tag-list {
+	padding: 5px;
+}
