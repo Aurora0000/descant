@@ -3,45 +3,58 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', '
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
     	.when('/', {
+			title: 'Home',
     		templateUrl: 'pages/topics.html'
     	})
 		.when('/topics', {
+			title: 'Topics',
 			templateUrl: 'pages/topics.html'
 		})
     	.when('/users', {
+			title: 'Users',
     		templateUrl: 'pages/users.html'
     	})
     	.when('/admin', {
+			title: 'Administration',
     		templateUrl: 'pages/admin.html'
     	})
-			.when('/topic/:topicId', {
-				templateUrl: 'pages/post-view.html',
-				controller: 'PostViewController'
-			})
-			.when('/topics/:tagId', {
-				templateUrl: 'pages/tag-topics.html',
-				controller: 'TagTopicViewController'
-			})
+		.when('/topic/:topicId', {
+			title: 'Topic',
+			templateUrl: 'pages/post-view.html',
+			controller: 'PostViewController'
+		})
+		.when('/topics/:tagId', {
+			title: 'Topics',
+			templateUrl: 'pages/tag-topics.html',
+			controller: 'TagTopicViewController'
+		})
 		.when('/chat', {
+			title: 'Chat',
 			templateUrl: 'pages/chat.html'
 		})
 		.when('/login', {
+			title: 'Log in',
 			templateUrl: 'pages/login.html'
 		})
 		.when('/register', {
+			title: 'Register',
 			templateUrl: 'pages/register.html'
 		})
 		.when('/logout', {
+			title: 'Log out',
 			templateUrl: 'pages/logout.html'
 		})
 		.when('/activate', {
+			title: 'Account Activation',
 			template: '',
 			controller: 'ActivateController'
 		})
 		.when('/registered', {
+			title: 'Registration Succeeded!',
 			templateUrl: 'pages/registration-done.html'
 		})
 		.when('/404', {
+			title: 'Not Found',
 			templateUrl: 'pages/404.html'
 		})
 		.otherwise('/404');
@@ -169,6 +182,7 @@ app.directive('newTopicBox', function($location) {
 				}
 			};
 			this.addTopic = function(title, contents, tag_ids) {
+				var i;
 				for (i = 0; i < tag_ids.length; i++) {
 					tag_ids[i] = parseInt(tag_ids[i]['id']);
 				}
@@ -231,11 +245,13 @@ app.directive('adminPanel', function() {
 		templateUrl: 'templates/admin/admin-panel.html'
 	}
 });
-app.run(function ($rootScope, $timeout, $window) {
+app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {
 	$rootScope.$on('$routeChangeSuccess', function () {
 		$timeout(function () {
 			$window.scrollTo(0,0);
 		}, 500);
+		
+        document.title = $route.current.title + " | " + descantConfig.forumName;        
 	});
 });
 
@@ -305,6 +321,7 @@ app.directive('topicFirstpost', function(descantConfig) {
 			$http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/").success(function (data) {
 				topicCtrl.post = data;
 				topicCtrl.loaded = true;
+				document.title = topicCtrl.post.title + " | " + descantConfig.forumName;
 			});
 		},
 		controllerAs: 'topic'
