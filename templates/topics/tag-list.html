@@ -1,8 +1,6 @@
 <button ng-click="tagCtrl.toggleBox()"><i class="fa fa-tags"></i> Tags</button>
-<div ng-show="tagCtrl.showTags" class="panel">
-  <ul class="box tag-list">
-		<li class="tag-item" ng-repeat="tag in tagCtrl.list">
-			<div class="tag-name"><a ng-href="#/topics/{{tag.id}}">{{ tag.name }}</a></div>
-		</li>
-	</ul>
-</div>
+<ul class="box tag-list" ng-show="tagCtrl.showTags">
+	<li class="tag-item" ng-repeat="tag in tagCtrl.list">
+		<div class="tag-name"><a ng-href="#/topics/{{tag.id}}">{{ tag.name }}</a></div>
+	</li>
+</ul>

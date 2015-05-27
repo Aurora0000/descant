@@ -2,10 +2,10 @@
 	<div class="load-error" ng-show="posts.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
 	<div class="loading" ng-hide="posts.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 	<ul class="box posts-list">
-		<li class="post-item" ng-repeat="post in posts.list">
-			<div class="post-avatar"></div>
-			<div class="post-stats">{{ post.author_name }} <span class="topics-time">posted {{ post.post_date | relativeDate }}</span></div>
-			<div class="post-contents">{{ post.contents }}</div>
+		<li class="list-item" ng-repeat="post in posts.list">
+			<div class="list-avatar"></div>
+			<div class="list-stats">{{ post.author_name }} <span class="list-time">posted {{ post.post_date | relativeDate }}</span></div>
+			<div class="list-contents">{{ post.contents }}</div>
 		</li>
 	</ul>
 </div>

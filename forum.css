@@ -1,5 +1,14 @@
+@import url(//rawgit.com/Tel-Aviv/CSS-Framework/master/framework.css);
 
-.topics-avatar, .users-avatar {
+@-ms-viewport {
+	width: device-width;
+}
+
+body {
+	overflow-y: scroll;
+}
+
+.list-avatar {
 	height: 40px;
 	width: 40px;
 	border-radius: 5px;
@@ -9,52 +18,58 @@
 	float: left;
 }
 
-.topics-title, .users-title {
+.list-title {
 	font-weight: 600;
 }
-.topics-time, .users-time {
+.list-time {
 	opacity: .7;
 	font-size: small;
 }
 
-.topics-list>li, .users-list>li {
+.list-list>li {
 	cursor: pointer;
 }
 
-.topics-list>li:hover, .users-list>li:hover {
+.list-list.highlight>li:hover {
 	background-color: rgb(253, 253, 253);
 }
 
-.topics-list>li:before, .users-list>li:before, .topics-list>li:after, .users-list>li:after { content: ""; display: table; } .topics-list>li:after, .topics-list>li:after { clear: both; }
+.list-list>li:before, .list-list>li:after {
+	content: "";
+	display: table;
+}
+.list-list>li:after {
+	clear: both;
+}
 
 div.container {
 	position: relative;
 }
 
 #main {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    opacity: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	opacity: 1;
 }
 #main.ng-enter,
 #main.ng-leave {
-    -webkit-transition: all 1s ease;
-    transition: all 1s ease;
+	-webkit-transition: all 1s ease;
+	transition: all 1s ease;
 }
 #main.ng-enter {
-    opacity: 0;
+	opacity: 0;
 }
 #main.ng-enter-active {
-    opacity: 1;
+	opacity: 1;
 }
 #main.ng-leave {
-    opacity: 1;
+	opacity: 1;
 }
 #main.ng-leave-active {
-    opacity: 0;
+	opacity: 0;
 }
 
 .auth-login, .auth-hi {
@@ -67,13 +82,17 @@ nav-btn>a {
 }
 
 auth-status>span>a {
-		color: #ffffff;
+	color: #ffffff;
 }
 
 ul.tag-list {
-	padding: 5px;
 }
 
 div.loading, div.load-error {
 	text-align: center;
+}
+
+.first-post {
+	padding: 0!important;
+	border: none!important;
 }

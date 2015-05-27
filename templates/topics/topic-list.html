@@ -1,11 +1,11 @@
 <div>
 	<div class="load-error" ng-show="topics.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
 	<div class="loading" ng-hide="topics.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
-	<ul class="box topics-list" ng-show="topics.loaded">
-		<li class="topic-item" ng-repeat="topic in topics.list">
-			<div class="topics-avatar"></div>
-			<div class="topics-title"><a ng-href="#/topic/{{topic.id}}">{{ topic.title }}</a></div>
-			<div class="topics-stats">{{ topic.author_name }} <span class="topics-time">posted {{ topic.post_date | relativeDate }} / {{ topic.reply_count }} replies</span></div>
+	<ul class="box list-list highlight" ng-show="topics.loaded">
+		<li class="list-item" ng-repeat="topic in topics.list">
+			<div class="list-avatar"></div>
+			<div class="list-title"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></div>
+			<div class="list-stats">{{ topic.author_name }} <span class="list-time">posted {{ topic.post_date | relativeDate }} / {{ topic.reply_count }} replies</span></div>
 		</li>
 	</ul>
 </div>

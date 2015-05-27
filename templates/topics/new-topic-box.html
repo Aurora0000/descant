@@ -9,20 +9,20 @@
 	<div class="body">
 		<div class="margin-fix">
 			<form>
-			<p>
-				<input class="full" placeholder="Title" ng-model="title" />
-			</p>
-			<p>
-				<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
-			</p>
-			<p>
-				<tags-input add-from-autocomplete-only="true" ng-model="tag_ids" display-property="name">
-      		<auto-complete source="newTopicCtrl.loadTags()"></auto-complete>
-    		</tags-input>
-			</p>
-			<p>
-				<button class="highlight" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)">Post</button>
-			</p>
+				<p>
+					<input class="full" placeholder="Title" ng-model="title">
+				</p>
+				<p>
+					<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
+				</p>
+				<p>
+					<tags-input add-from-autocomplete-only="true" ng-model="tag_ids" display-property="name">
+						<auto-complete source="newTopicCtrl.loadTags()"></auto-complete>
+					</tags-input>
+				</p>
+				<p>
+					<button class="highlight" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)">Post</button>
+				</p>
 			</form>
 		</div>
 	</div>
