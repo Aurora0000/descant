@@ -49,6 +49,14 @@ class TopicList(generics.ListCreateAPIView):
         assign_perm('forums.change_post', self.request.user, serializer.instance)
         assign_perm('forums.delete_post', self.request.user, serializer.instance)
 
+
+class TopicListReverse(generics.ListAPIView):
+    queryset = Post.objects.all().filter(is_topic=True).order_by('-id')
+    serializer_class = TopicSerializer
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
+
+
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
