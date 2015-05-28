@@ -13,3 +13,7 @@ after_success:
   - coverage report
   - pip install --quiet python-coveralls
   - coveralls
+after_failure:
+  - coverage report
+  - pip install --quit python-coveralls
+  - coveralls
