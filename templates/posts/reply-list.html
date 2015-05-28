@@ -1,6 +1,4 @@
-<div>
-	<div class="load-error" ng-show="posts.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
-	<div class="loading" ng-hide="posts.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
+<div infinite-scroll='posts.updateList()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='1'>
 	<ul class="box list-list">
 		<li class="list-item" ng-repeat="post in posts.list">
 			<div class="list-avatar"></div>
@@ -8,4 +6,6 @@
 			<div class="list-contents">{{ post.contents }}</div>
 		</li>
 	</ul>
+	<div class="loading" ng-show="posts.busy" ng-hide="posts.end"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
+	<div class="results-end loading" ng-show="posts.end"><i class="fa fa-minus"></i> No more replies available!</div>
 </div>
