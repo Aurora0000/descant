@@ -250,7 +250,12 @@ app.directive('newTopicBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function($rootScope, $http, descantConfig) {
+		controller: function(tokenService, $rootScope, $http, descantConfig) {
+			this.auth = tokenService.authenticated;
+			var ntb = this;
+			$rootScope.$on('auth:statusChange', function() {
+				ntb.auth = tokenService.authenticated;
+			});
 			this.showNTP = false;
 			this.toggleNTP = function() {
 				if (this.showNTP == true) {
@@ -275,9 +280,6 @@ app.directive('newTopicBox', function($location) {
 				});
 			};
 
-			this.loadTags = function() {
-				return $http.get(descantConfig.backend + "/api/v0.1/tags/");
-			};
 		},
 		controllerAs: 'newTopicCtrl'
 	}
@@ -286,7 +288,12 @@ app.directive('newPostBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/posts/new-post-box.html',
-		controller: function($rootScope, $http, descantConfig) {
+		controller: function(tokenService, $rootScope, $http, descantConfig) {
+			this.auth = tokenService.authenticated;
+			var ntb = this;
+			$rootScope.$on('auth:statusChange', function() {
+				ntb.auth = tokenService.authenticated;
+			});
 			this.showNTP = false;
 			this.toggleNTP = function() {
 				if (this.showNTP == true) {

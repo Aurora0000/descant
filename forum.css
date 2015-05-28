@@ -101,3 +101,7 @@ div.loading, div.load-error {
 	padding: 0!important;
 	border: none!important;
 }
+
+input.ng-invalid {
+	border: 3px solid #ff0000;
+}

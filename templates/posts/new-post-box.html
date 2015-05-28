@@ -1,7 +1,7 @@
 <p>
-	<button ng-click="newPostCtrl.toggleNTP()" class="highlight"><i class="fa" ng-class="{ 'fa-minus': newPostCtrl.showNTP, 'fa-plus': newPostCtrl.showNTP == false }"></i> Reply</button>
+	<button ng-show="newPostCtrl.auth" ng-click="newPostCtrl.toggleNTP()" class="highlight"><i class="fa" ng-class="{ 'fa-minus': newPostCtrl.showNTP, 'fa-plus': newPostCtrl.showNTP == false }"></i> Reply</button>
 </p>
-<div ng-show="newPostCtrl.showNTP" class="panel">
+<div ng-show="newPostCtrl.showNTP && newPostCtrl.auth" class="panel">
 	<div class="end">
 		Reply
 	</div>
