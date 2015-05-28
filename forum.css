@@ -8,6 +8,10 @@ body {
 	overflow-y: scroll;
 }
 
+.list-stats {
+	cursor: default;
+}
+
 .list-avatar {
 	height: 40px;
 	width: 40px;
@@ -27,11 +31,12 @@ body {
 }
 
 .list-list>li {
-	cursor: pointer;
+	
 }
 
 .list-list.highlight>li:hover {
 	background-color: rgb(253, 253, 253);
+	cursor: pointer;
 }
 
 .list-list>li:before, .list-list>li:after {

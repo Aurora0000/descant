@@ -1,6 +1,8 @@
 <div class="load-error" ng-show="topic.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
 <div class="loading" ng-hide="topic.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
+	<h1>{{ topic.post.title }}</h1>
+	<hr>
 	<ul class="box list-list">
 		<li class="list-item first-post">
 			<div class="list-avatar"></div>
