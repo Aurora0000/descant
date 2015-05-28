@@ -275,7 +275,10 @@ app.directive('newTopicBox', function($location) {
 					alert("Error adding topic.");
 				});
 			};
-
+			
+			this.loadTags = function() {
+				return $http.get(descantConfig.backend + "/api/v0.1/tags/");
+			};
 		},
 		controllerAs: 'newTopicCtrl'
 	}

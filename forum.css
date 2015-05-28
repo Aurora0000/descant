@@ -90,9 +90,6 @@ auth-status>span>a {
 	color: #ffffff;
 }
 
-ul.tag-list {
-}
-
 div.loading, div.load-error {
 	text-align: center;
 }
@@ -105,3 +102,4 @@ div.loading, div.load-error {
 input.ng-invalid {
 	border: 3px solid #ff0000;
 }
+
