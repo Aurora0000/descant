@@ -53,7 +53,8 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
-                  'post_date', 'last_edit_date', 'is_topic')
+                  'post_date', 'last_edit_date', 'is_topic',
+                  'was_edited')
 
     def get_author_name(self, obj):
         return obj.author.username
