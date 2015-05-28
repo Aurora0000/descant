@@ -417,10 +417,16 @@ app.directive('postList', function(descantConfig) {
 				postsCtrl.refreshList();
 			});
 
+			this.destroy = function() {
+				$interval.cancel(postsCtrl.stopRefreshList);	
+			};
 			// listen on DOM destroy (removal) event, and cancel the next UI update
 			// to prevent updating time after the DOM element was removed.
 			$rootScope.$on('$destroy', function() {
-				$interval.cancel(postsCtrl.stopRefreshList);
+				postsCtrl.destroy();
+			});
+			$rootScope.$on('$locationChangeSuccess', function() {
+				postsCtrl.destroy();
 			});
 
 		},
