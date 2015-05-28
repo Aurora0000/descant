@@ -103,3 +103,11 @@ input.ng-invalid {
 	border: 3px solid #ff0000;
 }
 
+nav-btn {
+	padding: 0!important;
+}
+
+nav-btn>a {
+	padding: 10px 20px!important;
+	display: inline-block;
+}
