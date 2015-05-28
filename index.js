@@ -104,7 +104,6 @@ app.directive('topicList', function(descantConfig) {
 					}
 					var items = data['results'];
       				for (var i = 0; i < items.length; i++) {
-						alert(items[i]);
         				topicsCtrl.list.push(items[i]);
       				}
 					topicsCtrl.offset += data['results'].length;
@@ -180,7 +179,6 @@ app.directive('tagTopicList', function(descantConfig) {
 					}
 					var items = data['results'];
       				for (var i = 0; i < items.length; i++) {
-						alert(items[i]);
         				topicsCtrl.list.push(items[i]);
       				}
 					topicsCtrl.offset += data['results'].length;
@@ -379,7 +377,6 @@ app.directive('postList', function(descantConfig) {
 					}
 					var items = data['results'];
       				for (var i = 0; i < items.length; i++) {
-						alert(items[i]);
         				postsCtrl.list.push(items[i]);
       				}
 					postsCtrl.offset += data['results'].length;
