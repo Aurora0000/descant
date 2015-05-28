@@ -31,7 +31,7 @@ body {
 }
 
 .list-list>li {
-	
+
 }
 
 .list-list.highlight>li:hover {
@@ -103,11 +103,36 @@ input.ng-invalid {
 	border: 3px solid #ff0000;
 }
 
-nav-btn {
+nav-btn, auth-status {
 	padding: 0!important;
 }
 
-nav-btn>a {
+nav-btn>a, auth-status>span {
 	padding: 10px 20px!important;
 	display: inline-block;
+}
+
+@media only screen and (max-width: 450px) {
+	nav-btn {
+		display: block!important;
+	}
+	.nav {
+		height: auto;
+		border: 1px solid rgb(230, 230, 230);
+		color: black!important;
+		background-color: white;
+		position: static;
+		border-radius: 5px;
+	}
+	
+	nav-btn>*, auth-status * {
+		color: black!important;
+	}
+	
+	.hasnav {
+		padding-top: 0;
+	}
+	.nav .f-right {
+		float: none;
+	}
 }
