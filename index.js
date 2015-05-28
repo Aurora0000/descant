@@ -133,9 +133,7 @@ app.directive('topicList', function(descantConfig) {
 				});
 			};
 			
-			this.updateList();
-
-			// Update once per minute.
+			// Update once every 45 seconds.
 			this.stopRefreshList = $interval(this.refreshList, 45000);
 
 			$rootScope.$on('topics:refresh', function() {
@@ -208,9 +206,7 @@ app.directive('tagTopicList', function(descantConfig) {
 				});
 			};
 			
-			this.updateList();
-			
-			// Update once per minute.
+			// Update once every 45 seconds.
 			this.stopRefreshList = $interval(this.refreshList, 45000);
 
 			$rootScope.$on('topics:refresh', function() {
@@ -414,9 +410,7 @@ app.directive('postList', function(descantConfig) {
 				});
 			};
 			
-			this.updateList();
-			
-			// Update once per minute.
+			// Update once every 45 seconds.
 			this.stopRefreshList = $interval(this.refreshList, 45000);
 
 			$rootScope.$on('topic:refresh', function() {
