@@ -19,7 +19,7 @@ class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
 
 
 class StandardThrottle(UserRateThrottle):
-    rate = '20/min'  # 1 per 3 seconds
+    rate = '60/min'  # 1 per second
 
 
 class TagDetail(generics.ListAPIView):
