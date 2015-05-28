@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.4"
+branches:
+  only:
+    - backend
+install:
+  - pip install -r requirements.txt
+  - pip install coverage
+script:
+  - coverage run manage.py test
+after_success:
+  - coverage report
+  - pip install --quiet python-coveralls
+  - coveralls
