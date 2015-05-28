@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services', 'ngTagsInput', 'relativeDate']);
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'descant.config', 'descant.services', 'ngTagsInput', 'relativeDate', 'infinite-scroll']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -85,32 +85,69 @@ app.directive('topicList', function(descantConfig) {
 		templateUrl: 'templates/topics/topic-list.html',
 		controller: function($http, $interval, $rootScope) {
 			var topicsCtrl = this;
-			this.loaded = false;
-
+			this.list = [];
+			this.busy = false;
+			this.offset = 0;
+			this.limit = 15;
+			this.end = false;
+			
 			this.updateList = function() {
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/");
+				if (topicsCtrl.busy || topicsCtrl.end) {
+					return;
+				}
+				topicsCtrl.busy = true;
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newest/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
-					topicsCtrl.list = data.reverse();
-					topicsCtrl.loaded = true;
+					if (data['results'].length == 0){
+						topicsCtrl.end = true;
+						return;
+					}
+					var items = data['results'];
+      				for (var i = 0; i < items.length; i++) {
+						alert(items[i]);
+        				topicsCtrl.list.push(items[i]);
+      				}
+					topicsCtrl.offset += data['results'].length;
+					topicsCtrl.busy = false;
 				});
 				req.error(function(data) {
-					topicsCtrl.loaded = true;
-					topicsCtrl.error = true;
+					topicsCtrl.busy = false;
+					topicsCtrl.end = true;
 				});
 			};
+			
+			this.refreshList = function() {
+				topicsCtrl.busy = true;
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newest/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
+				req.success(function (data) {
+					if (data['results'].length == 0){
+						topicsCtrl.end = true;
+						return;
+					}
+					var items = data['results'];
+      				topicsCtrl.list = items;
+					topicsCtrl.offset = data['results'].length;
+					topicsCtrl.busy = false;
+				});
+				req.error(function(data) {
+					topicsCtrl.busy = false;
+					topicsCtrl.end = true;
+				});
+			};
+			
 			this.updateList();
 
 			// Update once per minute.
-			this.stopUpdateList = $interval(this.updateList, 45000);
+			this.stopRefreshList = $interval(this.refreshList, 45000);
 
 			$rootScope.$on('topics:refresh', function() {
-				topicsCtrl.updateList();
+				topicsCtrl.refreshList();
 			});
 
 			// listen on DOM destroy (removal) event, and cancel the next UI update
 			// to prevent updating time after the DOM element was removed.
 			$rootScope.$on('$destroy', function() {
-				$interval.cancel(topicsCtrl.stopUpdateList);
+				$interval.cancel(topicsCtrl.stopRefreshList);
 			});
 		},
 		controllerAs: 'topics'
@@ -125,32 +162,69 @@ app.directive('tagTopicList', function(descantConfig) {
     },
 		controller: function($http, $scope, $interval, $rootScope) {
 			var topicsCtrl = this;
-			this.loaded = false;
-
+			this.list = [];
+			this.busy = false;
+			this.offset = 0;
+			this.limit = 15;
+			this.end = false;
+			
 			this.updateList = function() {
-				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/");
+				if (topicsCtrl.busy || topicsCtrl.end) {
+					return;
+				}
+				topicsCtrl.busy = true;
+				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newest/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
-					topicsCtrl.list = data.reverse();
-					topicsCtrl.loaded = true;
+					if (data['results'].length == 0){
+						topicsCtrl.end = true;
+						return;
+					}
+					var items = data['results'];
+      				for (var i = 0; i < items.length; i++) {
+						alert(items[i]);
+        				topicsCtrl.list.push(items[i]);
+      				}
+					topicsCtrl.offset = data['results'].length;
+					topicsCtrl.busy = false;
 				});
 				req.error(function(data) {
-					topicsCtrl.loaded = true;
-					topicsCtrl.error = true;
+					topicsCtrl.busy = false;
+					topicsCtrl.end = true;
 				});
 			};
+			
+			this.refreshList = function() {
+				topicsCtrl.busy = true;
+				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newest/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
+				req.success(function (data) {
+					if (data['results'].length == 0){
+						topicsCtrl.end = true;
+						return;
+					}
+					var items = data['results'];
+      				topicsCtrl.list = items;
+					topicsCtrl.offset += data['results'].length;
+					topicsCtrl.busy = false;
+				});
+				req.error(function(data) {
+					topicsCtrl.busy = false;
+					topicsCtrl.end = true;
+				});
+			};
+			
 			this.updateList();
-
+			
 			// Update once per minute.
-			this.stopUpdateList = $interval(this.updateList, 45000);
+			this.stopRefreshList = $interval(this.refreshList, 45000);
 
 			$rootScope.$on('topics:refresh', function() {
-				topicsCtrl.updateList();
+				topicsCtrl.refreshList();
 			});
 
 			// listen on DOM destroy (removal) event, and cancel the next UI update
 			// to prevent updating time after the DOM element was removed.
 			$rootScope.$on('$destroy', function() {
-				$interval.cancel(topicsCtrl.stopUpdateList);
+				$interval.cancel(topicsCtrl.stopRefreshList);
 			});
 		},
 		controllerAs: 'topics'
@@ -198,7 +272,7 @@ app.directive('newTopicBox', function($location) {
 				$http.post(descantConfig.backend + "/api/v0.1/topics/", {"title": title, "contents": contents, "tag_ids": tag_ids}).success(function(data){
 					$location.path('/topics');
 					ntb.toggleNTP();
-					$rootScope.$broadcast('topics:refresh')
+					$rootScope.$broadcast('topics:refresh');
 				})
 				.error(function(data) {
 					alert("Error adding topic.");

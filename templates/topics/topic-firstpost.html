@@ -2,13 +2,14 @@
 <div class="loading" ng-hide="topic.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
 	<h1>{{ topic.post.title }}</h1>
-	<hr>
 	<ul class="box list-list">
 		<li class="list-item first-post">
 			<div class="list-avatar"></div>
 			<div class="list-stats">{{ topic.post.author_name }} <span class="list-time">posted {{ topic.post.post_date | relativeDate }}</span></div>
+			<div class="list-stats-edits" ng-show="topic.post.was_edited">Last edited {{ topic.post.last_edit_date | relativeDate }}</div>
 			<div class="list-contents">{{ topic.post.contents }}</div>
 		</li>
 	</ul>
 </div>
-<hr>
+<hr />
+<br />
