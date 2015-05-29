@@ -1,0 +1,3 @@
+omit =
+    */python?.?/*
+    */site-packages/*
