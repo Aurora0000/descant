@@ -1,4 +1,4 @@
-app = angular.module('descant.services', ['descant.config', 'LocalStorageModule']);
+app = angular.module('descant.services.tokenservice', ['descant.config', 'LocalStorageModule']);
 
 app.service('tokenService', function($http, $q, $rootScope, descantConfig, localStorageService) {
 	this.authenticated = false;
@@ -45,7 +45,7 @@ app.service('tokenService', function($http, $q, $rootScope, descantConfig, local
 		if (this.authenticated) {
 				return this.token;
 		}
-		tokenVal = localStorageService.get('authToken');
+		var tokenVal = localStorageService.get('authToken');
 		if (tokenVal != null) {
 			this.authenticated = true;
 			this.token = tokenVal;
