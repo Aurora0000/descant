@@ -43,6 +43,17 @@ class TagDetailReverse(generics.ListAPIView):
         tag = Tag.objects.get(pk=self.kwargs['id'])
         return Post.objects.all().filter(pk__in=tag.posts.all()).order_by('-id')
 
+
+class TagDetailByLastReply(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = TopicSerializer
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
+
+    def get_queryset(self):
+        tag = Tag.objects.get(pk=self.kwargs['id'])
+        return Post.objects.all().filter(pk__in=tag.posts.all()).order_by('-replies__post_date', '-id')
+
 class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
