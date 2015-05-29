@@ -68,6 +68,12 @@ class TopicListReverse(generics.ListAPIView):
     throttle_classes = (StandardThrottle,)
 
 
+class TopicListByLastReply(generics.ListAPIView):
+    queryset = Post.objects.all().filter(is_topic=True).order_by('-replies__post_date', '-id')
+    serializer_class = TopicSerializer
+    permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
+    throttle_classes = (StandardThrottle,)
+
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().filter(is_topic=True)
     serializer_class = TopicSerializer
