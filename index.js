@@ -96,7 +96,7 @@ app.directive('topicList', function(descantConfig) {
 					return;
 				}
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newest/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newestreplies/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
@@ -117,7 +117,7 @@ app.directive('topicList', function(descantConfig) {
 			
 			this.refreshList = function() {
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newest/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
+				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newestreplies/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
@@ -169,7 +169,7 @@ app.directive('tagTopicList', function(descantConfig) {
 					return;
 				}
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newest/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
+				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newestreplies/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
@@ -190,7 +190,7 @@ app.directive('tagTopicList', function(descantConfig) {
 			
 			this.refreshList = function() {
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newest/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
+				var req = $http.get(descantConfig.backend + "/api/v0.1/tags/" + $scope.tagId + "/newestreplies/?limit=" + topicsCtrl.offset.toString() + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
