@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from django.dispatch import receiver
-from django.db.models import Max
+from django.db.models import Case, Count, F, Max, When
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, DjangoObjectPermissions
 from rest_framework.throttling import UserRateThrottle
@@ -53,8 +53,11 @@ class TagDetailByLastReply(generics.ListAPIView):
 
     def get_queryset(self):
         tag = Tag.objects.get(pk=self.kwargs['id'])
-        return Post.objects.all().annotate(last_reply_date=Max('replies__post_date')).filter(pk__in=tag.posts.all()) \
-            .order_by('-last_reply_date', '-id')
+        return Post.objects.all().filter(pk__in=tag.posts.all()). \
+            annotate(replies_count=Count('replies')). \
+            annotate(last_update=Case(When(replies_count=0, then=F('post_date')), default=Max('replies__post_date'))). \
+            filter(is_topic=True). \
+            order_by('-last_update', '-id')
 
 class TagList(generics.ListCreateAPIView):
     queryset = Tag.objects.all()
@@ -82,8 +85,11 @@ class TopicListReverse(generics.ListAPIView):
 
 
 class TopicListByLastReply(generics.ListAPIView):
-    queryset = Post.objects.all().annotate(last_reply_date=Max('replies__post_date')).filter(is_topic=True) \
-        .order_by('-last_reply_date', '-id')
+    queryset = Post.objects.all(). \
+        annotate(replies_count=Count('replies')). \
+        annotate(last_update=Case(When(replies_count=0, then=F('post_date')), default=Max('replies__post_date'))). \
+        filter(is_topic=True). \
+        order_by('-last_update', '-id')
     serializer_class = TopicSerializer
     permission_classes = (DjangoObjectPermissionsOrAnonReadOnly,)
     throttle_classes = (StandardThrottle,)
