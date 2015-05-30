@@ -442,7 +442,10 @@ topicListApp.directive('topicList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-list.html',
-		controller: function($http, $interval, $rootScope) {
+		scope: {
+			url: '@'	
+		},
+		controller: function($http, $scope, $interval, $rootScope) {
 			var topicsCtrl = this;
 			this.list = [];
 			this.busy = false;
@@ -455,7 +458,7 @@ topicListApp.directive('topicList', function(descantConfig) {
 					return;
 				}
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/newestreplies/?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
+				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
