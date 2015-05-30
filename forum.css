@@ -133,3 +133,10 @@ nav-btn>a, auth-status>span {
 		float: none;
 	}
 }
+
+.list-tag {
+	border: 1px solid rgb(230,230,230);
+	border-radius: 3px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
