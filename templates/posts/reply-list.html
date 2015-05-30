@@ -2,10 +2,11 @@
 	<ul class="box list-list">
 		<li class="list-item" ng-repeat="post in posts.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{post.avatar_url}}">
-			<div class="list-stats"><a ng-href="#/user/{{post.author}}">{{ post.author_name }}</a> <span class="list-time">posted {{ post.post_date | relativeDate }}</span></div>
+			<a class="list-author" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
+			<span class="list-details"><span class="list-details">posted {{ post.post_date | relativeDate }}</span></span>
 			<div class="list-contents">{{ post.contents }}</div>
 		</li>
 	</ul>
-	<div class="loading" ng-show="posts.busy" ng-hide="posts.end"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
-	<div class="results-end loading" ng-show="posts.end"><i class="fa fa-minus"></i> No more replies available!</div>
+	<p class="loading" ng-show="posts.busy" ng-hide="posts.end"><i class="fa fa-2x fa-refresh fa-spin"></i></p>
+	<h2 class="results-end loading" ng-show="posts.end"><i class="fa fa-check-circle"></i> You've made it to the last reply!</h2>
 </div>
