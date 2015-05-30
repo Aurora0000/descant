@@ -1,4 +1,5 @@
 @import url(//rawgit.com/Tel-Aviv/CSS-Framework/master/framework.css);
+@import url(tags.css);
 
 @-ms-viewport {
 	width: device-width;
@@ -122,11 +123,11 @@ nav-btn>a, auth-status>span {
 		position: static;
 		border-radius: 5px;
 	}
-	
+
 	nav-btn>*, auth-status * {
 		color: black!important;
 	}
-	
+
 	.hasnav {
 		padding-top: 0;
 	}
