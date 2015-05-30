@@ -95,6 +95,22 @@ class UserSerializer(serializers.ModelSerializer):
         return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
 
 
+class UserStatsSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
+    post_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'date_joined', 'avatar_url', 'post_count')
+
+    def get_avatar_url(self, obj):
+        emailhash = md5(obj.email.strip().lower().encode('utf-8')).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
+
+    def get_post_count(self, obj):
+        return obj.posts.count()
+
+
 class UserGravatarSerializer(serializers.ModelSerializer):
     gravatar_url = serializers.SerializerMethodField()
 

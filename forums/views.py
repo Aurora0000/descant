@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.dispatch import receiver
 from django.db.models import Avg, Case, Count, F, Max, When
 from rest_framework import generics
@@ -9,9 +9,7 @@ from rest_framework.response import Response
 from guardian.shortcuts import assign_perm
 from djoser.signals import user_activated
 
-from .models import Post, Tag
-from .serializers import PostSerializer, TopicSerializer, TagSerializer, UserSerializer, UserGravatarSerializer, \
-    PostOrTopicSerializer
+from .serializers import *
 
 
 class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
@@ -156,7 +154,7 @@ class UserList(generics.ListAPIView):
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserStatsSerializer
     permission_classes = (AllowAny,)
     throttle_classes = (StandardThrottle,)
 
