@@ -1,6 +1,6 @@
-var tagApp = angular.module('descant.directives.taglist', ['descant.config']);
+var tagApp = angular.module('descant.directives.taglist', ['descant.config', 'descant.services.tagservice']);
 
-tagApp.directive('tagList', function($location) {
+tagApp.directive('tagList', function($location, tagService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/tag-list.html',
@@ -16,7 +16,7 @@ tagApp.directive('tagList', function($location) {
 
 			var tagCtrl = this;
 			this.updateList = function() {
-				$http.get(descantConfig.backend + "/api/v0.1/tags/").success(function (data) {
+				tagCtrl.list = tagService.getAllTags().then(function(data) {
 					tagCtrl.list = data;
 				});
 			};

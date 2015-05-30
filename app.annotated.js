@@ -99,6 +99,53 @@ angular.module('descant.config', []).constant('descantConfig', {
   'version': 0.1,
   'forumName': 'Descant Demo Forum'
 });
+var tagApp = angular.module('descant.services.tagservice', ['descant.config']);
+tagApp.service('tagService', [
+  '$http',
+  '$q',
+  '$rootScope',
+  'descantConfig',
+  function ($http, $q, $rootScope, descantConfig) {
+    this.tags = [];
+    this.fetched = false;
+    this.getTagInfo = function (tagId) {
+      var serv = this;
+      if (!this.fetched) {
+        return this.fetch().then(function (data) {
+          return serv.tags[tagId];
+        });
+      }
+      var inf = this.tags[tagId];
+      return $q(function (resolve, reject) {
+        resolve(inf);
+      });
+    };
+    this.getAllTags = function () {
+      if (!this.fetched) {
+        var serv = this;
+        return this.fetch().then(function (data) {
+          return serv.tags;
+        });
+      }
+      var inf = this.tags;
+      return $q(function (resolve, reject) {
+        resolve(inf);
+      });
+    };
+    this.fetch = function () {
+      var serv = this;
+      return $http.get(descantConfig.backend + '/api/v0.1/tags/').then(function (data) {
+        serv.tags = data.data;
+        serv.fetched = true;
+        return data.data;
+      }, function (data) {
+        // TODO: Refetch if there was an error.
+        serv.fetched = true;
+        return $q.reject(data);
+      });
+    };
+  }
+]);
 var tokenApp = angular.module('descant.services.tokenservice', [
     'descant.config',
     'LocalStorageModule'
@@ -426,10 +473,14 @@ newTopicApp.directive('newTopicBox', [
     };
   }
 ]);
-var tagApp = angular.module('descant.directives.taglist', ['descant.config']);
+var tagApp = angular.module('descant.directives.taglist', [
+    'descant.config',
+    'descant.services.tagservice'
+  ]);
 tagApp.directive('tagList', [
   '$location',
-  function ($location) {
+  'tagService',
+  function ($location, tagService) {
     return {
       restrict: 'E',
       templateUrl: 'templates/topics/tag-list.html',
@@ -448,7 +499,7 @@ tagApp.directive('tagList', [
           };
           var tagCtrl = this;
           this.updateList = function () {
-            $http.get(descantConfig.backend + '/api/v0.1/tags/').success(function (data) {
+            tagCtrl.list = tagService.getAllTags().then(function (data) {
               tagCtrl.list = data;
             });
           };
@@ -605,6 +656,36 @@ topicListApp.directive('tagTopicList', [
         }
       ],
       controllerAs: 'topics'
+    };
+  }
+]);
+var topicTagsApp = angular.module('angular.directives.topictags', ['descant.services.tagservice']);
+tagApp.directive('topicTags', [
+  'tagService',
+  function (tagService) {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/topics/topic-tags.html',
+      scope: { tagItems: '=' },
+      controller: [
+        '$scope',
+        function ($scope) {
+          this.tags = [];
+          this.updateTags = function () {
+            var i;
+            var ctrl = this;
+            for (i = 0; i < $scope.tagItems.length; i++) {
+              tagService.getTagInfo(parseInt($scope.tagItems[i])).then(function (data) {
+                if (data != null) {
+                  ctrl.tags.push(data);
+                }
+              });
+            }
+          };
+          this.updateTags();
+        }
+      ],
+      controllerAs: 'tags'
     };
   }
 ]);

@@ -4,6 +4,7 @@
 			<div class="list-avatar"></div>
 			<div class="list-title"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></div>
 			<div class="list-stats">{{ topic.author_name }} <span class="list-time">posted {{ topic.post_date | relativeDate }} / {{ topic.reply_count }} replies</span></div>
+			<div class="list-tags"><topic-tags tag-items="topic.tag_ids"></topic-tags></div>
 		</li>
 	</ul>
 	<div class="loading" ng-show="topics.busy" ng-hide="topics.end"><i class="fa fa-2x fa-refresh fa-spin"></i></div>

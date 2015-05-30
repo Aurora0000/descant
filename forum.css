@@ -30,9 +30,6 @@ body {
 	font-size: small;
 }
 
-.list-list>li {
-
-}
 
 .list-list.highlight>li:hover {
 	background-color: rgb(253, 253, 253);
