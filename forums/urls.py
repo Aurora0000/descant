@@ -15,6 +15,8 @@ urlpatterns = [
     url(r'tags/(?P<id>[0-9]+)/newestreplies/$', TagDetailByLastReply.as_view()),
     url(r'tags/(?P<id>[0-9]+)/$', TagDetail.as_view()),
     url(r'tags/', TagList.as_view()),
+    url(r'users/(?P<id>[0-9]+)/posts/$', UserDetailPosts.as_view()),
+    url(r'users/(?P<pk>[0-9]+)/$', UserDetail.as_view()),
     url(r'users/', UserList.as_view()),
     url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view()),
     url(r'stats/', ForumStats.as_view())

@@ -154,6 +154,22 @@ class UserList(generics.ListAPIView):
     throttle_classes = (StandardThrottle,)
 
 
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+    throttle_classes = (StandardThrottle,)
+
+
+class UserDetailPosts(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostOrTopicSerializer
+    permission_classes = (AllowAny,)
+    throttle_classes = (StandardThrottle,)
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.kwargs['id'])
+
 class GravatarLink(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserGravatarSerializer

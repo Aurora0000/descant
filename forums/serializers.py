@@ -59,18 +59,23 @@ class TopicSerializer(serializers.ModelSerializer):
 class PostOrTopicSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
     was_edited = serializers.SerializerMethodField()
+    avatar_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
                   'post_date', 'last_edit_date', 'is_topic',
-                  'was_edited')
+                  'was_edited', 'avatar_url')
 
     def get_author_name(self, obj):
         return obj.author.username
 
     def get_was_edited(self, obj):
         return obj.was_edited()
+
+    def get_avatar_url(self, obj):
+        emailhash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
