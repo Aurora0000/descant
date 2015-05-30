@@ -4,6 +4,11 @@ app.controller('PostViewController', function($scope, $routeParams) {
 	$scope.topicId = $routeParams.topicId;
 });
 
+app.controller('UserViewController', function($scope, $routeParams) {
+	$scope.userId = $routeParams.userId;
+});
+
+
 app.controller('TagTopicViewController', function($scope, $routeParams) {
 	$scope.tagId = $routeParams.tagId;
 });

@@ -25,6 +25,9 @@ topicViewApp.directive('postList', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/posts/reply-list.html',
+		scope: {
+			url: '@'	
+		},
 		controller: function($http, $interval, $rootScope, $scope) {
 			var postsCtrl = this;
 			this.list = [];
@@ -38,7 +41,7 @@ topicViewApp.directive('postList', function(descantConfig) {
 					return;
 				}
 				postsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/?limit=" + postsCtrl.limit.toString() + "&offset=" + postsCtrl.offset.toString());
+				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + postsCtrl.limit.toString() + "&offset=" + postsCtrl.offset.toString());
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						postsCtrl.end = true;

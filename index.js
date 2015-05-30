@@ -34,6 +34,11 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'pages/tag-topics.html',
 			controller: 'TagTopicViewController'
 		})
+		.when('/user/:userId', {
+			title: 'User Information',
+			templateUrl: 'pages/user-view.html',
+			controller: 'UserViewController'
+		})
 		.when('/chat', {
 			title: 'Chat',
 			templateUrl: 'pages/chat.html'
