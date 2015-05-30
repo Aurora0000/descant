@@ -103,10 +103,10 @@ tagApp.service('tagService', function($http, $q, $rootScope, descantConfig) {
 		var serv = this;
 		if (!this.fetched) {
 			return this.fetch().then(function(data) {
-				return serv.tags[tagId];
+				return serv.tags[tagId - 1];
 			});
 		}
-		var inf = this.tags[tagId];
+		var inf = this.tags[tagId - 1];
 		return $q(function(resolve, reject) {
 			resolve(inf);
 		});
