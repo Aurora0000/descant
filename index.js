@@ -4,7 +4,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.navbtn', 'descant.directives.newpost',
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
-									 'descant.directives.topicview', 'descant.directives.userlist']);
+									 'descant.directives.topicview', 'descant.directives.userlist',
+									 'descant.directives.userstats']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider

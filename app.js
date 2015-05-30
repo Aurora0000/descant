@@ -4,7 +4,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.navbtn', 'descant.directives.newpost',
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
-									 'descant.directives.topicview', 'descant.directives.userlist']);
+									 'descant.directives.topicview', 'descant.directives.userlist',
+									 'descant.directives.userstats']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -667,6 +668,30 @@ userListApp.directive('userList', function(descantConfig) {
 			});
 		},
 		controllerAs: 'users'
+	}
+});var userStatsApp = angular.module('descant.directives.userstats', ['descant.config']);
+
+
+userListApp.directive('userStats', function(descantConfig) {
+	return {
+		restrict: 'E',
+		scope: {
+			userId: '@'
+		},
+		templateUrl: 'templates/users/user-stats.html',
+		controller: function($http, $scope) {
+			var userCtrl = this;
+			var req = $http.get(descantConfig.backend + "/api/v0.1/users/" + $scope.userId + "/");
+			req.success(function (data) {
+				userCtrl.user = data;
+				userCtrl.loaded = true;
+			});
+			req.error(function(data){
+				userCtrl.loaded = true;
+				userCtrl.error = true;
+			});
+		},
+		controllerAs: 'userCtrl'
 	}
 });var controllerApp = angular.module('descant.controllers.routing', []);
 

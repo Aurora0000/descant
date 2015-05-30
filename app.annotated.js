@@ -16,7 +16,8 @@ var app = angular.module('descant', [
     'descant.directives.topiclist',
     'descant.directives.topicview',
     'descant.directives.topicview',
-    'descant.directives.userlist'
+    'descant.directives.userlist',
+    'descant.directives.userstats'
   ]);
 app.config([
   '$routeProvider',
@@ -764,6 +765,34 @@ userListApp.directive('userList', [
         }
       ],
       controllerAs: 'users'
+    };
+  }
+]);
+var userStatsApp = angular.module('descant.directives.userstats', ['descant.config']);
+userListApp.directive('userStats', [
+  'descantConfig',
+  function (descantConfig) {
+    return {
+      restrict: 'E',
+      scope: { userId: '@' },
+      templateUrl: 'templates/users/user-stats.html',
+      controller: [
+        '$http',
+        '$scope',
+        function ($http, $scope) {
+          var userCtrl = this;
+          var req = $http.get(descantConfig.backend + '/api/v0.1/users/' + $scope.userId + '/');
+          req.success(function (data) {
+            userCtrl.user = data;
+            userCtrl.loaded = true;
+          });
+          req.error(function (data) {
+            userCtrl.loaded = true;
+            userCtrl.error = true;
+          });
+        }
+      ],
+      controllerAs: 'userCtrl'
     };
   }
 ]);
