@@ -390,6 +390,7 @@ newPostApp.directive('newPostBox', [
         '$http',
         'descantConfig',
         function (tokenService, $rootScope, $http, descantConfig) {
+          this.submitting = false;
           this.auth = tokenService.authenticated;
           var ntb = this;
           $rootScope.$on('auth:statusChange', function () {
@@ -404,13 +405,16 @@ newPostApp.directive('newPostBox', [
             }
           };
           this.addReply = function (contents, post_id) {
+            this.submitting = true;
             var npb = this;
             $http.post(descantConfig.backend + '/api/v0.1/topics/' + post_id + '/replies/', { 'contents': contents }).success(function (data) {
+              npb.submitting = false;
               $location.path('/topic/' + post_id);
               npb.toggleNTP();
               $rootScope.$broadcast('topic:refresh');
             }).error(function (data) {
-              alert('Error adding post.');
+              npb.submitting = false;
+              alert('Error!');
             });
           };
         }
@@ -436,6 +440,7 @@ newTopicApp.directive('newTopicBox', [
         'descantConfig',
         function (tokenService, $rootScope, $http, descantConfig) {
           this.auth = tokenService.authenticated;
+          this.submitting = false;
           var ntb = this;
           $rootScope.$on('auth:statusChange', function () {
             ntb.auth = tokenService.authenticated;
@@ -449,6 +454,7 @@ newTopicApp.directive('newTopicBox', [
             }
           };
           this.addTopic = function (title, contents, tag_ids) {
+            this.submitting = true;
             var i;
             for (i = 0; i < tag_ids.length; i++) {
               tag_ids[i] = parseInt(tag_ids[i]['id']);
@@ -459,11 +465,13 @@ newTopicApp.directive('newTopicBox', [
               'contents': contents,
               'tag_ids': tag_ids
             }).success(function (data) {
+              ntb.submitting = false;
               $location.path('/topics');
               ntb.toggleNTP();
               $rootScope.$broadcast('topics:refresh');
             }).error(function (data) {
-              alert('Error adding topic.');
+              ntb.submitting = false;
+              alert('Error!');
             });
           };
           this.loadTags = function () {

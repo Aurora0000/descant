@@ -12,7 +12,7 @@
 					<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
 				</p>
 				<p>
-					<button class="highlight" ng-click="newPostCtrl.addReply(contents, topicId)">Post</button>
+					<button class="highlight" ng-click="newPostCtrl.addReply(contents, topicId)"><i ng-show="newPostCtrl.submitting" class="fa fa-refresh fa-spin"></i> Post</button>
 				</p>
 			</form>
 		</div>
