@@ -79,9 +79,15 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'posts', 'date_joined')
+        fields = ('id', 'username', 'posts', 'date_joined', 'avatar_url')
+
+    def get_avatar_url(self, obj):
+        emailhash = md5(obj.email.strip().lower().encode('utf-8')).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
 
 
 class UserGravatarSerializer(serializers.ModelSerializer):
