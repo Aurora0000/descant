@@ -101,27 +101,31 @@ tagApp.service('tagService', function($http, $q, $rootScope, descantConfig) {
 	this.fetched = false;
 	this.getTagInfo = function(tagId) {
 		var serv = this;
-		if (!this.fetched) {
+		if (this.fetched == false) {
 			return this.fetch().then(function(data) {
 				return serv.tags[tagId - 1];
 			});
 		}
-		var inf = this.tags[tagId - 1];
-		return $q(function(resolve, reject) {
-			resolve(inf);
-		});
+		else {
+			var inf = this.tags[tagId - 1];
+			return $q(function(resolve, reject) {
+				resolve(inf);
+			});
+		}
 	};
 	this.getAllTags = function() {
-		if (!this.fetched) {
+		if (this.fetched == false) {
 			var serv = this;
 			return this.fetch().then(function(data){
 				return serv.tags;
 			});
 		}	
-		var inf = this.tags;
-		return $q(function(resolve, reject) {
-			resolve(inf);
-		});
+		else {
+			var inf = this.tags;
+			return $q(function(resolve, reject) {
+				resolve(inf);
+			});
+		}
 	};
 	this.fetch = function() {
 		var serv = this;
