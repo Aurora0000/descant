@@ -15,5 +15,5 @@ after_success:
   - coveralls
 after_failure:
   - coverage report
-  - pip install --quit python-coveralls
+  - pip install --quiet python-coveralls
   - coveralls
