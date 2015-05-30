@@ -1,7 +1,7 @@
 <div infinite-scroll='topics.updateList()' infinite-scroll-disabled='topics.busy' infinite-scroll-distance='1'>
 	<ul class="box list-list highlight">
 		<li class="list-item" ng-repeat="topic in topics.list">
-			<img class="list-avatar" alt="avatar" src="avatar.svg">
+			<img class="list-avatar" alt="avatar" ng-src="{{topic.avatar_url}}">
 			<div class="list-title"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></div>
 			<div class="list-stats">{{ topic.author_name }} <span class="list-time">posted {{ topic.post_date | relativeDate }} / {{ topic.reply_count }} replies</span></div>
 			<div class="list-tags"><topic-tags tag-items="topic.tag_ids"></topic-tags></div>
