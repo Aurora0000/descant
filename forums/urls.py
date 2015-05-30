@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'tags/(?P<id>[0-9]+)/$', TagDetail.as_view()),
     url(r'tags/', TagList.as_view()),
     url(r'users/', UserList.as_view()),
-    url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view())
+    url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view()),
+    url(r'stats/', ForumStats.as_view())
 ]
 
