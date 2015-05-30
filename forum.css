@@ -16,7 +16,7 @@ body {
 	height: 40px;
 	width: 40px;
 	border-radius: 5px;
-	background-image: url(//aviv.ml/avatar.svg);
+	background-image: url(avatar.svg);
 	background-size: cover;
 	margin-right: 10px;
 	float: left;
