@@ -99,11 +99,11 @@ angular.module('descant.config', []).constant('descantConfig', {
   'version': 0.1,
   'forumName': 'Descant Demo Forum'
 });
-app = angular.module('descant.services.tokenservice', [
-  'descant.config',
-  'LocalStorageModule'
-]);
-app.service('tokenService', [
+var tokenApp = angular.module('descant.services.tokenservice', [
+    'descant.config',
+    'LocalStorageModule'
+  ]);
+tokenApp.service('tokenService', [
   '$http',
   '$q',
   '$rootScope',

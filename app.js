@@ -94,9 +94,9 @@ angular.module('descant.config', [])
 	'version': 0.1,
 	'forumName': 'Descant Demo Forum'
 });
-app = angular.module('descant.services.tokenservice', ['descant.config', 'LocalStorageModule']);
+var tokenApp = angular.module('descant.services.tokenservice', ['descant.config', 'LocalStorageModule']);
 
-app.service('tokenService', function($http, $q, $rootScope, descantConfig, localStorageService) {
+tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, localStorageService) {
 	this.authenticated = false;
 	this.token = '';
 	this.login = function(user, pass) {
