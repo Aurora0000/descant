@@ -4,7 +4,7 @@
 	<h1>{{ topic.post.title }}</h1>
 	<ul class="box list-list">
 		<li class="list-item first-post">
-			<div class="list-avatar"></div>
+			<img class="list-avatar" alt="avatar" src="avatar.svg">
 			<div class="list-stats">{{ topic.post.author_name }} <span class="list-time">posted {{ topic.post.post_date | relativeDate }}</span></div>
 			<div class="list-stats-edits" ng-show="topic.post.was_edited">Last edited {{ topic.post.last_edit_date | relativeDate }}</div>
 			<div class="list-contents">{{ topic.post.contents }}</div>

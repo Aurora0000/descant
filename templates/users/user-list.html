@@ -3,7 +3,7 @@
 	<div class="loading" ng-hide="users.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></div>
 	<ul class="box list-list highlight">
 		<li ng-repeat="user in users.list">
-			<div class="list-avatar"></div>
+			<img class="list-avatar" alt="avatar" src="avatar.svg">
 			<div class="list-title">{{ user.username }}</div>
 			<div class="list-stats"><span class="list-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
 		</li>

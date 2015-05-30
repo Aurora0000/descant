@@ -1,7 +1,7 @@
 <div infinite-scroll='posts.updateList()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='1'>
 	<ul class="box list-list">
 		<li class="list-item" ng-repeat="post in posts.list">
-			<div class="list-avatar"></div>
+			<img class="list-avatar" alt="avatar" src="avatar.svg">
 			<div class="list-stats">{{ post.author_name }} <span class="list-time">posted {{ post.post_date | relativeDate }}</span></div>
 			<div class="list-contents">{{ post.contents }}</div>
 		</li>
