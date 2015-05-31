@@ -811,9 +811,14 @@ app.controller('PostViewController', [
 ]);
 app.controller('UserViewController', [
   '$scope',
+  '$location',
   '$routeParams',
-  function ($scope, $routeParams) {
-    $scope.userId = $routeParams.userId;
+  function ($scope, $location, $routeParams) {
+    if ($routeParams.userId != -1) {
+      $scope.userId = $routeParams.userId;
+    } else {
+      $location.path('/users');
+    }
   }
 ]);
 app.controller('TagTopicViewController', [
