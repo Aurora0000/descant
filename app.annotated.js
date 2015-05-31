@@ -17,7 +17,8 @@ var app = angular.module('descant', [
     'descant.directives.topicview',
     'descant.directives.topicview',
     'descant.directives.userlist',
-    'descant.directives.userstats'
+    'descant.directives.userstats',
+    'descant.filters.html'
   ]);
 app.config([
   '$routeProvider',
@@ -631,7 +632,10 @@ tagApp.directive('topicTags', [
     };
   }
 ]);
-var topicViewApp = angular.module('descant.directives.topicview', ['descant.config']);
+var topicViewApp = angular.module('descant.directives.topicview', [
+    'descant.config',
+    'descant.filters.html'
+  ]);
 topicViewApp.directive('topicFirstpost', [
   'descantConfig',
   function (descantConfig) {
@@ -705,7 +709,7 @@ topicViewApp.directive('postList', [
           this.refreshList = function () {
             postsCtrl.busy = true;
             postsCtrl.end = false;
-            var req = $http.get(descantConfig.backend + '/api/v0.1/topics/' + $scope.topicId + '/replies/?limit=' + postsCtrl.offset.toString() + '&offset=0');
+            var req = $http.get(descantConfig.backend + $scope.url + '?limit=' + postsCtrl.offset.toString() + '&offset=0');
             req.success(function (data) {
               if (data['results'].length == 0) {
                 postsCtrl.end = true;
@@ -834,5 +838,14 @@ app.controller('ActivateController', [
     req.error(function (data) {
       alert('Error while activating account!');
     });
+  }
+]);
+var htmlApp = angular.module('descant.filters.html', []);
+app.filter('html', [
+  '$sce',
+  function ($sce) {
+    return function (val) {
+      return $sce.trustAsHtml(val);
+    };
   }
 ]);

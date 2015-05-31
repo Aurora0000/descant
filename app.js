@@ -544,7 +544,7 @@ tagApp.directive('topicTags', function(tagService) {
 		},
 		controllerAs: 'tags'
 	};
-});var topicViewApp = angular.module('descant.directives.topicview', ['descant.config']);
+});var topicViewApp = angular.module('descant.directives.topicview', ['descant.config', 'descant.filters.html']);
 
 topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
@@ -609,7 +609,7 @@ topicViewApp.directive('postList', function(descantConfig) {
 			this.refreshList = function() {
 				postsCtrl.busy = true;
 				postsCtrl.end = false;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/replies/?limit=" + postsCtrl.offset.toString() + "&offset=0");
+				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + postsCtrl.offset.toString() + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						postsCtrl.end = true;
