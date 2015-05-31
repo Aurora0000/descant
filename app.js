@@ -485,6 +485,7 @@ topicListApp.directive('topicList', function(descantConfig) {
 			
 			this.refreshList = function() {
 				topicsCtrl.busy = true;
+				topicsCtrl.end = false;
 				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + topicsCtrl.offset.toString() + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
