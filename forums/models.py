@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils import timezone
-
 import bleach
 from markdown2 import markdown
+
+from descant import settings
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)
@@ -49,5 +51,5 @@ class Post(models.Model):
         if not self.id:
             self.post_date = now
         self.last_edit_date = now
-        self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''))
+        self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''), settings.ALLOWED_TAGS)
         return super(Post, self).save(*args, **kwargs)
