@@ -141,3 +141,25 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = './static/'
+
+ALLOWED_TAGS = [
+    'a',
+    'abbr',
+    'acronym',
+    'b',
+    'blockquote',
+    'code',
+    'em',
+    'i',
+    'li',
+    'ol',
+    'strong',
+    'ul',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6'
+    'hr'
+]
