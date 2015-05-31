@@ -5,7 +5,7 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
-									 'descant.directives.userstats']);
+									 'descant.directives.userstats', 'descant.filters.html']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -716,4 +716,10 @@ app.controller('ActivateController', function($http, descantConfig, $location, $
 	req.error(function(data) {
 		alert("Error while activating account!");
 	});
+});var htmlApp = angular.module('descant.filters.html', []);
+
+app.filter('html', function($sce) {
+    return function(val) {
+        return $sce.trustAsHtml(val);
+    };
 });

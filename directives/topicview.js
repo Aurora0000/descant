@@ -1,4 +1,4 @@
-var topicViewApp = angular.module('descant.directives.topicview', ['descant.config']);
+var topicViewApp = angular.module('descant.directives.topicview', ['descant.config', 'descant.filters.html']);
 
 topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
