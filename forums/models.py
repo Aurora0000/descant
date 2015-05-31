@@ -50,5 +50,5 @@ class Post(models.Model):
             self.post_date = now
         self.last_edit_date = now
         self.contents_marked_up = escape(self.contents_marked_up)
-        self.contents_marked_up = markdown(self.contents).replace('\n', '<br />')
+        self.contents_marked_up = markdown(self.contents).replace('\n', '')
         return super(Post, self).save(*args, **kwargs)
