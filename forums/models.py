@@ -51,5 +51,6 @@ class Post(models.Model):
         if not self.id:
             self.post_date = now
         self.last_edit_date = now
-        self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''), settings.ALLOWED_TAGS)
+        self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''), settings.ALLOWED_TAGS,
+                                               settings.ALLOWED_ATTRIBUTES)
         return super(Post, self).save(*args, **kwargs)

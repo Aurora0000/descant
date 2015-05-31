@@ -163,5 +163,15 @@ ALLOWED_TAGS = [
     'h5',
     'h6'
     'hr',
-    'p'
+    'p',
+    'pre',
+    'br',
+    'img'
 ]
+
+ALLOWED_ATTRIBUTES = {
+    'a': ['href', 'title'],
+    'abbr': ['title'],
+    'acronym': ['title'],
+    'img': ['src', 'alt']
+}
