@@ -4,8 +4,13 @@ app.controller('PostViewController', function($scope, $routeParams) {
 	$scope.topicId = $routeParams.topicId;
 });
 
-app.controller('UserViewController', function($scope, $routeParams) {
-	$scope.userId = $routeParams.userId;
+app.controller('UserViewController', function($scope, $location, $routeParams) {
+	if ($routeParams.userId != "-1") {
+		$scope.userId = $routeParams.userId;
+	}
+	else {
+		$location.path('/users');
+	}
 });
 
 
