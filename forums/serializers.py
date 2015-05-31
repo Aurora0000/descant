@@ -15,7 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
                   'post_date', 'last_edit_date', 'reply_to',
-                  'was_edited', 'avatar_url')
+                  'was_edited', 'avatar_url', 'contents_marked_up')
 
     def get_author_name(self, obj):
         return obj.author.username
@@ -65,7 +65,7 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
                   'post_date', 'last_edit_date', 'is_topic',
-                  'was_edited', 'avatar_url')
+                  'was_edited', 'avatar_url', 'contents_marked_up')
 
     def get_author_name(self, obj):
         return obj.author.username
