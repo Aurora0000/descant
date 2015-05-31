@@ -161,12 +161,12 @@ ALLOWED_TAGS = [
     'h3',
     'h4',
     'h5',
-    'h6'
+    'h6',
     'hr',
     'p',
     'pre',
     'br',
-    'img'
+    'img',
 ]
 
 ALLOWED_ATTRIBUTES = {
