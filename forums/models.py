@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
+from markupsafe import escape
+from markdown2 import markdown
+
 class Tag(models.Model):
     name = models.CharField(max_length=40)
     # Hex colours will be converted to an integer here for convenience
@@ -14,6 +17,8 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', related_name='posts', editable=False)
 
     contents = models.TextField()
+
+    contents_marked_up = models.TextField(editable=False, null=True)
 
     post_date = models.DateTimeField(editable=False)
 
@@ -44,4 +49,6 @@ class Post(models.Model):
         if not self.id:
             self.post_date = now
         self.last_edit_date = now
+        self.contents_marked_up = escape(self.contents_marked_up)
+        self.contents_marked_up = markdown(self.contents).replace('\n', '<br />')
         return super(Post, self).save(*args, **kwargs)
