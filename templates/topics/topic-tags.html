@@ -1,1 +1,1 @@
-<span class="tag-holder" ng-hide="tags.tags.length == 0"><span class="list-tag" ng-repeat="tag in tags.tags">{{tag.name}}</span></span>
+<span class="tag-holder" ng-hide="tags.tags.length == 0"><span class="list-tag" ng-repeat="tag in tags.tags"><a ng-href="#/topics/{{tag.id}}">{{tag.name}}</a></span></span>

@@ -4,7 +4,7 @@
 	<ul class="box list-list highlight">
 		<li ng-repeat="user in users.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
-			<div class="list-title">{{ user.username }}</div>
+			<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
 			<div class="list-details"><span class="list-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
 		</li>
 	</ul>

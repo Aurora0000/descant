@@ -89,7 +89,7 @@ auth-status>span>a {
 	color: #ffffff;
 }
 
-div.loading, div.load-error, p.loading, p.load-error {
+div.loading, div.load-error, h2.loading, p.loading, p.load-error {
 	text-align: center;
 }
 
