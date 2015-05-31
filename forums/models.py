@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-from markupsafe import escape
+import bleach
 from markdown2 import markdown
 
 class Tag(models.Model):
@@ -49,6 +49,5 @@ class Post(models.Model):
         if not self.id:
             self.post_date = now
         self.last_edit_date = now
-        self.contents_marked_up = escape(self.contents_marked_up)
-        self.contents_marked_up = markdown(self.contents).replace('\n', '')
+        self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''))
         return super(Post, self).save(*args, **kwargs)
