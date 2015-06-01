@@ -6,7 +6,6 @@ from rest_framework.permissions import AllowAny, DjangoObjectPermissions
 from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from guardian.shortcuts import assign_perm
 from djoser.signals import user_activated
 
 from .serializers import *
@@ -88,8 +87,6 @@ class TopicList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, is_topic=True)
-        assign_perm('forums.change_post', self.request.user, serializer.instance)
-        assign_perm('forums.delete_post', self.request.user, serializer.instance)
 
 
 class TopicListReverse(generics.ListAPIView):
@@ -124,8 +121,6 @@ class ReplyList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user, reply_to=Post.objects.get(id=self.kwargs['reply_to'], is_topic=True))
-        assign_perm('forums.change_post', self.request.user, serializer.instance)
-        assign_perm('forums.delete_post', self.request.user, serializer.instance)
 
     def get_queryset(self):
         return Post.objects.all().filter(is_topic=False, reply_to=self.kwargs['reply_to'])

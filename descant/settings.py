@@ -43,7 +43,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'djoser',
     'corsheaders',
-    'guardian',
+    'permission',
     'forums',
 )
 
@@ -61,7 +61,7 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
-    'guardian.backends.ObjectPermissionBackend',
+    'permission.backends.PermissionBackend',
 )
 
 ANONYMOUS_USER_ID = -1
