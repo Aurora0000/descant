@@ -4,7 +4,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function(tokenService, $rootScope, $http, descantConfig) {
+		controller: function(tokenService, tagService, $rootScope, $http, descantConfig) {
 			this.auth = tokenService.authenticated;
 			this.submitting = false;
 			
@@ -40,7 +40,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 			};
 			
 			this.loadTags = function() {
-				return $http.get(descantConfig.backend + "/api/v0.1/tags/");
+				return tagService.getAllTags();
 			};
 		},
 		controllerAs: 'newTopicCtrl'

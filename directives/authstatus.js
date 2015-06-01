@@ -7,21 +7,21 @@ authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', funct
 		templateUrl: 'templates/users/auth-status.html',
 		controller: ['$http', '$scope', 'tokenService', function($http, $scope, tokenService) {
 			this.tryAuth = function() {
-				var req = $http.get(descantConfig.backend + "/api/auth/me/");
-				req.success(function (data) {
-					authCtrl.user = data;
-					authCtrl.loaded = true;
-					authCtrl.error = false;
-				});
-				req.error(function(data) {
-					authCtrl.loaded = true;
-					authCtrl.error = true;
+				var ctrl = this;
+				tokenService.getAuthStatus().then(function(data) {
+					ctrl.loaded = true;
+					ctrl.error = false;
+					ctrl.user = data.data;
+				}, function(data) {
+					ctrl.loaded = true;
+					ctrl.error = true;
 				});
 			};
 
 			$scope.tokenServ = tokenService;
 			var authCtrl = this;
 			$scope.$on('auth:statusChange', function(event, data) {
+				tokenService.loaded = false;
 				authCtrl.tryAuth();
 			});
 			authCtrl.tryAuth();

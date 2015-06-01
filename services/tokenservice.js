@@ -67,4 +67,25 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, 
 	this.purgeToken = function () {
 		localStorageService.remove('authToken');
 	};
+	this.getAuthStatus = function() {
+		if (this.loaded && !this.error) {
+			return $q(function(resolve, reject) {
+				resolve(this.user);
+			});
+		}
+		var req = $http.get(descantConfig.backend + "/api/auth/me/");
+		var ctrl = this;
+		req.then(function (data) {
+			ctrl.user = data;
+			ctrl.loaded = true;
+			ctrl.error = false;
+			return data;
+		},
+		function(data) {
+			ctrl.loaded = true;
+			ctrl.error = true;
+			return $q.reject(data);
+		});
+		return req;
+	};
 });

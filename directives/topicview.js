@@ -4,7 +4,8 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-firstpost.html',
-		controller: function($http, $scope) {
+		controller: function($http, $scope, tagService, tokenService) {
+			this.editing = false;
 			var topicCtrl = this;
 			topicCtrl.loaded = false;
 			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/");
@@ -12,11 +13,47 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 				topicCtrl.post = data;
 				topicCtrl.loaded = true;
 				document.title = topicCtrl.post.title + " | " + descantConfig.forumName;
+				if (tokenService.user != null) {
+					$scope.user = tokenService.user.data.id;
+				}
+				else {
+					$scope.user = -1;
+				}
 			});
 			req.error(function(data) {
 				topicCtrl.loaded = true;
 				topicCtrl.error = true;
 			});
+			
+			this.edit = function() {
+				this.editing = !this.editing;
+				$scope.tag_ids_edited = [];
+				$scope.contents_edited = topicCtrl.post.contents;
+				$scope.title_edited = topicCtrl.post.title;
+				for (var i = 0; i < topicCtrl.post.tag_ids; i++) {
+					tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function(data) {
+						if (data != null) { 
+							$scope.tag_ids_edited.push(data);
+						}
+					});
+				}
+			};
+			
+			this.editSubmit = function() {
+				var tag_ids = $scope.tag_ids_edited	;
+				for (var i = 0; i < tag_ids.length; i++) {
+					tag_ids[i] = parseInt(tag_ids[i]['id']);
+				}
+				var req = $http.put(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/", {"title": $scope.title_edited, "contents": $scope.contents_edited, "tag_ids": tag_ids});
+				var ctrl = this;
+				req.success(function(data) {
+					ctrl.edit();
+				});
+			};
+			
+			this.loadTags = function() {
+				return tagService.getAllTags();
+			};
 		},
 		controllerAs: 'topic'
 	}

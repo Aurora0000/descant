@@ -216,6 +216,27 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, 
 	this.purgeToken = function () {
 		localStorageService.remove('authToken');
 	};
+	this.getAuthStatus = function() {
+		if (this.loaded && !this.error) {
+			return $q(function(resolve, reject) {
+				resolve(this.user);
+			});
+		}
+		var req = $http.get(descantConfig.backend + "/api/auth/me/");
+		var ctrl = this;
+		req.then(function (data) {
+			ctrl.user = data;
+			ctrl.loaded = true;
+			ctrl.error = false;
+			return data;
+		},
+		function(data) {
+			ctrl.loaded = true;
+			ctrl.error = true;
+			return $q.reject(data);
+		});
+		return req;
+	};
 });
 var authFormApp = angular.module('descant.directives.authforms', ['descant.config', 'descant.services.tokenservice']);
 
@@ -287,21 +308,21 @@ authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', funct
 		templateUrl: 'templates/users/auth-status.html',
 		controller: ['$http', '$scope', 'tokenService', function($http, $scope, tokenService) {
 			this.tryAuth = function() {
-				var req = $http.get(descantConfig.backend + "/api/auth/me/");
-				req.success(function (data) {
-					authCtrl.user = data;
-					authCtrl.loaded = true;
-					authCtrl.error = false;
-				});
-				req.error(function(data) {
-					authCtrl.loaded = true;
-					authCtrl.error = true;
+				var ctrl = this;
+				tokenService.getAuthStatus().then(function(data) {
+					ctrl.loaded = true;
+					ctrl.error = false;
+					ctrl.user = data.data;
+				}, function(data) {
+					ctrl.loaded = true;
+					ctrl.error = true;
 				});
 			};
 
 			$scope.tokenServ = tokenService;
 			var authCtrl = this;
 			$scope.$on('auth:statusChange', function(event, data) {
+				tokenService.loaded = false;
 				authCtrl.tryAuth();
 			});
 			authCtrl.tryAuth();
@@ -372,7 +393,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function(tokenService, $rootScope, $http, descantConfig) {
+		controller: function(tokenService, tagService, $rootScope, $http, descantConfig) {
 			this.auth = tokenService.authenticated;
 			this.submitting = false;
 			
@@ -408,7 +429,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 			};
 			
 			this.loadTags = function() {
-				return $http.get(descantConfig.backend + "/api/v0.1/tags/");
+				return tagService.getAllTags();
 			};
 		},
 		controllerAs: 'newTopicCtrl'
@@ -551,7 +572,8 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-firstpost.html',
-		controller: function($http, $scope) {
+		controller: function($http, $scope, tagService, tokenService) {
+			this.editing = false;
 			var topicCtrl = this;
 			topicCtrl.loaded = false;
 			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/");
@@ -559,11 +581,47 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 				topicCtrl.post = data;
 				topicCtrl.loaded = true;
 				document.title = topicCtrl.post.title + " | " + descantConfig.forumName;
+				if (tokenService.user != null) {
+					$scope.user = tokenService.user.data.id;
+				}
+				else {
+					$scope.user = -1;
+				}
 			});
 			req.error(function(data) {
 				topicCtrl.loaded = true;
 				topicCtrl.error = true;
 			});
+			
+			this.edit = function() {
+				this.editing = !this.editing;
+				$scope.tag_ids_edited = [];
+				$scope.contents_edited = topicCtrl.post.contents;
+				$scope.title_edited = topicCtrl.post.title;
+				for (var i = 0; i < topicCtrl.post.tag_ids; i++) {
+					tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function(data) {
+						if (data != null) { 
+							$scope.tag_ids_edited.push(data);
+						}
+					});
+				}
+			};
+			
+			this.editSubmit = function() {
+				var tag_ids = $scope.tag_ids_edited	;
+				for (var i = 0; i < tag_ids.length; i++) {
+					tag_ids[i] = parseInt(tag_ids[i]['id']);
+				}
+				var req = $http.put(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/", {"title": $scope.title_edited, "contents": $scope.contents_edited, "tag_ids": tag_ids});
+				var ctrl = this;
+				req.success(function(data) {
+					ctrl.edit();
+				});
+			};
+			
+			this.loadTags = function() {
+				return tagService.getAllTags();
+			};
 		},
 		controllerAs: 'topic'
 	}

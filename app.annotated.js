@@ -230,6 +230,26 @@ tokenApp.service('tokenService', [
     this.purgeToken = function () {
       localStorageService.remove('authToken');
     };
+    this.getAuthStatus = function () {
+      if (this.loaded && !this.error) {
+        return $q(function (resolve, reject) {
+          resolve(this.user);
+        });
+      }
+      var req = $http.get(descantConfig.backend + '/api/auth/me/');
+      var ctrl = this;
+      req.then(function (data) {
+        ctrl.user = data;
+        ctrl.loaded = true;
+        ctrl.error = false;
+        return data;
+      }, function (data) {
+        ctrl.loaded = true;
+        ctrl.error = true;
+        return $q.reject(data);
+      });
+      return req;
+    };
   }
 ]);
 var authFormApp = angular.module('descant.directives.authforms', [
@@ -334,20 +354,20 @@ authApp.directive('authStatus', [
         'tokenService',
         function ($http, $scope, tokenService) {
           this.tryAuth = function () {
-            var req = $http.get(descantConfig.backend + '/api/auth/me/');
-            req.success(function (data) {
-              authCtrl.user = data;
-              authCtrl.loaded = true;
-              authCtrl.error = false;
-            });
-            req.error(function (data) {
-              authCtrl.loaded = true;
-              authCtrl.error = true;
+            var ctrl = this;
+            tokenService.getAuthStatus().then(function (data) {
+              ctrl.loaded = true;
+              ctrl.error = false;
+              ctrl.user = data.data;
+            }, function (data) {
+              ctrl.loaded = true;
+              ctrl.error = true;
             });
           };
           $scope.tokenServ = tokenService;
           var authCtrl = this;
           $scope.$on('auth:statusChange', function (event, data) {
+            tokenService.loaded = false;
             authCtrl.tryAuth();
           });
           authCtrl.tryAuth();
@@ -441,10 +461,11 @@ newTopicApp.directive('newTopicBox', [
       templateUrl: 'templates/topics/new-topic-box.html',
       controller: [
         'tokenService',
+        'tagService',
         '$rootScope',
         '$http',
         'descantConfig',
-        function (tokenService, $rootScope, $http, descantConfig) {
+        function (tokenService, tagService, $rootScope, $http, descantConfig) {
           this.auth = tokenService.authenticated;
           this.submitting = false;
           var ntb = this;
@@ -481,7 +502,7 @@ newTopicApp.directive('newTopicBox', [
             });
           };
           this.loadTags = function () {
-            return $http.get(descantConfig.backend + '/api/v0.1/tags/');
+            return tagService.getAllTags();
           };
         }
       ],
@@ -646,7 +667,10 @@ topicViewApp.directive('topicFirstpost', [
       controller: [
         '$http',
         '$scope',
-        function ($http, $scope) {
+        'tagService',
+        'tokenService',
+        function ($http, $scope, tagService, tokenService) {
+          this.editing = false;
           var topicCtrl = this;
           topicCtrl.loaded = false;
           var req = $http.get(descantConfig.backend + '/api/v0.1/topics/' + $scope.topicId + '/');
@@ -654,11 +678,47 @@ topicViewApp.directive('topicFirstpost', [
             topicCtrl.post = data;
             topicCtrl.loaded = true;
             document.title = topicCtrl.post.title + ' | ' + descantConfig.forumName;
+            if (tokenService.user != null) {
+              $scope.user = tokenService.user.data.id;
+            } else {
+              $scope.user = -1;
+            }
           });
           req.error(function (data) {
             topicCtrl.loaded = true;
             topicCtrl.error = true;
           });
+          this.edit = function () {
+            this.editing = !this.editing;
+            $scope.tag_ids_edited = [];
+            $scope.contents_edited = topicCtrl.post.contents;
+            $scope.title_edited = topicCtrl.post.title;
+            for (var i = 0; i < topicCtrl.post.tag_ids; i++) {
+              tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function (data) {
+                if (data != null) {
+                  $scope.tag_ids_edited.push(data);
+                }
+              });
+            }
+          };
+          this.editSubmit = function () {
+            var tag_ids = $scope.tag_ids_edited;
+            for (var i = 0; i < tag_ids.length; i++) {
+              tag_ids[i] = parseInt(tag_ids[i]['id']);
+            }
+            var req = $http.put(descantConfig.backend + '/api/v0.1/topics/' + $scope.topicId + '/', {
+                'title': $scope.title_edited,
+                'contents': $scope.contents_edited,
+                'tag_ids': tag_ids
+              });
+            var ctrl = this;
+            req.success(function (data) {
+              ctrl.edit();
+            });
+          };
+          this.loadTags = function () {
+            return tagService.getAllTags();
+          };
         }
       ],
       controllerAs: 'topic'
