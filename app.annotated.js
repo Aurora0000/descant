@@ -667,9 +667,10 @@ topicViewApp.directive('topicFirstpost', [
       controller: [
         '$http',
         '$scope',
+        '$location',
         'tagService',
         'tokenService',
-        function ($http, $scope, tagService, tokenService) {
+        function ($http, $scope, $location, tagService, tokenService) {
           this.editing = false;
           var topicCtrl = this;
           topicCtrl.loaded = false;
@@ -714,6 +715,11 @@ topicViewApp.directive('topicFirstpost', [
             var ctrl = this;
             req.success(function (data) {
               ctrl.edit();
+            });
+          };
+          this.deleteObj = function () {
+            $http.delete(descantConfig.backend + '/api/v0.1/topics/' + $scope.topicId + '/').success(function (data) {
+              $location.path('/');
             });
           };
           this.loadTags = function () {

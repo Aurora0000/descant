@@ -4,7 +4,7 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-firstpost.html',
-		controller: function($http, $scope, tagService, tokenService) {
+		controller: function($http, $scope, $location, tagService, tokenService) {
 			this.editing = false;
 			var topicCtrl = this;
 			topicCtrl.loaded = false;
@@ -48,6 +48,12 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 				var ctrl = this;
 				req.success(function(data) {
 					ctrl.edit();
+				});
+			};
+			
+			this.deleteObj = function() {
+				$http.delete(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/").success(function(data) {
+					$location.path('/');
 				});
 			};
 			

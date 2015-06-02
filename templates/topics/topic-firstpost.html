@@ -16,7 +16,10 @@
 				</tags-input>
 				<button ng-click="topic.editSubmit()">Save</button>
 			</div>
-			<span class="edit-button" ng-show="user == topic.post.author" ng-click="topic.edit()"><i class="fa fa-pencil"></i> Edit</span>
+			<div class="list-mod-buttons" ng-show="user == topic.post.author">
+				<span class="edit-button" ng-click="topic.edit()"><i class="fa fa-pencil"></i> Edit</span>
+				<span class="delete-button" ng-click="topic.deleteObj()"><i class="fa fa-trash-o"></i> Delete</span>
+			</div>
 		</li>
 	</ul>
 </div>
