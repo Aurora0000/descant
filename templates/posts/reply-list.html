@@ -1,10 +1,7 @@
 <div infinite-scroll='posts.updateList()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='1'>
 	<ul class="box list-list">
 		<li class="list-item" ng-repeat="post in posts.list">
-			<img class="list-avatar" alt="avatar" ng-src="{{post.avatar_url}}">
-			<a class="list-author" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
-			<span class="list-details"><span class="list-details">posted {{ post.post_date | relativeDate }}</span></span>
-			<div class="list-contents" ng-class="post-{{post.id}}" ng-bind-html="post.contents_marked_up | html"></div>
+			<reply-item post="post"></reply-item>
 		</li>
 	</ul>
 	<p class="loading" ng-show="posts.busy" ng-hide="posts.end"><i class="fa fa-2x fa-refresh fa-spin"></i></p>

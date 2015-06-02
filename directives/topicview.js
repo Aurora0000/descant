@@ -64,6 +64,51 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 		controllerAs: 'topic'
 	}
 });
+
+topicViewApp.directive('replyItem', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'templates/posts/reply-item.html',
+		scope: {
+			post: '='	
+		},
+		controller: function($http, $scope, $route, descantConfig, tokenService) {
+			this.editing = false;
+			
+			if (tokenService.user != null) {
+				$scope.user = tokenService.user.data.id;
+			}
+			else {
+				$scope.user = -1;
+			}
+			
+			this.edit = function() {
+				$scope.contents_edited = $scope.post.contents;
+				this.editing = !this.editing;
+			};
+			
+			this.editSubmit = function() {
+				var req = $http.put(descantConfig.backend + "/api/v0.1/posts/" + $scope.post.id + "/", {"contents": $scope.contents_edited});
+				req.success(function(data) {
+					$route.reload();
+				});
+			};
+			
+			this.deleteObj = function() {
+				var del = $http.delete(descantConfig.backend + "/api/v0.1/posts/" + $scope.post.id + "/");
+				del.success(function(data) {
+					$route.reload();
+				});
+				del.error(function(data) {
+					alert("Unexpected error!");
+				});
+			};
+			
+		},
+		controllerAs: 'postCtrl'
+	}
+});
+
 topicViewApp.directive('postList', function(descantConfig) {
 	return {
 		restrict: 'E',
@@ -71,7 +116,7 @@ topicViewApp.directive('postList', function(descantConfig) {
 		scope: {
 			url: '@'	
 		},
-		controller: function($http, $interval, $rootScope, $scope) {
+		controller: function($http, $interval, $route, $rootScope, $scope, tokenService) {
 			var postsCtrl = this;
 			this.list = [];
 			this.busy = false;
