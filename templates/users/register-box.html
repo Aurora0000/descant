@@ -15,6 +15,9 @@
 					<input type="password" class="full" placeholder="Password" ng-model="pass">
 				</p>
 				<p>
+					<entropy-indicator class="full" password="pass" percentage="percentage"></entropy-indicator>
+				</p>
+				<p>
 					<button class="highlight" ng-click="registerCtrl.register(user, email, pass)">Register</button>
 				</p>
 				<p>

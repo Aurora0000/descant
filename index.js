@@ -5,7 +5,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
-									 'descant.directives.userstats', 'descant.filters.html']);
+									 'descant.directives.userstats', 'descant.directives.entropyindicator',
+									 'descant.filters.html']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
