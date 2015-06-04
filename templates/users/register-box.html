@@ -15,10 +15,11 @@
 					<input type="password" class="full" placeholder="Password" ng-model="pass">
 				</p>
 				<p>
+					Password Security: 
 					<entropy-indicator class="full" password="pass" percentage="percentage"></entropy-indicator>
 				</p>
 				<p>
-					<button class="highlight" ng-click="registerCtrl.register(user, email, pass)">Register</button>
+					<button ng-disabled="percentage < 25" class="highlight" ng-click="registerCtrl.register(user, email, pass)">Register</button>
 				</p>
 				<p>
 					You will need to activate your account with the email that we're going to send you before you can post.

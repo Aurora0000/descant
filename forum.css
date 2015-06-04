@@ -206,3 +206,7 @@ progress {
 	display: block;
 	height: 100%;
 }
+
+button[disabled] {
+	background: #c0392b;
+}
