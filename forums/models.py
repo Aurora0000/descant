@@ -35,9 +35,14 @@ class Post(models.Model):
     # Tags are stored in their own table, the IDs of those are here.
     tag_ids = models.ManyToManyField(Tag, related_name='posts', blank=True)
 
+    is_locked = models.NullBooleanField(blank=True)
+
+    # END Topics only fields #
     # These fields apply to replies only #
 
     reply_to = models.ForeignKey('Post', related_name='replies', blank=True, null=True, editable=False)
+
+    # END Replies only fields #
 
     def was_edited(self):
         return True if self.last_edit_date != self.post_date else False

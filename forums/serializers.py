@@ -38,7 +38,8 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Post
         fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
                   'contents', 'post_date', 'last_edit_date', 'reply_count',
-                  'was_edited', 'avatar_url', 'contents_marked_up')
+                  'was_edited', 'avatar_url', 'contents_marked_up',
+                  'is_locked')
 
         read_only_fields = ('replies',)
 

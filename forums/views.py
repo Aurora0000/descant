@@ -86,7 +86,7 @@ class TopicList(generics.ListCreateAPIView):
     throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, is_topic=True)
+        serializer.save(author=self.request.user, is_topic=True, is_locked=False)
 
 
 class TopicListReverse(generics.ListAPIView):
@@ -120,7 +120,10 @@ class ReplyList(generics.ListCreateAPIView):
     throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user, reply_to=Post.objects.get(id=self.kwargs['reply_to'], is_topic=True))
+        post = Post.objects.get(id=self.kwargs['reply_to'], is_topic=True)
+        if post.is_locked:
+            return
+        serializer.save(author=self.request.user, reply_to=post)
 
     def get_queryset(self):
         return Post.objects.all().filter(is_topic=False, reply_to=self.kwargs['reply_to'])
