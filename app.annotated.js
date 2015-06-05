@@ -966,7 +966,7 @@ userListApp.directive('userStats', [
     };
   }
 ]);
-var controllerApp = angular.module('descant.controllers.routing', []);
+var controllerApp = angular.module('descant.controllers.routing', ['descant.config']);
 app.controller('PostViewController', [
   '$scope',
   '$routeParams',

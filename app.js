@@ -860,7 +860,7 @@ userListApp.directive('userStats', function(descantConfig) {
 		},
 		controllerAs: 'userCtrl'
 	}
-});var controllerApp = angular.module('descant.controllers.routing', []);
+});var controllerApp = angular.module('descant.controllers.routing', ['descant.config']);
 
 app.controller('PostViewController', function($scope, $routeParams) {
 	$scope.topicId = $routeParams.topicId;
