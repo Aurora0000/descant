@@ -55,7 +55,6 @@ class TopicSerializer(serializers.ModelSerializer):
     was_edited = serializers.SerializerMethodField()
     avatar_url = serializers.SerializerMethodField()
     can_edit = serializers.SerializerMethodField()
-    tag_ids = TagForTopicSerializer(many=True)
 
     class Meta:
         model = Post
