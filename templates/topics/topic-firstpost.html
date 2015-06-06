@@ -1,5 +1,5 @@
 <p class="load-error" ng-show="topic.error"><i class="icon-warning bigicon"></i> Loading failed.</p>
-<p class="loading" ng-hide="topic.loaded"><i class="icon-loop bigicon fa-spin"></i></p>
+<p class="loading" ng-hide="topic.loaded"><i class="icon-refresh bigicon fa-spin"></i></p>
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
 	<h1 ng-hide="topic.editing">{{ topic.post.title }}</h1>
 	<textarea ng-show="topic.editing" class="full" ng-model="title_edited"></textarea>
