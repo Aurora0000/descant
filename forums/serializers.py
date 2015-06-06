@@ -6,6 +6,17 @@ from rest_framework import serializers
 from .models import Post, Tag
 
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('id', 'name', 'colour', 'posts')
+
+
+class TagForTopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('name', 'colour')
+
 class PostSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
     was_edited = serializers.SerializerMethodField()
@@ -44,6 +55,7 @@ class TopicSerializer(serializers.ModelSerializer):
     was_edited = serializers.SerializerMethodField()
     avatar_url = serializers.SerializerMethodField()
     can_edit = serializers.SerializerMethodField()
+    tag_ids = TagForTopicSerializer(many=True)
 
     class Meta:
         model = Post
@@ -106,12 +118,6 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
             else:
                 return False
         return False
-
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = ('id', 'name', 'colour', 'posts')
-
 
 class UserSerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()

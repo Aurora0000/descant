@@ -172,8 +172,9 @@ class GravatarLink(generics.RetrieveAPIView):
     permission_classes = (AllowAny,)
     throttle_classes = (StandardThrottle,)
 
+
+# Should really be moved to somewhere that makes more sense.
 @receiver(user_activated)
 def add_user_to_group(sender, **kwargs):
     grp = Group.objects.get(name='registered')
-    print (kwargs['user'])
     grp.user_set.add(kwargs['user'])
