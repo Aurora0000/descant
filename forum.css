@@ -82,11 +82,16 @@ div.container {
 
 nav-btn>a {
 	text-decoration: none;
-	color: #ffffff;
+	color: white;
 }
 
 auth-status>span>a {
-	color: #ffffff;
+	color: white;
+}
+
+auth-status a {
+	text-decoration: none;
+	color: white;
 }
 
 div.loading, div.load-error, h2.loading, p.loading, p.load-error {
