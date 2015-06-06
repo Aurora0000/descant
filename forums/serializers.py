@@ -10,12 +10,14 @@ class PostSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
     was_edited = serializers.SerializerMethodField()
     avatar_url = serializers.SerializerMethodField()
+    can_edit = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
                   'post_date', 'last_edit_date', 'reply_to',
-                  'was_edited', 'avatar_url', 'contents_marked_up')
+                  'was_edited', 'avatar_url', 'contents_marked_up',
+                  'can_edit')
 
     def get_author_name(self, obj):
         return obj.author.username
@@ -27,19 +29,28 @@ class PostSerializer(serializers.ModelSerializer):
         emailhash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
         return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
 
+    def get_can_edit(self, obj):
+        if self.context['request'].user.is_authenticated():
+            if self.context['request'].user.has_perm('forums.change_post', obj):
+                return True
+            else:
+                return False
+        return False
+
 
 class TopicSerializer(serializers.ModelSerializer):
     reply_count = serializers.SerializerMethodField()
     author_name = serializers.SerializerMethodField()
     was_edited = serializers.SerializerMethodField()
     avatar_url = serializers.SerializerMethodField()
+    can_edit = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'tag_ids', 'author', 'author_name',
                   'contents', 'post_date', 'last_edit_date', 'reply_count',
                   'was_edited', 'avatar_url', 'contents_marked_up',
-                  'is_locked')
+                  'is_locked', 'can_edit')
 
         read_only_fields = ('replies',)
 
@@ -56,17 +67,27 @@ class TopicSerializer(serializers.ModelSerializer):
         emailhash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
         return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
 
+    def get_can_edit(self, obj):
+        if self.context['request'].user.is_authenticated():
+            if self.context['request'].user.has_perm('forums.change_post', obj):
+                return True
+            else:
+                return False
+        return False
+
 
 class PostOrTopicSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
     was_edited = serializers.SerializerMethodField()
     avatar_url = serializers.SerializerMethodField()
+    can_edit = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ('id', 'author', 'author_name', 'contents',
                   'post_date', 'last_edit_date', 'is_topic',
-                  'was_edited', 'avatar_url', 'contents_marked_up')
+                  'was_edited', 'avatar_url', 'contents_marked_up',
+                  'can_edit')
 
     def get_author_name(self, obj):
         return obj.author.username
@@ -75,8 +96,16 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
         return obj.was_edited()
 
     def get_avatar_url(self, obj):
-        emailhash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
-        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
+        email_hash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(email_hash)
+
+    def get_can_edit(self, obj):
+        if self.context['request'].user.is_authenticated():
+            if self.context['request'].user.has_perm('forums.change_post', obj):
+                return True
+            else:
+                return False
+        return False
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
