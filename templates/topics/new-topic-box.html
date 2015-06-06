@@ -1,5 +1,5 @@
 <p>
-	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i class="fa" ng-class="{ 'fa-minus': newTopicCtrl.showNTP, 'fa-plus': newTopicCtrl.showNTP == false }"></i> New Topic</button>
+	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i ng-class="{ 'icon-remove': newTopicCtrl.showNTP, 'icon-add': newTopicCtrl.showNTP == false }"></i> New Topic</button>
 	<tag-list></tag-list>
 </p>
 <div ng-show="newTopicCtrl.showNTP" class="panel" ng-show="newTopicCtrl.auth">
@@ -21,7 +21,7 @@
 					</tags-input>
 				</p>
 				<p>
-					<button class="highlight full" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)"><i ng-show="newTopicCtrl.submitting" class="fa fa-refresh fa-spin"></i> Post</button>
+					<button class="highlight full" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)"><i ng-show="newTopicCtrl.submitting" class="icon-loop fa-spin"></i> Post</button>
 				</p>
 			</form>
 		</div>

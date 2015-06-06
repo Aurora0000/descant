@@ -1,5 +1,5 @@
-<div class="load-error" ng-show="topic.error"><i class="fa fa-2x fa-exclamation-triangle"></i> Loading failed.</div>
-<p class="loading" ng-hide="topic.loaded"><i class="fa fa-2x fa-refresh fa-spin"></i></p>
+<p class="load-error" ng-show="topic.error"><i class="icon-warning"></i> Loading failed.</p>
+<p class="loading" ng-hide="topic.loaded"><i class="icon-loop fa-spin"></i></p>
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
 	<h1 ng-hide="topic.editing">{{ topic.post.title }}</h1>
 	<textarea ng-show="topic.editing" class="full" ng-model="title_edited"></textarea>
@@ -17,10 +17,10 @@
 				<button ng-click="topic.editSubmit()">Save</button>
 			</div>
 			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
-				<span class="edit-button" ng-click="topic.edit()"><i class="fa fa-pencil"></i> Edit</span>
-				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="fa fa-lock"></i> Lock</span>
-				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="fa fa-unlock"></i> Unlock</span>
-				<span class="delete-button" ng-click="topic.deleteObj()"><i class="fa fa-trash-o"></i> Delete</span>
+				<span class="edit-button" ng-click="topic.edit()"><i class="icon-edit"></i> Edit</span>
+				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="icon-lock"></i> Lock</span>
+				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="icon-lock_open"></i> Unlock</span>
+				<span class="delete-button" ng-click="topic.deleteObj()"><i class="icon-delete"></i> Delete</span>
 			</div>
 		</li>
 	</ul>
