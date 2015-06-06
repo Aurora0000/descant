@@ -212,3 +212,7 @@ progress {
 button[disabled] {
 	background: #c0392b;
 }
+
+.bigicon {
+	font-size: 200%;
+}
