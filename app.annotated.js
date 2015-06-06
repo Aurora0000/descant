@@ -467,9 +467,10 @@ newPostApp.directive('newPostBox', [
       controller: [
         'tokenService',
         '$rootScope',
+        '$scope',
         '$http',
         'descantConfig',
-        function (tokenService, $rootScope, $http, descantConfig) {
+        function (tokenService, $rootScope, $scope, $http, descantConfig) {
           this.submitting = false;
           this.auth = tokenService.authenticated;
           var ntb = this;
@@ -484,12 +485,12 @@ newPostApp.directive('newPostBox', [
               this.showNTP = true;
             }
           };
-          this.addReply = function (contents, post_id) {
+          this.addReply = function (contents) {
             this.submitting = true;
             var npb = this;
-            $http.post(descantConfig.backend + '/api/v0.1/topics/' + post_id + '/replies/', { 'contents': contents }).success(function (data) {
+            $http.post(descantConfig.backend + '/api/v0.1/topics/' + $scope.postData.id + '/replies/', { 'contents': contents }).success(function (data) {
               npb.submitting = false;
-              $location.path('/topic/' + post_id);
+              $location.path('/topic/' + $scope.postData.id);
               npb.toggleNTP();
               $rootScope.$broadcast('topic:refresh');
             }).error(function (data) {
