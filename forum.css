@@ -157,19 +157,16 @@ nav-btn>a, auth-status>span {
 	border-radius: 5px;
 }
 
-.edit-button, .delete-button {
+.edit-button, .delete-button, .lock-button, .unlock-button {
 	cursor: pointer;
 	font-size: 80%;
 	opacity: .7;
-}
-
-.edit-button {
-	margin-right: 5px;
+	margin-right: 10px;
 }
 
 .delete-button {
-	margin-left: 5px;
 	color: #c0392b;
+	margin-right: 0;
 }
 
 progress {
