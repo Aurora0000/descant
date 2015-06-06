@@ -18,6 +18,8 @@
 			</div>
 			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
 				<span class="edit-button" ng-click="topic.edit()"><i class="fa fa-pencil"></i> Edit</span>
+				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="fa fa-lock"></i> Lock</span>
+				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="fa fa-unlock"></i> Unlock</span>
 				<span class="delete-button" ng-click="topic.deleteObj()"><i class="fa fa-trash-o"></i> Delete</span>
 			</div>
 		</li>

@@ -1,2 +1,2 @@
-<span ng-show="auth.error"><a href="#/login" class="auth-login"><i class="fa fa-sign-in"></i> Log in</a></span>
-<span ng-hide="auth.error" ng-show="auth.loaded" class="auth-hi">Hello, <a ng-href="#/user/{{auth.user.id}}" class="auth-hi">{{auth.user.username}}</a>! <a href="#/logout">Log out ></a></span>
+<span ng-show="auth.error"><a href="#/login" class="auth-login ng-cloak"><i class="fa fa-sign-in"></i> Log in</a></span>
+<span ng-hide="auth.error" ng-show="auth.user != null" class="auth-hi ng-cloak">Hello, <a ng-href="#/user/{{auth.user.id}}" class="auth-hi">{{auth.user.username}}</a>! <a href="#/logout">Log out ></a></span>

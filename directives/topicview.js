@@ -4,13 +4,18 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-firstpost.html',
-		controller: function($http, $scope, $location, tagService, tokenService) {
+		scope: {
+			postData: '=',
+			topicId: '='	
+		},
+		controller: function($http, $scope, $location, $route, tagService, tokenService) {
 			this.editing = false;
 			var topicCtrl = this;
 			topicCtrl.loaded = false;
 			var req = $http.get(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/");
 			req.success(function (data) {
 				topicCtrl.post = data;
+				$scope.postData = data;
 				topicCtrl.loaded = true;
 				document.title = topicCtrl.post.title + " | " + descantConfig.forumName;
 				if (tokenService.user != null) {
@@ -24,6 +29,18 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 				topicCtrl.loaded = true;
 				topicCtrl.error = true;
 			});
+			
+			this.lock = function() {
+				$http.put(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/", {"title": topicCtrl.post.title, "contents": topicCtrl.post.contents, "tag_ids": topicCtrl.post.tag_ids, "is_locked": true}).success(function() {
+					$route.reload();
+				});
+			};
+			
+			this.unlock = function() {
+				$http.put(descantConfig.backend + "/api/v0.1/topics/" + $scope.topicId + "/", {"title": topicCtrl.post.title, "contents": topicCtrl.post.contents, "tag_ids": topicCtrl.post.tag_ids, "is_locked": false}).success(function() {
+					$route.reload();
+				});
+			};
 			
 			this.edit = function() {
 				this.editing = !this.editing;

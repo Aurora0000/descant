@@ -9,11 +9,9 @@ authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', funct
 			this.tryAuth = function() {
 				var ctrl = this;
 				tokenService.getAuthStatus().then(function(data) {
-					ctrl.loaded = true;
-					ctrl.error = false;
 					ctrl.user = data.data;
+					ctrl.error = false;
 				}, function(data) {
-					ctrl.loaded = true;
 					ctrl.error = true;
 				});
 			};

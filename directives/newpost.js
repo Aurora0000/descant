@@ -4,6 +4,9 @@ newPostApp.directive('newPostBox', function($location) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/posts/new-post-box.html',
+		scope: {
+			postData: '='	
+		},
 		controller: function(tokenService, $rootScope, $http, descantConfig) {
 			this.submitting = false;
 			this.auth = tokenService.authenticated;
