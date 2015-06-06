@@ -16,7 +16,7 @@
 				</tags-input>
 				<button ng-click="topic.editSubmit()">Save</button>
 			</div>
-			<div class="list-mod-buttons" ng-show="user == topic.post.author">
+			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
 				<span class="edit-button" ng-click="topic.edit()"><i class="fa fa-pencil"></i> Edit</span>
 				<span class="delete-button" ng-click="topic.deleteObj()"><i class="fa fa-trash-o"></i> Delete</span>
 			</div>
