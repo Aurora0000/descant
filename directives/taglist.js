@@ -16,9 +16,7 @@ tagApp.directive('tagList', function($location, tagService) {
 
 			var tagCtrl = this;
 			this.updateList = function() {
-				tagCtrl.list = tagService.getAllTags().then(function(data) {
-					tagCtrl.list = data;
-				});
+				tagCtrl.list = tagService.getAllTags();
 			};
 
 			this.updateList();

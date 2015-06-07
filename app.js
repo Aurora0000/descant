@@ -95,58 +95,35 @@ app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {
         document.title = $route.current.title + " | " + descantConfig.forumName;        
 	});
 });
-angular.module('descant.config', [])
+angular.module('descant.config', ['ngResource'])
+.config(function($resourceProvider) {
+	$resourceProvider.defaults.stripTrailingSlashes = false;
+})
 .constant('descantConfig', {
 	'backend': '//django-descant.rhcloud.com',
 	'version': 0.1,
 	'forumName': 'Descant Demo Forum'
 });
-var tagApp = angular.module('descant.services.tagservice', ['descant.config']);
+var tagApp = angular.module('descant.services.tagservice', ['descant.config', 'ngResource']);
 
-tagApp.service('tagService', function($http, $q, $rootScope, descantConfig) {
+tagApp.factory("Tag", function($resource, $cacheFactory, descantConfig) {
+  return $resource(descantConfig.backend + "/api/v0.1/tags/", {}, {
+	  query: {method: 'GET', cache: true, isArray: true}
+  });
+});
+
+tagApp.service('tagService', function($http, $q, $rootScope, descantConfig, Tag) {
 	this.tags = [];
-	this.fetched = false;
 	this.getTagInfo = function(tagId) {
-		var serv = this;
-		if (this.fetched == false) {
-			return this.fetch().then(function(data) {
-				return serv.tags[tagId - 1];
-			});
-		}
-		else {
-			var inf = this.tags[tagId - 1];
-			return $q(function(resolve, reject) {
-				resolve(inf);
-			});
-		}
-	};
-	this.getAllTags = function() {
-		if (this.fetched == false) {
-			var serv = this;
-			return this.fetch().then(function(data){
-				return serv.tags;
-			});
-		}	
-		else {
-			var inf = this.tags;
-			return $q(function(resolve, reject) {
-				resolve(inf);
-			});
-		}
-	};
-	this.fetch = function() {
-		var serv = this;
-		return $http.get(descantConfig.backend + "/api/v0.1/tags/").then(
-		function (data) {
-			serv.tags = data.data;
-			serv.fetched = true;
-			return data.data;
-		}, function(data) {
-			// TODO: Refetch if there was an error.
-			serv.fetched = true;
-			return $q.reject(data);
+		return Tag.query().$promise.then(function(data) {
+			return data[tagId - 1];
 		});
 	};
+	this.getAllTags = function() {
+		this.tags = Tag.query();
+		return this.tags;
+	};
+    
 });
 var tokenApp = angular.module('descant.services.tokenservice', ['descant.config', 'LocalStorageModule']);
 
@@ -487,7 +464,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 			};
 			
 			this.loadTags = function() {
-				return tagService.getAllTags();
+				return tagService.getAllTags().$promise;
 			};
 		},
 		controllerAs: 'newTopicCtrl'
@@ -511,9 +488,7 @@ tagApp.directive('tagList', function($location, tagService) {
 
 			var tagCtrl = this;
 			this.updateList = function() {
-				tagCtrl.list = tagService.getAllTags().then(function(data) {
-					tagCtrl.list = data;
-				});
+				tagCtrl.list = tagService.getAllTags();
 			};
 
 			this.updateList();
@@ -598,27 +573,29 @@ topicListApp.directive('topicList', function(descantConfig) {
 	}
 });var topicTagsApp = angular.module('angular.directives.topictags', ['descant.services.tagservice']);
 
-tagApp.directive('topicTags', function(tagService) {
+tagApp.directive('topicTags', function (tagService) {
 	return {
 		restrict: 'E',
 		templateUrl: 'templates/topics/topic-tags.html',
 		scope: {
-      		tagItems: '=',
+			tagItems: '=',
 		},
-		controller: function($scope) {
+		controller: function ($scope) {
 			this.tags = [];
-			this.updateTags = function() {
+			this.updateTags = function () {
 				var i;
-				var ctrl = this;
 				for (i = 0; i < $scope.tagItems.length; i++) {
-					tagService.getTagInfo(parseInt($scope.tagItems[i])).then(function(data) {
+					var res = tagService.getTagInfo(parseInt($scope.tagItems[i]));
+					var ctrl = this;
+					res.then(function (data) {
 						if (data != null) {
 							ctrl.tags.push(data);
 						}
 					});
+
 				}
 			};
-			
+
 			this.updateTags();
 
 		},
@@ -677,7 +654,7 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 					tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function(data) {
 						if (data != null) { 
 							$scope.tag_ids_edited.push(data);
-						}
+						}	
 					});
 				}
 			};

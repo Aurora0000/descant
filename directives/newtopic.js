@@ -40,7 +40,7 @@ newTopicApp.directive('newTopicBox', function($location) {
 			};
 			
 			this.loadTags = function() {
-				return tagService.getAllTags();
+				return tagService.getAllTags().$promise;
 			};
 		},
 		controllerAs: 'newTopicCtrl'

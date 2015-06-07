@@ -51,7 +51,7 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 					tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function(data) {
 						if (data != null) { 
 							$scope.tag_ids_edited.push(data);
-						}
+						}	
 					});
 				}
 			};

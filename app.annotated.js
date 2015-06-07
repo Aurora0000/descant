@@ -101,57 +101,50 @@ app.run([
     });
   }
 ]);
-angular.module('descant.config', []).constant('descantConfig', {
+angular.module('descant.config', ['ngResource']).config([
+  '$resourceProvider',
+  function ($resourceProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+  }
+]).constant('descantConfig', {
   'backend': '//django-descant.rhcloud.com',
   'version': 0.1,
   'forumName': 'Descant Demo Forum'
 });
-var tagApp = angular.module('descant.services.tagservice', ['descant.config']);
+var tagApp = angular.module('descant.services.tagservice', [
+    'descant.config',
+    'ngResource'
+  ]);
+tagApp.factory('Tag', [
+  '$resource',
+  '$cacheFactory',
+  'descantConfig',
+  function ($resource, $cacheFactory, descantConfig) {
+    return $resource(descantConfig.backend + '/api/v0.1/tags/', {}, {
+      query: {
+        method: 'GET',
+        cache: true,
+        isArray: true
+      }
+    });
+  }
+]);
 tagApp.service('tagService', [
   '$http',
   '$q',
   '$rootScope',
   'descantConfig',
-  function ($http, $q, $rootScope, descantConfig) {
+  'Tag',
+  function ($http, $q, $rootScope, descantConfig, Tag) {
     this.tags = [];
-    this.fetched = false;
     this.getTagInfo = function (tagId) {
-      var serv = this;
-      if (this.fetched == false) {
-        return this.fetch().then(function (data) {
-          return serv.tags[tagId - 1];
-        });
-      } else {
-        var inf = this.tags[tagId - 1];
-        return $q(function (resolve, reject) {
-          resolve(inf);
-        });
-      }
+      return Tag.query().$promise.then(function (data) {
+        return data[tagId - 1];
+      });
     };
     this.getAllTags = function () {
-      if (this.fetched == false) {
-        var serv = this;
-        return this.fetch().then(function (data) {
-          return serv.tags;
-        });
-      } else {
-        var inf = this.tags;
-        return $q(function (resolve, reject) {
-          resolve(inf);
-        });
-      }
-    };
-    this.fetch = function () {
-      var serv = this;
-      return $http.get(descantConfig.backend + '/api/v0.1/tags/').then(function (data) {
-        serv.tags = data.data;
-        serv.fetched = true;
-        return data.data;
-      }, function (data) {
-        // TODO: Refetch if there was an error.
-        serv.fetched = true;
-        return $q.reject(data);
-      });
+      this.tags = Tag.query();
+      return this.tags;
     };
   }
 ]);
@@ -557,7 +550,7 @@ newTopicApp.directive('newTopicBox', [
             });
           };
           this.loadTags = function () {
-            return tagService.getAllTags();
+            return tagService.getAllTags().$promise;
           };
         }
       ],
@@ -591,9 +584,7 @@ tagApp.directive('tagList', [
           };
           var tagCtrl = this;
           this.updateList = function () {
-            tagCtrl.list = tagService.getAllTags().then(function (data) {
-              tagCtrl.list = data;
-            });
+            tagCtrl.list = tagService.getAllTags();
           };
           this.updateList();
         }
@@ -693,9 +684,10 @@ tagApp.directive('topicTags', [
           this.tags = [];
           this.updateTags = function () {
             var i;
-            var ctrl = this;
             for (i = 0; i < $scope.tagItems.length; i++) {
-              tagService.getTagInfo(parseInt($scope.tagItems[i])).then(function (data) {
+              var res = tagService.getTagInfo(parseInt($scope.tagItems[i]));
+              var ctrl = this;
+              res.then(function (data) {
                 if (data != null) {
                   ctrl.tags.push(data);
                 }
