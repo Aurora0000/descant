@@ -6,7 +6,7 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
-									 'descant.filters.html']);
+									 'descant.filters.html', 'descant.controllers.routing']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -65,6 +65,12 @@ app.config(function($routeProvider, $locationProvider) {
 		.when('/registered', {
 			title: 'Registration Succeeded!',
 			templateUrl: 'pages/registration-done.html'
+		})
+		.when('/usercp', {
+			title: 'User Control Panel',
+			templateUrl: 'pages/user-cp.html',
+			controller: 'UserCPController',
+			controllerAs: 'cpCtrl'
 		})
 		.when('/404', {
 			title: 'Not Found',

@@ -68,13 +68,13 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, 
 		localStorageService.remove('authToken');
 	};
 	this.getAuthStatus = function() {
+		var ctrl = this;
 		if (this.loaded && !this.error) {
 			return $q(function(resolve, reject) {
-				resolve(this.user);
+				resolve(ctrl.user);
 			});
 		}
 		var req = $http.get(descantConfig.backend + "/api/auth/me/");
-		var ctrl = this;
 		req.then(function (data) {
 			ctrl.user = data;
 			ctrl.loaded = true;

@@ -1,0 +1,12 @@
+<h1>User Control Panel</h1>
+Current Password (required for all functions below):
+<input type="password" placeholder="Password" ng-model="current_password" />
+<br />
+<input type="text" placeholder="Username" ng-model="new_username" />
+<button ng-click="cpCtrl.changeUser(new_username, current_password)">Change Username</button>
+<br />
+<input type="email" placeholder="Email" ng-model="new_email" />
+<button>Change Email</button>
+<br />
+<input type="password" placeholder="Password" ng-model="new_password" />
+<button>Change Password</button>

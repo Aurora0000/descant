@@ -19,7 +19,8 @@ var app = angular.module('descant', [
     'descant.directives.userlist',
     'descant.directives.userstats',
     'descant.directives.entropyindicator',
-    'descant.filters.html'
+    'descant.filters.html',
+    'descant.controllers.routing'
   ]);
 app.config([
   '$routeProvider',
@@ -68,6 +69,11 @@ app.config([
     }).when('/registered', {
       title: 'Registration Succeeded!',
       templateUrl: 'pages/registration-done.html'
+    }).when('/usercp', {
+      title: 'User Control Panel',
+      templateUrl: 'pages/user-cp.html',
+      controller: 'UserCPController',
+      controllerAs: 'cpCtrl'
     }).when('/404', {
       title: 'Not Found',
       templateUrl: 'pages/404.html'
@@ -225,13 +231,13 @@ tokenApp.service('tokenService', [
       localStorageService.remove('authToken');
     };
     this.getAuthStatus = function () {
+      var ctrl = this;
       if (this.loaded && !this.error) {
         return $q(function (resolve, reject) {
-          resolve(this.user);
+          resolve(ctrl.user);
         });
       }
       var req = $http.get(descantConfig.backend + '/api/auth/me/');
-      var ctrl = this;
       req.then(function (data) {
         ctrl.user = data;
         ctrl.loaded = true;
@@ -768,7 +774,6 @@ topicViewApp.directive('topicFirstpost', [
             $scope.contents_edited = topicCtrl.post.contents;
             $scope.title_edited = topicCtrl.post.title;
             for (var i = 0; i < topicCtrl.post.tag_ids.length; i++) {
-              alert(topicCtrl.post.tag_ids[i]);
               tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function (data) {
                 if (data != null) {
                   $scope.tag_ids_edited.push(data);
@@ -960,7 +965,8 @@ userListApp.directive('userList', [
 var userStatsApp = angular.module('descant.directives.userstats', ['descant.config']);
 userListApp.directive('userStats', [
   'descantConfig',
-  function (descantConfig) {
+  'tokenService',
+  function (descantConfig, tokenService) {
     return {
       restrict: 'E',
       scope: { userId: '@' },
@@ -970,6 +976,9 @@ userListApp.directive('userStats', [
         '$scope',
         function ($http, $scope) {
           var userCtrl = this;
+          tokenService.getAuthStatus().then(function (data) {
+            userCtrl.user_auth = data.data;
+          });
           var req = $http.get(descantConfig.backend + '/api/v0.1/users/' + $scope.userId + '/');
           req.success(function (data) {
             userCtrl.user = data;
@@ -986,14 +995,14 @@ userListApp.directive('userStats', [
   }
 ]);
 var controllerApp = angular.module('descant.controllers.routing', ['descant.config']);
-app.controller('PostViewController', [
+controllerApp.controller('PostViewController', [
   '$scope',
   '$routeParams',
   function ($scope, $routeParams) {
     $scope.topicId = $routeParams.topicId;
   }
 ]);
-app.controller('UserViewController', [
+controllerApp.controller('UserViewController', [
   '$scope',
   '$location',
   '$routeParams',
@@ -1005,14 +1014,14 @@ app.controller('UserViewController', [
     }
   }
 ]);
-app.controller('TagTopicViewController', [
+controllerApp.controller('TagTopicViewController', [
   '$scope',
   '$routeParams',
   function ($scope, $routeParams) {
     $scope.tagId = $routeParams.tagId;
   }
 ]);
-app.controller('ActivateController', [
+controllerApp.controller('ActivateController', [
   '$http',
   'descantConfig',
   '$location',
@@ -1028,6 +1037,24 @@ app.controller('ActivateController', [
     req.error(function (data) {
       alert('Error while activating account!');
     });
+  }
+]);
+controllerApp.controller('UserCPController', [
+  '$http',
+  '$location',
+  'descantConfig',
+  function ($http, $location, descantConfig) {
+    this.changeUser = function (new_username, current_password) {
+      alert('Submitting...');
+      $http.post(descantConfig.backend + '/api/auth/username/', {
+        'new_username': new_username,
+        'current_password': current_password
+      }).success(function (data) {
+        $location.path('/');
+      }).error(function (data) {
+        alert(data);
+      });
+    };
   }
 ]);
 var htmlApp = angular.module('descant.filters.html', []);
