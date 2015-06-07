@@ -767,7 +767,8 @@ topicViewApp.directive('topicFirstpost', [
             $scope.tag_ids_edited = [];
             $scope.contents_edited = topicCtrl.post.contents;
             $scope.title_edited = topicCtrl.post.title;
-            for (var i = 0; i < topicCtrl.post.tag_ids; i++) {
+            for (var i = 0; i < topicCtrl.post.tag_ids.length; i++) {
+              alert(topicCtrl.post.tag_ids[i]);
               tagService.getTagInfo(topicCtrl.post.tag_ids[i]).then(function (data) {
                 if (data != null) {
                   $scope.tag_ids_edited.push(data);
