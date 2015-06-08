@@ -11,9 +11,9 @@ navApp.directive('navBtn', function() {
     },
     templateUrl: 'templates/nav/nav-btn.html',
 		controller: function($scope, $location) {
-		    $scope.isActive = function(route) {
-		        return route === $location.path();
-		    }
+		    this.isActive = function(route) {
+		        return route == $location.path();
+		    };
 		},
 		controllerAs: 'navCtrl'
   }
