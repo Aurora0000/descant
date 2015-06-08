@@ -89,18 +89,6 @@ app.config([
     }).otherwise('/404');
   }
 ]);
-app.directive('chatBox', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/chat/chat-box.html'
-  };
-});
-app.directive('adminPanel', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/admin/admin-panel.html'
-  };
-});
 app.run([
   '$rootScope',
   '$route',

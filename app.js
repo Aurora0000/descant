@@ -90,18 +90,6 @@ app.config(function($routeProvider, $locationProvider) {
 
 });
 
-app.directive('chatBox', function() {
-	return {
-		restrict: 'E',
-		templateUrl: 'templates/chat/chat-box.html'
-	}
-});
-app.directive('adminPanel', function() {
-	return {
-		restrict: 'E',
-		templateUrl: 'templates/admin/admin-panel.html'
-	}
-});
 app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {
 	$rootScope.$on('$routeChangeSuccess', function () {
 		$timeout(function () {
