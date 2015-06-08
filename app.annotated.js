@@ -162,9 +162,10 @@ tokenApp.service('tokenService', [
   '$http',
   '$q',
   '$rootScope',
+  '$route',
   'descantConfig',
   'localStorageService',
-  function ($http, $q, $rootScope, descantConfig, localStorageService) {
+  function ($http, $q, $rootScope, $route, descantConfig, localStorageService) {
     this.authenticated = false;
     this.token = '';
     this.login = function (user, pass) {
@@ -246,6 +247,12 @@ tokenApp.service('tokenService', [
       }, function (data) {
         ctrl.loaded = true;
         ctrl.error = true;
+        if (this.token != '') {
+          ctrl.token = '';
+          ctrl.purgeToken();
+          ctrl.setHeader();
+          $route.reload();
+        }
         return $q.reject(data);
       });
       return req;

@@ -1,6 +1,6 @@
 var tokenApp = angular.module('descant.services.tokenservice', ['descant.config', 'LocalStorageModule']);
 
-tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, localStorageService) {
+tokenApp.service('tokenService', function($http, $q, $rootScope, $route, descantConfig, localStorageService) {
 	this.authenticated = false;
 	this.token = '';
 	this.login = function(user, pass) {
@@ -84,6 +84,12 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, descantConfig, 
 		function(data) {
 			ctrl.loaded = true;
 			ctrl.error = true;
+			if (this.token != '') {
+				ctrl.token = '';
+				ctrl.purgeToken();
+				ctrl.setHeader();
+				$route.reload();
+			}
 			return $q.reject(data);
 		});
 		return req;
