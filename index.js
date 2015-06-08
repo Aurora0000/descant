@@ -6,7 +6,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
-									 'descant.filters.html', 'descant.controllers.routing']);
+									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
+									 'descant.directives.resetconf']);
 
 app.config(function($routeProvider, $locationProvider) {
 		$routeProvider
@@ -71,6 +72,15 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'pages/user-cp.html',
 			controller: 'UserCPController',
 			controllerAs: 'cpCtrl'
+		})
+		.when('/resetpass', {
+			title: 'Reset Password',
+			templateUrl: 'pages/reset-pass.html'
+		})
+		.when('/reset', {
+			title: 'Reset Password',
+			templateUrl: 'pages/reset-pass-confirm.html',
+			controller: 'ResetPassController'
 		})
 		.when('/404', {
 			title: 'Not Found',

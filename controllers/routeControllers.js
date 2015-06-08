@@ -28,6 +28,12 @@ controllerApp.controller('ActivateController', function($http, descantConfig, $l
 	});
 });
 
+
+controllerApp.controller('ResetPassController', function($scope, $routeParams) {
+	$scope.uid = $routeParams.uid;
+	$scope.tok = $routeParams.token;
+});
+
 controllerApp.controller('UserCPController', function($http, $location, descantConfig) {
 	this.options = false;
 	

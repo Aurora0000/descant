@@ -20,7 +20,9 @@ var app = angular.module('descant', [
     'descant.directives.userstats',
     'descant.directives.entropyindicator',
     'descant.filters.html',
-    'descant.controllers.routing'
+    'descant.controllers.routing',
+    'descant.directives.resetpass',
+    'descant.directives.resetconf'
   ]);
 app.config([
   '$routeProvider',
@@ -74,6 +76,13 @@ app.config([
       templateUrl: 'pages/user-cp.html',
       controller: 'UserCPController',
       controllerAs: 'cpCtrl'
+    }).when('/resetpass', {
+      title: 'Reset Password',
+      templateUrl: 'pages/reset-pass.html'
+    }).when('/reset', {
+      title: 'Reset Password',
+      templateUrl: 'pages/reset-pass-confirm.html',
+      controller: 'ResetPassController'
     }).when('/404', {
       title: 'Not Found',
       templateUrl: 'pages/404.html'
@@ -571,6 +580,60 @@ newTopicApp.directive('newTopicBox', [
     };
   }
 ]);
+var resetCApp = angular.module('descant.directives.resetconf', ['descant.config']);
+resetCApp.directive('resetPasswordConfirm', [
+  '$location',
+  function ($location) {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/users/password-reset-confirm.html',
+      controller: [
+        '$rootScope',
+        '$http',
+        'descantConfig',
+        function ($rootScope, $http, descantConfig) {
+          this.reset = function (uid, token, new_pass) {
+            $http.post(descantConfig.backend + '/api/auth/password/reset/confirm/', {
+              'uid': uid,
+              'token': token,
+              'new_password': new_pass
+            }).success(function (data) {
+              $location.path('/');
+            }).error(function (data) {
+              alert('Error!');
+            });
+          };
+        }
+      ],
+      controllerAs: 'resetCtrl'
+    };
+  }
+]);
+var resetApp = angular.module('descant.directives.resetpass', ['descant.config']);
+resetApp.directive('resetPassword', [
+  '$location',
+  function ($location) {
+    return {
+      restrict: 'E',
+      templateUrl: 'templates/users/password-reset.html',
+      controller: [
+        '$rootScope',
+        '$http',
+        'descantConfig',
+        function ($rootScope, $http, descantConfig) {
+          this.reset = function (email) {
+            $http.post(descantConfig.backend + '/api/auth/password/reset/', { 'email': email }).success(function (data) {
+              $location.path('/');
+            }).error(function (data) {
+              alert('Error!');
+            });
+          };
+        }
+      ],
+      controllerAs: 'resetCtrl'
+    };
+  }
+]);
 var tagApp = angular.module('descant.directives.taglist', [
     'descant.config',
     'descant.services.tagservice'
@@ -1044,6 +1107,14 @@ controllerApp.controller('ActivateController', [
     req.error(function (data) {
       alert('Error while activating account!');
     });
+  }
+]);
+controllerApp.controller('ResetPassController', [
+  '$scope',
+  '$routeParams',
+  function ($scope, $routeParams) {
+    $scope.uid = $routeParams.uid;
+    $scope.tok = $routeParams.token;
   }
 ]);
 controllerApp.controller('UserCPController', [
