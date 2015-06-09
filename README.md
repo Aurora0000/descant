@@ -5,3 +5,6 @@
 Free, open-source forum software powered by Angular and Django.
 
 Information on the plans and APIs of Descant are available in the wiki.
+
+## Developing with Descant
+If you're interested in developing the front-end of Descant, take a look in static/descant/. Otherwise, you'll find the descant/ and forums/ directories interesting.
