@@ -1,0 +1,16 @@
+<h1>User Control Panel</h1>
+<div class="user-cp-password-entry" ng-hide="cpCtrl.options">
+Enter your current password:
+<input type="password" placeholder="Password" ng-model="current_password" />
+<button ng-click="cpCtrl.showOptions()">Confirm</button>
+</div>
+<div class="user-cp-options" ng-show="cpCtrl.options">
+<input type="text" placeholder="Username" ng-model="new_username" />
+<button ng-click="cpCtrl.changeUser(new_username, current_password)">Change Username</button>
+<br />
+<input type="email" placeholder="Email" ng-model="new_email" />
+<button ng-click="cpCtrl.changeEmail(new_email)">Change Email</button>
+<br />
+<input type="password" placeholder="Password" ng-model="new_password" />
+<button ng-click="cpCtrl.changePassword(new_password, current_password)">Change Password</button>
+</div>

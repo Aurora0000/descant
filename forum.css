@@ -1,0 +1,218 @@
+@import url(//rawgit.com/Tel-Aviv/CSS-Framework/master/framework.css);
+@import url(tags.css);
+
+@-ms-viewport {
+	width: device-width;
+}
+
+body {
+	overflow-y: scroll;
+}
+
+.list-stats {
+	cursor: default;
+}
+
+.list-author {
+	text-decoration: none;
+}
+
+.list-avatar {
+	height: 40px;
+	width: 40px;
+	border-radius: 5px;
+	margin-right: 10px;
+	float: left;
+}
+
+.list-title {
+	font-weight: 600;
+}
+.list-details {
+	opacity: .7;
+	font-size: small;
+}
+
+.list-list.highlight>li:hover {
+	background-color: rgb(253, 253, 253);
+	cursor: pointer;
+}
+
+.list-list>li:before, .list-list>li:after {
+	content: "";
+	display: table;
+}
+.list-list>li:after {
+	clear: both;
+}
+
+div.container {
+	position: relative;
+}
+
+#main {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	opacity: 1;
+}
+#main.ng-enter,
+#main.ng-leave {
+	-webkit-transition: all 1s ease;
+	transition: all 1s ease;
+}
+#main.ng-enter {
+	opacity: 0;
+}
+#main.ng-enter-active {
+	opacity: 1;
+}
+#main.ng-leave {
+	opacity: 1;
+}
+#main.ng-leave-active {
+	opacity: 0;
+}
+
+.auth-login, .auth-hi {
+	text-decoration: none;
+}
+
+nav-btn>a {
+	text-decoration: none;
+	color: white;
+}
+
+auth-status>span>a {
+	color: white;
+}
+
+auth-status a {
+	text-decoration: none;
+	color: white;
+}
+
+div.loading, div.load-error, h2.loading, p.loading, p.load-error {
+	text-align: center;
+}
+
+.first-post {
+	padding: 0!important;
+	border: none!important;
+}
+
+input.ng-invalid {
+	border: 3px solid #ff0000;
+}
+
+nav-btn, auth-status {
+	padding: 0!important;
+}
+
+nav-btn>a, auth-status>span {
+	padding: 10px 20px!important;
+	display: inline-block;
+}
+
+@media only screen and (max-width: 450px) {
+	nav-btn {
+		display: block!important;
+	}
+	.nav {
+		height: auto;
+		border: 1px solid rgb(230, 230, 230);
+		color: black!important;
+		background-color: white;
+		position: static;
+		border-radius: 5px;
+	}
+
+	nav-btn>*, auth-status * {
+		color: black!important;
+	}
+
+	.hasnav {
+		padding-top: 0;
+	}
+	.nav .f-right {
+		float: none;
+	}
+}
+
+.list-tag {
+	margin: 0 2px;
+	border-right: 1px solid rgb(76, 76, 76);
+	padding-right: 4px;
+	font-weight: bold;
+}
+
+.list-tag:first-child {
+	margin-left: 0px;
+}
+
+.list-tag:last-child {
+	margin-right: 0px;
+	border-right: none;
+	padding-right: 0;
+}
+
+.list-mod-buttons {
+	border-radius: 5px;
+}
+
+.edit-button, .delete-button, .lock-button, .unlock-button {
+	cursor: pointer;
+	font-size: 80%;
+	opacity: .7;
+	margin-right: 10px;
+}
+
+.delete-button {
+	color: #c0392b;
+	margin-right: 0;
+}
+
+progress {
+   -webkit-appearance: none;
+   appearance: none;
+}
+
+.green {
+  background-color: rgb(43,194,83);
+  background-image: linear-gradient(
+    center bottom,
+    rgb(43,194,83) 37%,
+    rgb(84,240,84) 69%
+  );
+}
+
+.orange{
+  background-color: #f1a165;
+  background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
+}
+
+.red  {
+  background-color: #f0a3a3;
+  background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
+}
+
+.progress-bar {
+	height: 30px;
+	border: 3px solid black;
+	border-radius: 4px;
+}
+
+.progress-bar > span {
+	display: block;
+	height: 100%;
+}
+
+button[disabled] {
+	background: #c0392b;
+}
+
+.bigicon {
+	font-size: 200%;
+}

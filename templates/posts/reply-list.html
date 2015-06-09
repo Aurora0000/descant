@@ -1,0 +1,9 @@
+<div infinite-scroll='posts.updateList()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='1'>
+	<ul class="box list-list">
+		<li class="list-item" ng-repeat="post in posts.list">
+			<reply-item post="post"></reply-item>
+		</li>
+	</ul>
+	<p class="loading" ng-show="posts.busy" ng-hide="posts.end"><i class="icon-refresh bigicon fa-spin"></i></p>
+	<h2 class="results-end loading" ng-show="posts.end"><i class="icon-check"></i> You've made it to the last reply!</h2>
+</div>

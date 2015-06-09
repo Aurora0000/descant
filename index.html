@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="descant">
+	<head>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ng-tags-input/2.3.0/ng-tags-input.min.css">
+		<link rel="stylesheet" href="forum.css">
+		<link rel="stylesheet" href="icons/style.css">
+		<script src="vendor.min.js"></script>
+		<!-- Debug only <script src="config.js"></script>
+		<script src="services.js"></script>
+		<script src="controllers/routeControllers.js"></script>
+		<script src="directives/authforms.js"></script>
+		<script src="directives/authmisc.js"></script>
+		<script src="directives/authstatus.js"></script>
+		<script src="directives/navbtn.js"></script>
+		<script src="directives/newpost.js"></script>
+		<script src="directives/newtopic.js"></script>
+		<script src="directives/taglist.js"></script>
+		<script src="directives/topiclist.js"></script>
+		<script src="directives/topicview.js"></script>
+		<script src="directives/userlist.js"></script>
+		<script src="index.js"></script>-->	
+		<script src="app.js"></script>
+		<title>Descant Forum</title>
+	</head>
+	<body class="width hasnav">
+			<emit-token></emit-token>
+			<!--Nav-->
+			<div class="nav">
+				<nav-btn route-url="/topics" route-name="Topics" route-icon="icon-forum"></nav-btn>
+				<nav-btn route-url="/users" route-name="Users" route-icon="icon-people"></nav-btn>
+				<auth-status class="f-right"></auth-status>
+			</div>
+			<!--Pages-->
+			<div class="container">
+				<div id="main" ng-view></div>
+			</div>
+			<noscript>
+				<h2>Descant Error</h2>
+				<p>It appears that JavaScript is disabled or unavailable in your browser. Unfortunately, this means that Descant can't load data and content from our APIs, which stops Descant from working properly.</p>
+				<h3>Solutions</h3>
+				<ul>
+					<li>Enable JavaScript in your browser</li>
+					<li>Upgrade to a more modern browser.</li>
+				</ul>
+			</noscript>
+	</body>
+</html>

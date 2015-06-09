@@ -1,0 +1,28 @@
+<p class="load-error" ng-show="topic.error"><i class="icon-warning bigicon"></i> Loading failed.</p>
+<p class="loading" ng-hide="topic.loaded"><i class="icon-refresh bigicon fa-spin"></i></p>
+<div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
+	<h1 ng-hide="topic.editing">{{ topic.post.title }}</h1>
+	<textarea ng-show="topic.editing" class="full" ng-model="title_edited"></textarea>
+	<ul class="box list-list">
+		<li class="list-item first-post">
+			<img class="list-avatar" alt="avatar" ng-src="{{topic.post.avatar_url}}">
+			<div class="list-stats">{{ topic.post.author_name }} <span class="list-details">posted {{ topic.post.post_date | relativeDate }}<span ng-show="topic.post.was_edited"> / last edited {{ topic.post.last_edit_date | relativeDate }}</span></span>
+			</div>
+			<div class="list-contents" ng-hide="topic.editing" ng-bind-html="topic.post.contents_marked_up | html"></div>
+			<div ng-show="topic.editing">
+				<textarea ng-model="contents_edited" class="full"></textarea>
+				<tags-input add-from-autocomplete-only="true" ng-model="tag_ids_edited" display-property="name">
+					<auto-complete class="tag-select" source="topic.loadTags()"></auto-complete>
+				</tags-input>
+				<button ng-click="topic.editSubmit()">Save</button>
+			</div>
+			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
+				<span class="edit-button" ng-click="topic.edit()"><i class="icon-edit"></i> Edit</span>
+				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="icon-lock"></i> Lock</span>
+				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="icon-lock_open"></i> Unlock</span>
+				<span class="delete-button" ng-click="topic.deleteObj()"><i class="icon-delete"></i> Delete</span>
+			</div>
+		</li>
+	</ul>
+</div>
+<hr>
