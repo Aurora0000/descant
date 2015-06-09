@@ -5,5 +5,6 @@ angular.module('descant.config', ['ngResource'])
 .constant('descantConfig', {
 	'backend': '//django-descant.rhcloud.com',
 	'version': 0.1,
-	'forumName': 'Descant Demo Forum'
+	'forumName': 'Descant Demo Forum',
+	'apiPaginationLimit': 25
 });

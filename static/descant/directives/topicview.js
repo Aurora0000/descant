@@ -138,7 +138,7 @@ topicViewApp.directive('postList', function(descantConfig) {
 			this.list = [];
 			this.busy = false;
 			this.offset = 0;
-			this.limit = 15;
+			this.limit = descantConfig.apiPaginationLimit;
 			this.end = false;
 			
 			this.updateList = function() {

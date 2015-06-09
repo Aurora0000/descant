@@ -112,7 +112,8 @@ angular.module('descant.config', ['ngResource']).config([
 ]).constant('descantConfig', {
   'backend': '//django-descant.rhcloud.com',
   'version': 0.1,
-  'forumName': 'Descant Demo Forum'
+  'forumName': 'Descant Demo Forum',
+  'apiPaginationLimit': 25
 });
 var tagApp = angular.module('descant.services.tagservice', [
     'descant.config',
@@ -675,7 +676,7 @@ topicListApp.directive('topicList', [
           this.list = [];
           this.busy = false;
           this.offset = 0;
-          this.limit = 15;
+          this.limit = descantConfig.apiPaginationLimit;
           this.end = false;
           this.updateList = function () {
             if (topicsCtrl.busy || topicsCtrl.end) {
@@ -929,7 +930,7 @@ topicViewApp.directive('postList', [
           this.list = [];
           this.busy = false;
           this.offset = 0;
-          this.limit = 15;
+          this.limit = descantConfig.apiPaginationLimit;
           this.end = false;
           this.updateList = function () {
             if (postsCtrl.busy || postsCtrl.end) {
@@ -1008,7 +1009,7 @@ userListApp.directive('userList', [
           this.list = [];
           this.busy = false;
           this.offset = 0;
-          this.limit = 15;
+          this.limit = descantConfig.apiPaginationLimit;
           this.end = false;
           this.updateList = function () {
             if (this.busy || this.end) {
