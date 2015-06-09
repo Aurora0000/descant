@@ -3,10 +3,11 @@ python:
   - "3.4"
 branches:
   only:
-    - backend
+    - master
 install:
   - pip install -r requirements.txt
   - pip install coverage
+  - pip install python-coveralls
 script:
   - coverage run manage.py test
 after_success:
