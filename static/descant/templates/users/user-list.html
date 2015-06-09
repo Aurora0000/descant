@@ -1,6 +1,4 @@
-<div>
-	<div class="load-error" ng-show="users.error"><i class="icon-warning bigicon"></i> Loading failed.</div>
-	<p class="loading" ng-hide="users.loaded"><i class="icon-refresh bigicon fa-spin"></i></p>
+<div infinite-scroll='users.updateList()' infinite-scroll-disabled='users.busy' infinite-scroll-distance='1'>
 	<ul class="box list-list highlight">
 		<li ng-repeat="user in users.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
@@ -8,4 +6,6 @@
 			<div class="list-details"><span class="list-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
 		</li>
 	</ul>
+	<p class="loading" ng-show="users.busy" ng-hide="users.end"><i class="icon-refresh bigicon fa-spin"></i></p>
+	<h2 class="results-end loading" ng-show="users.end"><i class="icon-check"></i> You've made it to the last user!</h2>
 </div>
