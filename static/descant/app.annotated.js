@@ -113,7 +113,8 @@ angular.module('descant.config', ['ngResource']).config([
   'backend': '//django-descant.rhcloud.com',
   'version': 0.1,
   'forumName': 'Descant Demo Forum',
-  'apiPaginationLimit': 25
+  'apiPaginationLimit': 25,
+  'enforcePasswordEntropy': true
 });
 var tagApp = angular.module('descant.services.tagservice', [
     'descant.config',
@@ -291,6 +292,7 @@ authFormApp.directive('registerBox', [
         '$http',
         'descantConfig',
         function ($http, descantConfig) {
+          this.enforce = descantConfig.enforcePasswordEntropy;
           this.register = function (user, email, pass) {
             var req = $http.post(descantConfig.backend + '/api/auth/register/', {
                 'email': email,

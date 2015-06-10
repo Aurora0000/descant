@@ -6,5 +6,6 @@ angular.module('descant.config', ['ngResource'])
 	'backend': '//django-descant.rhcloud.com',
 	'version': 0.1,
 	'forumName': 'Descant Demo Forum',
-	'apiPaginationLimit': 25
+	'apiPaginationLimit': 25,
+	'enforcePasswordEntropy': true
 });

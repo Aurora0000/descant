@@ -107,7 +107,8 @@ angular.module('descant.config', ['ngResource'])
 	'backend': '//django-descant.rhcloud.com',
 	'version': 0.1,
 	'forumName': 'Descant Demo Forum',
-	'apiPaginationLimit': 25
+	'apiPaginationLimit': 25,
+	'enforcePasswordEntropy': true
 });
 var tagApp = angular.module('descant.services.tagservice', ['descant.config', 'ngResource']);
 
@@ -243,7 +244,7 @@ authFormApp.directive('loginBox', ['tokenService', '$location', function(tokenSe
 			};
 		},
 		controllerAs: 'loginCtrl'
-	}
+	};
 }]);
 
 authFormApp.directive('registerBox', function($location) {
@@ -251,6 +252,8 @@ authFormApp.directive('registerBox', function($location) {
 		restrict: 'E',
 		templateUrl: 'templates/users/register-box.html',
 		controller: function($http, descantConfig) {
+			this.enforce = descantConfig.enforcePasswordEntropy;
+			
 			this.register = function(user, email, pass) {
 				var req = $http.post(descantConfig.backend + "/api/auth/register/", {"email": email, "username": user, "password": pass});
 				req.success(function(data) {
