@@ -76,7 +76,7 @@ div.container {
 	opacity: 0;
 }
 
-.auth-login, .auth-hi {
+.auth-login, .auth-hi, .user-name > a {
 	text-decoration: none;
 }
 
