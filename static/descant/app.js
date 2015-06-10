@@ -217,7 +217,7 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, $route, descant
 		function(data) {
 			ctrl.loaded = true;
 			ctrl.error = true;
-			if (this.token != '') {
+			if (ctrl.token != '') {
 				ctrl.token = '';
 				ctrl.purgeToken();
 				ctrl.setHeader();
@@ -268,10 +268,9 @@ authFormApp.directive('registerBox', function($location) {
 	};
 });var authMiscApp = angular.module('descant.directives.authmisc', ['descant.services.tokenservice']);
 
-authMiscApp.directive('logout', ['tokenService', '$location', function(tokenService, $location) {
+authMiscApp.directive('logout', function(tokenService, $location) {
 	return {
 		restrict: 'E',
-		template: '',
 		controller: function($location) {
 			tokenService.logout().then(function(data){
 				$location.path('/');
@@ -281,9 +280,9 @@ authMiscApp.directive('logout', ['tokenService', '$location', function(tokenServ
 			});
 		}
 	}
-}]);
+});
 
-authMiscApp.directive('emitToken', ['tokenService', function(tokenService) {
+authMiscApp.directive('emitToken', function(tokenService) {
 	return {
 		restrict: 'E',
 		template: '',
@@ -291,7 +290,7 @@ authMiscApp.directive('emitToken', ['tokenService', function(tokenService) {
 			tokenService.setHeader();
 		}
 	}
-}]);var authApp = angular.module('descant.directives.authstatus', ['descant.config', 'descant.services.tokenservice']);
+});var authApp = angular.module('descant.directives.authstatus', ['descant.config', 'descant.services.tokenservice']);
 
 
 authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', function($http, tokenService, descantConfig) {

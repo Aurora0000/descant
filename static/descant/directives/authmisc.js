@@ -1,9 +1,8 @@
 var authMiscApp = angular.module('descant.directives.authmisc', ['descant.services.tokenservice']);
 
-authMiscApp.directive('logout', ['tokenService', '$location', function(tokenService, $location) {
+authMiscApp.directive('logout', function(tokenService, $location) {
 	return {
 		restrict: 'E',
-		template: '',
 		controller: function($location) {
 			tokenService.logout().then(function(data){
 				$location.path('/');
@@ -13,9 +12,9 @@ authMiscApp.directive('logout', ['tokenService', '$location', function(tokenServ
 			});
 		}
 	}
-}]);
+});
 
-authMiscApp.directive('emitToken', ['tokenService', function(tokenService) {
+authMiscApp.directive('emitToken', function(tokenService) {
 	return {
 		restrict: 'E',
 		template: '',
@@ -23,4 +22,4 @@ authMiscApp.directive('emitToken', ['tokenService', function(tokenService) {
 			tokenService.setHeader();
 		}
 	}
-}]);
+});

@@ -84,7 +84,7 @@ tokenApp.service('tokenService', function($http, $q, $rootScope, $route, descant
 		function(data) {
 			ctrl.loaded = true;
 			ctrl.error = true;
-			if (this.token != '') {
+			if (ctrl.token != '') {
 				ctrl.token = '';
 				ctrl.purgeToken();
 				ctrl.setHeader();

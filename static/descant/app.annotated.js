@@ -246,7 +246,7 @@ tokenApp.service('tokenService', [
       }, function (data) {
         ctrl.loaded = true;
         ctrl.error = true;
-        if (this.token != '') {
+        if (ctrl.token != '') {
           ctrl.token = '';
           ctrl.purgeToken();
           ctrl.setHeader();
@@ -319,15 +319,17 @@ authMiscApp.directive('logout', [
   function (tokenService, $location) {
     return {
       restrict: 'E',
-      template: '',
-      controller: function ($location) {
-        tokenService.logout().then(function (data) {
-          $location.path('/');
-        }, function (data) {
-          alert('Cannot log out.');
-          tokenService.purgeToken();
-        });
-      }
+      controller: [
+        '$location',
+        function ($location) {
+          tokenService.logout().then(function (data) {
+            $location.path('/');
+          }, function (data) {
+            alert('Cannot log out.');
+            tokenService.purgeToken();
+          });
+        }
+      ]
     };
   }
 ]);
