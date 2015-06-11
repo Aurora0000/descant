@@ -94,7 +94,7 @@ auth-status a {
 	color: white;
 }
 
-div.loading, div.load-error, h2.loading, p.loading, p.load-error {
+div.loading, div.load-error, h2.loading, p.loading, p.load-error, .locked-msg {
 	text-align: center;
 }
 
@@ -162,40 +162,35 @@ nav-btn>a, auth-status>span {
 	border-radius: 5px;
 }
 
-.edit-button, .delete-button, .lock-button, .unlock-button {
+.list-mod-buttons>* {
 	cursor: pointer;
 	font-size: 80%;
 	opacity: .7;
 	margin-right: 10px;
 }
 
-.delete-button {
-	color: #c0392b;
-	margin-right: 0;
-}
-
 progress {
-   -webkit-appearance: none;
-   appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
 }
 
 .green {
-  background-color: rgb(43,194,83);
-  background-image: linear-gradient(
-    center bottom,
-    rgb(43,194,83) 37%,
-    rgb(84,240,84) 69%
-  );
+	background-color: rgb(43,194,83);
+	background-image: linear-gradient(
+		center bottom,
+		rgb(43,194,83) 37%,
+		rgb(84,240,84) 69%
+	);
 }
 
 .orange{
-  background-color: #f1a165;
-  background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
+	background-color: #f1a165;
+	background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
 }
 
 .red  {
-  background-color: #f0a3a3;
-  background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
+	background-color: #f0a3a3;
+	background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
 }
 
 .progress-bar {

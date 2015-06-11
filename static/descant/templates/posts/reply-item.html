@@ -5,6 +5,9 @@
 	<span class="edit-button" ng-click="postCtrl.edit()"><i class="icon-edit"></i> Edit</span>
 	<span class="delete-button" ng-click="postCtrl.deleteObj()"><i class="icon-delete"></i> Delete</span>
 </div>
+<div class="list-mod-buttons" ng-hide="post.can_edit">
+	<span class="flag-button" onclick="alert('Not yet!');"><i class="icon-flag"></i> Report</span>
+</div>
 <div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
 <div class="list-edit-boxes" ng-show="postCtrl.editing">
 	<textarea ng-model="contents_edited"></textarea>
