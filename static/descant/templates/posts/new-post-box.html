@@ -1,4 +1,6 @@
-<p>
+<p ng-show="postData.is_locked">
+	<i class="icon-lock"></i> This topic is locked!
+</p>
 	<button ng-show="newPostCtrl.auth && !postData.is_locked" ng-click="newPostCtrl.toggleNTP()" class="highlight"><i ng-class="{ 'icon-remove': newPostCtrl.showNTP, 'icon-add': newPostCtrl.showNTP == false }"></i> Reply</button>
 </p>
 <div ng-show="newPostCtrl.showNTP && newPostCtrl.auth" class="panel">
