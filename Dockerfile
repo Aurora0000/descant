@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Aurora01 (descant)
 RUN apt-get update
 RUN apt-get install -y git nano python3 python3-pip
-RUN git clone https://github.com/Aurora0000/descant.git
+ADD / /descant
 WORKDIR /descant
 EXPOSE 8000
 RUN pip3 install -r requirements.txt
