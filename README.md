@@ -4,7 +4,7 @@
 
 Free, open-source forum software powered by Angular and Django.
 
-## [Live Demo](http://django-descant.rhcloud.com/static/descant/#/)
+## [Live Demo](http://django-descant.rhcloud.com/static/descant/#/) | [Releases](https://github.com/Aurora0000/descant/releases)
 
 ## Features
 - RESTful API that provides access to *all* features
