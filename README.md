@@ -4,6 +4,8 @@
 
 Free, open-source forum software powered by Angular and Django.
 
+## [Live Demo](http://django-descant.rhcloud.com/static/descant/#/)
+
 ## Features
 - RESTful API that provides access to *all* features
 - Posting with Markdown formatting.
@@ -30,7 +32,6 @@ Free, open-source forum software powered by Angular and Django.
     vagrant up
 
 **Note:** The Vagrant image does *not* serve static files. You'll need to configure nginx to serve up static files. [This](https://gist.github.com/Aurora0000/0af65d3310e2c7d059fb) code may be helpful.
-
 
 ## Developing with Descant
 If you're interested in developing the front-end of Descant, take a look in static/descant/. Otherwise, you'll find the descant/ and forums/ directories interesting.
