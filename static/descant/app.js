@@ -1,7 +1,7 @@
 var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'relativeDate', 'infinite-scroll',
- 									 'descant.config', 'descant.services.tokenservice', 'descant.directives.authforms',
-									 'descant.directives.authmisc', 'descant.directives.authstatus', 
-									 'descant.directives.navbtn', 'descant.directives.newpost',
+									 'pascalprecht.translate', 'descant.config', 'descant.services.tokenservice', 
+									 'descant.directives.authforms', 'descant.directives.authmisc', 
+									 'descant.directives.authstatus', 'descant.directives.navbtn', 'descant.directives.newpost',
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
@@ -9,7 +9,7 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
 									 'descant.directives.resetconf']);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
     	.when('/', {
 			title: 'Home',
@@ -87,7 +87,15 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'pages/404.html'
 		})
 		.otherwise('/404');
-
+		
+		$translateProvider.useStaticFilesLoader({
+ 			prefix: 'translations/lang-',
+  			suffix: '.json'
+		});
+		
+		$translateProvider.useSanitizeValueStrategy('escape');
+		
+		$translateProvider.preferredLanguage('fr');
 });
 
 app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {

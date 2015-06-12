@@ -4,6 +4,7 @@ var app = angular.module('descant', [
     'ngTagsInput',
     'relativeDate',
     'infinite-scroll',
+    'pascalprecht.translate',
     'descant.config',
     'descant.services.tokenservice',
     'descant.directives.authforms',
@@ -27,7 +28,8 @@ var app = angular.module('descant', [
 app.config([
   '$routeProvider',
   '$locationProvider',
-  function ($routeProvider, $locationProvider) {
+  '$translateProvider',
+  function ($routeProvider, $locationProvider, $translateProvider) {
     $routeProvider.when('/', {
       title: 'Home',
       templateUrl: 'pages/topics.html'
@@ -87,6 +89,12 @@ app.config([
       title: 'Not Found',
       templateUrl: 'pages/404.html'
     }).otherwise('/404');
+    $translateProvider.useStaticFilesLoader({
+      prefix: 'translations/lang-',
+      suffix: '.json'
+    });
+    $translateProvider.useSanitizeValueStrategy('escape');
+    $translateProvider.preferredLanguage('fr');
   }
 ]);
 app.run([
