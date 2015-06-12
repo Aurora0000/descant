@@ -15,7 +15,6 @@ Free, open-source forum software powered by Angular and Django.
 - Administration Panel (via Django)
 
 ## Installing
-## Installing
 ### Debian, Ubuntu or other apt-based distributions
 
     sudo apt-get install python3 python3-pip git
