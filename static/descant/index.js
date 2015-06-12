@@ -94,7 +94,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		});
 		
 		$translateProvider.useSanitizeValueStrategy('escape');
-		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'ro'], {
+		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'de', 'ro'], {
 			'en_US': 'en',
     		'en_UK': 'en',
     		'ro_RO': 'ro',
