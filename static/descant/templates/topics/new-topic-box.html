@@ -1,5 +1,5 @@
 <p>
-	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i ng-class="{ 'icon-remove': newTopicCtrl.showNTP, 'icon-add': newTopicCtrl.showNTP == false }"></i> New Topic</button>
+	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i ng-class="{ 'icon-remove': newTopicCtrl.showNTP, 'icon-add': newTopicCtrl.showNTP == false }"></i> {{'NEW_TOPIC' | translate}}</button>
 	<tag-list></tag-list>
 </p>
 <div ng-show="newTopicCtrl.showNTP" class="panel" ng-show="newTopicCtrl.auth">
