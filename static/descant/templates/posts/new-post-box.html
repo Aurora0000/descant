@@ -3,7 +3,7 @@
 </p>
 <div ng-show="newPostCtrl.showNTP && newPostCtrl.auth" class="panel">
 	<div class="end">
-		Reply
+		{{'REPLY_BUTTON'| translate }}
 	</div>
 	<div class="body">
 		<div class="margin-fix">
@@ -12,7 +12,7 @@
 					<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
 				</p>
 				<p>
-					<button class="highlight full" ng-click="newPostCtrl.addReply(contents)"><i ng-show="newPostCtrl.submitting" class="icon-refresh icon-spin"></i> Post</button>
+					<button class="highlight full" ng-click="newPostCtrl.addReply(contents)"><i ng-show="newPostCtrl.submitting" class="icon-refresh icon-spin"></i> {{'POST_BUTTON' | translate}}</button>
 				</p>
 			</form>
 		</div>

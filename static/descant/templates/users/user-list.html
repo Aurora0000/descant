@@ -3,9 +3,9 @@
 		<li ng-repeat="user in users.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
 			<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
-			<div class="list-details"><span class="list-time">registered {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} posts</span></div>
+			<div class="list-details"><span class="list-time">{{'REGISTERED_ON' | translate}} {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} {{'POSTS' | translate}}</span></div>
 		</li>
 	</ul>
 	<p class="loading" ng-show="users.busy" ng-hide="users.end"><i class="icon-refresh bigicon icon-spin"></i></p>
-	<h2 class="results-end loading" ng-show="users.end"><i class="icon-check"></i> You've made it to the last user!</h2>
+	<h2 class="results-end loading" ng-show="users.end"><i class="icon-check"></i> {{'LAST_USER' | translate}}</h2>
 </div>

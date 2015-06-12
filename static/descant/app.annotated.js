@@ -94,7 +94,25 @@ app.config([
       suffix: '.json'
     });
     $translateProvider.useSanitizeValueStrategy('escape');
-    $translateProvider.preferredLanguage('fr');
+    $translateProvider.registerAvailableLanguageKeys([
+      'en',
+      'fr',
+      'de',
+      'ro'
+    ], {
+      'en_US': 'en',
+      'en_UK': 'en',
+      'ro_RO': 'ro',
+      'fr_FR': 'fr',
+      'fr_CH': 'fr',
+      'fr_BE': 'fr',
+      'fr_CA': 'fr',
+      'fr_LU': 'fr',
+      'de_DE': 'de'
+    });
+    $translateProvider.uniformLanguageTag('java');
+    $translateProvider.determinePreferredLanguage();
+    $translateProvider.fallbackLanguage('en');
   }
 ]);
 app.run([
