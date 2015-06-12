@@ -6,7 +6,7 @@
 	<ul class="box list-list">
 		<li class="list-item first-post">
 			<img class="list-avatar" alt="avatar" ng-src="{{topic.post.avatar_url}}">
-			<div class="list-stats">{{ topic.post.author_name }} <span class="list-details">posted {{ topic.post.post_date | relativeDate }}<span ng-show="topic.post.was_edited"> / last edited {{ topic.post.last_edit_date | relativeDate }}</span></span>
+			<div class="list-stats">{{ topic.post.author_name }} <span class="list-details">{{'POSTED' | translate}} {{ topic.post.post_date | relativeDate }}<span ng-show="topic.post.was_edited"> / last edited {{ topic.post.last_edit_date | relativeDate }}</span></span>
 			</div>
 			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
 				<span class="edit-button" ng-click="topic.edit()"><i class="icon-edit"></i> Edit</span>

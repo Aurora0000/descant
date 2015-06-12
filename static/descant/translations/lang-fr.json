@@ -1,3 +1,18 @@
 {
-	"TAGS_ICON": "Les étiquettes"
+	"TAGS_ICON": "Les étiquettes",
+	"just_now": "à l'instant",
+	"seconds_ago": "il y a {{time}} secondes",
+	"a_minute_ago": "il y a une minute",
+	"minutes_ago": "il y a {{time}} minutes",
+	"an_hour_ago": "il y a une heure",
+	"hours_ago": "il y a {{time}} heures",
+	"a_day_ago": "hier",
+	"days_ago": "il y a {{time}} jours",
+	"a_week_ago": "il y a une semaine",
+	"weeks_ago": "il y a {{time}} semaines",
+	"a_month_ago": "il y a un mois",
+	"months_ago": "il y a {{time}} mois",
+	"a_year_ago": "il y a un an",
+	"years_ago": "il y a {{time} ans",
+	"over_a_year_ago": "il y a plus d'un an"
 }

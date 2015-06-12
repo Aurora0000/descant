@@ -3,7 +3,13 @@
 		<li class="list-item" ng-repeat="topic in topics.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{topic.avatar_url}}">
 			<div class="list-title"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></div>
-			<div class="list-stats"><a class="list-author" ng-href="#/user/{{topic.author}}">{{ topic.author_name }}</a> <span class="list-details">posted {{ topic.post_date | relativeDate }} <span ng-hide="topic.tag_ids.length == 0">/</span> <topic-tags tag-items="topic.tag_ids"></topic-tags> / {{ topic.reply_count }} replies</span></div>
+			<div class="list-stats">
+				<a class="list-author" ng-href="#/user/{{topic.author}}">{{ topic.author_name }}</a>
+				<span class="list-details">{{'POSTED' | translate}} {{ topic.post_date | relativeDate }} 
+					<span ng-hide="topic.tag_ids.length == 0">/</span>
+					<topic-tags tag-items="topic.tag_ids"></topic-tags> / {{ topic.reply_count }} {{'REPLIES' | translate }}
+				</span>
+			</div>
 		</li>
 	</ul>
 	<p class="loading" ng-show="topics.busy" ng-hide="topics.end"><i class="icon-refresh bigicon icon-spin"></i></p>
