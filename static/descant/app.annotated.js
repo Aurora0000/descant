@@ -97,6 +97,7 @@ app.config([
     $translateProvider.registerAvailableLanguageKeys([
       'en',
       'fr',
+      'de',
       'ro'
     ], {
       'en_US': 'en',
@@ -106,7 +107,8 @@ app.config([
       'fr_CH': 'fr',
       'fr_BE': 'fr',
       'fr_CA': 'fr',
-      'fr_LU': 'fr'
+      'fr_LU': 'fr',
+      'de_DE': 'de'
     });
     $translateProvider.uniformLanguageTag('java');
     $translateProvider.determinePreferredLanguage();

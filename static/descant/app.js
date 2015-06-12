@@ -94,7 +94,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		});
 		
 		$translateProvider.useSanitizeValueStrategy('escape');
-		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'ro'], {
+		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'de', 'ro'], {
 			'en_US': 'en',
     		'en_UK': 'en',
     		'ro_RO': 'ro',
@@ -102,7 +102,9 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			'fr_CH': 'fr',
 			'fr_BE': 'fr',
 			'fr_CA': 'fr',
-			'fr_LU': 'fr'
+			'fr_LU': 'fr',
+			'de_DE': 'de'
+			//TODO: Other English and German dialects
 		});
 		$translateProvider.uniformLanguageTag('java');
   		$translateProvider.determinePreferredLanguage();
