@@ -1,61 +1,87 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Descant : Free, open-source forum software powered by Angular and Django.">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Descant</title>
+    <meta charset="UTF-8">
+    <title>Descant by Aurora0000</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Descant</h1>
+      <h2 class="project-tagline">Free, open-source forum software powered by Angular and Django.</h2>
+      <a href="https://github.com/Aurora0000/descant" class="btn">View on GitHub</a>
+      <a href="https://github.com/Aurora0000/descant/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Aurora0000/descant/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Aurora0000/descant">View on GitHub</a>
-
-          <h1 id="project_title">Descant</h1>
-          <h2 id="project_tagline">Free, open-source forum software powered by Angular and Django.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Aurora0000/descant/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Aurora0000/descant/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="descant" class="anchor" href="#descant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Descant</h1>
 
 <p><a href="https://coveralls.io/r/Aurora0000/descant"><img src="https://coveralls.io/repos/Aurora0000/descant/badge.svg" alt="Coverage Status"></a> <img src="https://travis-ci.org/Aurora0000/descant.svg" alt="Travis CI"></p>
 
 <p>Free, open-source forum software powered by Angular and Django.</p>
 
-<p>Information on the plans and APIs of Descant are available in the wiki.</p>
+<h2>
+<a id="live-demo--releases" class="anchor" href="#live-demo--releases" aria-hidden="true"><span class="octicon octicon-link"></span></a>
+<a href="http://django-descant.rhcloud.com/static/descant/#/">Live Demo</a> | <a href="https://github.com/Aurora0000/descant/releases">Releases</a>
+</h2>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>RESTful API that provides access to <em>all</em> features</li>
+<li>Posting with Markdown formatting.</li>
+<li>Tagging as opposed to categories/forums</li>
+<li>Editing and deleting (for the original poster of the post and staff)</li>
+<li>Responsive front-end UI</li>
+<li>Avatars powered by Gravatar</li>
+<li>Topic locking/unlocking</li>
+<li>Administration Panel (via Django)</li>
+</ul>
+
+<h2>
+<a id="installing" class="anchor" href="#installing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing</h2>
+
+<h3>
+<a id="debian-ubuntu-or-other-apt-based-distributions" class="anchor" href="#debian-ubuntu-or-other-apt-based-distributions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debian, Ubuntu or other apt-based distributions</h3>
+
+<pre><code>sudo apt-get install python3 python3-pip git
+git clone https://github.com/Aurora0000/descant.git
+cd descant
+sudo pip3 install -r requirements.txt
+sudo python3 manage.py migrate
+sudo python3 manage.py runserver
+</code></pre>
+
+<h3>
+<a id="via-dockervagrant" class="anchor" href="#via-dockervagrant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via Docker/Vagrant</h3>
+
+<pre><code>git clone https://github.com/Aurora0000/descant.git
+vagrant up
+</code></pre>
+
+<p><strong>Note:</strong> The Vagrant image does <em>not</em> serve static files. You'll need to configure nginx to serve up static files. <a href="https://gist.github.com/Aurora0000/0af65d3310e2c7d059fb">This</a> code may be helpful.</p>
 
 <h2>
 <a id="developing-with-descant" class="anchor" href="#developing-with-descant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developing with Descant</h2>
 
 <p>If you're interested in developing the front-end of Descant, take a look in static/descant/. Otherwise, you'll find the descant/ and forums/ directories interesting.</p>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Descant maintained by <a href="https://github.com/Aurora0000">Aurora0000</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Aurora0000/descant">Descant</a> is maintained by <a href="https://github.com/Aurora0000">Aurora0000</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-    
+    </section>
 
+  
   </body>
 </html>
+
