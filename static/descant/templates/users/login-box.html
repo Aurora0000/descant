@@ -1,6 +1,6 @@
 <div class="panel">
 	<div class="end">
-		Login
+		{{'LOGIN' | translate}}
 	</div>
 	<div class="body">
 		<div class="margin-fix">
@@ -12,9 +12,9 @@
 					<input type="password" placeholder="Password" class="full" ng-model="pass">
 				</p>
 				<p>
-					<button class="highlight" ng-click="loginCtrl.login(user, pass)">Login</button>
+					<button class="highlight" ng-click="loginCtrl.login(user, pass)">{{'LOGIN' | translate}}</button>
 				</p>
-				<p><a href="#/resetpass">Forgotten your password?</a></p>
+				<p><a href="#/resetpass">{{'FORGOTTEN_PASS' | translate}}</a></p>
 			</form>
 		</div>
 	</div>

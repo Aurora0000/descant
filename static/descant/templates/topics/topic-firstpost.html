@@ -1,4 +1,4 @@
-<p class="load-error" ng-show="topic.error"><i class="icon-warning bigicon"></i> Loading failed.</p>
+<p class="load-error" ng-show="topic.error"><i class="icon-warning bigicon"></i> {{'LOAD_ERROR' | translate}}</p>
 <p class="loading" ng-hide="topic.loaded"><i class="icon-refresh bigicon icon-spin"></i></p>
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
 	<h1 ng-hide="topic.editing">{{ topic.post.title }}</h1>
@@ -26,7 +26,7 @@
 				<tags-input add-from-autocomplete-only="true" ng-model="tag_ids_edited" display-property="name">
 					<auto-complete class="tag-select" source="topic.loadTags()"></auto-complete>
 				</tags-input>
-				<button ng-click="topic.editSubmit()">Save</button>
+				<button ng-click="topic.editSubmit()">{{'SAVE_BUTTON' | translate}}</button>
 			</div>
 		</li>
 	</ul>

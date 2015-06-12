@@ -1,6 +1,6 @@
 <div class="panel">
 	<div class="end">
-		Register
+		{{'REGISTER' | translate}}
 	</div>
 	<div class="body">
 		<div class="margin-fix">
@@ -19,7 +19,7 @@
 					<entropy-indicator class="full" password="pass" percentage="percentage"></entropy-indicator>
 				</p>
 				<p>
-					<button ng-disabled="(percentage < 25 && registerCtrl.enforce) || percentage == null" class="highlight" ng-click="registerCtrl.register(user, email, pass)">Register</button>
+					<button ng-disabled="(percentage < 25 && registerCtrl.enforce) || percentage == null" class="highlight" ng-click="registerCtrl.register(user, email, pass)">{{'REGISTER' | translate}}</button>
 				</p>
 				<p>
 					You will need to activate your account with the email that we're going to send you before you can post.

@@ -11,5 +11,5 @@
 <div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
 <div class="list-edit-boxes" ng-show="postCtrl.editing">
 	<textarea ng-model="contents_edited"></textarea>
-	<button ng-click="postCtrl.editSubmit()">Save</button>
+	<button ng-click="postCtrl.editSubmit()">{{'SAVE_BUTTON' | translate}}</button>
 </div>
