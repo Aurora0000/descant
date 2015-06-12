@@ -6,6 +6,8 @@
 	"EDIT_BUTTON": "Editez",
 	"DELETE_BUTTON": "Effacez",
 	"REPORT_BUTTON": "Dénoncez",
+	"LOCK_BUTTON": "Fermez",
+	"UNLOCK_BUTTON": "Ouvrez",
 	"just_now": "à l'instant",
 	"seconds_ago": "il y a {{time}} secondes",
 	"a_minute_ago": "il y a une minute",
