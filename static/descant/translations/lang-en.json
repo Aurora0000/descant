@@ -28,6 +28,8 @@
     "PASSWD_SECURITY": "Password Security:",
     "NOTICE_ACTIVATE": "Before you can post, you need to activate your account (we're going to send you an email with further instructions).",
     "USERNAME": "Username",
+    "HEADER_TOPICS": "Topics",
+    "HEADER_USERS": "Users",
     "just_now":    "just now",
     "seconds_ago": "{{time}} seconds ago",
     "a_minute_ago": "a minute ago",
