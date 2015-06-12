@@ -28,6 +28,8 @@
     "PASSWD_SECURITY": "Sicherheit des Passworts:",
     "NOTICE_ACTIVATE": "Bevor du einen Beitrag schreiben kannst, musst du deinen Account aktivieren (wir werden dir eine Email mit weiteren Anweisungen senden).",
     "USERNAME": "Benutzername",
+    "HEADER_TOPICS": "Themen",
+    "HEADER_USERS": "Nutzer",
     "just_now":    "gerade jetzt",
     "seconds_ago": "vor {{time}} Sekunden",
     "a_minute_ago": "vor einer Minute",
