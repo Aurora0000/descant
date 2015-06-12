@@ -1,12 +1,12 @@
 <img class="list-avatar" alt="avatar" ng-src="{{post.avatar_url}}">
 <a class="list-author" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
-<span class="list-details"><span class="list-details">posted {{ post.post_date | relativeDate }}</span> <span ng-show="post.was_edited">/ last edited {{post.last_edit_date | relativeDate}}</span></span>
+<span class="list-details"><span class="list-details">{{'POSTED' | translate}} {{ post.post_date | relativeDate }}</span> <span ng-show="post.was_edited">/ {{'LAST_EDITED' | translate}} {{post.last_edit_date | relativeDate}}</span></span>
 <div class="list-mod-buttons" ng-show="post.can_edit">
-	<span class="edit-button" ng-click="postCtrl.edit()"><i class="icon-edit"></i> Edit</span>
-	<span class="delete-button" ng-click="postCtrl.deleteObj()"><i class="icon-delete"></i> Delete</span>
+	<span class="edit-button" ng-click="postCtrl.edit()"><i class="icon-edit"></i> {{'EDIT_BUTTON' | translate}}</span>
+	<span class="delete-button" ng-click="postCtrl.deleteObj()"><i class="icon-delete"></i> {{'DELETE_BUTTON' | translate}}</span>
 </div>
 <div class="list-mod-buttons" ng-hide="post.can_edit">
-	<span class="flag-button" onclick="alert('Not yet!');"><i class="icon-flag"></i> Report</span>
+	<span class="flag-button" onclick="alert('Not yet!');"><i class="icon-flag"></i> {{'REPORT_BUTTON' | translate}}</span>
 </div>
 <div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
 <div class="list-edit-boxes" ng-show="postCtrl.editing">

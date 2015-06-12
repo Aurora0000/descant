@@ -1,5 +1,11 @@
 {
 	"TAGS_ICON": "Les étiquettes",
+	"POSTED": "a posté",
+	"REPLIES": "réponses",
+	"LAST_EDITED": "a édité",
+	"EDIT_BUTTON": "Editez",
+	"DELETE_BUTTON": "Effacez",
+	"REPORT_BUTTON": "Dénoncez",
 	"just_now": "à l'instant",
 	"seconds_ago": "il y a {{time}} secondes",
 	"a_minute_ago": "il y a une minute",
