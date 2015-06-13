@@ -1,19 +1,20 @@
 <p>
-	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight"><i ng-class="{ 'icon-remove': newTopicCtrl.showNTP, 'icon-add': newTopicCtrl.showNTP == false }"></i> {{'NEW_TOPIC' | translate}}</button>
+	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="highlight">
+		<i ng-class="{ 'icon-remove': newTopicCtrl.showNTP, 'icon-add': newTopicCtrl.showNTP == false }"></i> 
+		<span translate="NEW_TOPIC"></span>
+	</button>
 	<tag-list></tag-list>
 </p>
 <div ng-show="newTopicCtrl.showNTP" class="panel" ng-show="newTopicCtrl.auth">
-	<div class="end">
-		{{'NEW_TOPIC' | translate}}
-	</div>
+	<div class="end" translate="NEW_TOPIC"></div>
 	<div class="body">
 		<div class="margin-fix">
 			<form>
 				<p>
-					<input class="full" placeholder="Title" ng-model="title">
+					<input class="full" placeholder="{{'TITLE' | translate}}" ng-model="title">
 				</p>
 				<p>
-					<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
+					<textarea class="full" placeholder="{{'POST' | translate}}" ng-model="contents"></textarea>
 				</p>
 				<p>
 					<tags-input add-from-autocomplete-only="true" ng-model="tag_ids" display-property="name">
@@ -21,7 +22,10 @@
 					</tags-input>
 				</p>
 				<p>
-					<button class="highlight full" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)"><i ng-show="newTopicCtrl.submitting" class="icon-refresh icon-spin"></i> Post</button>
+					<button class="highlight full" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)">
+						<i ng-show="newTopicCtrl.submitting" class="icon-refresh icon-spin"></i> 
+					    <span translate="POST_BUTTON"></span>
+					</button>
 				</p>
 			</form>
 		</div>

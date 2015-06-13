@@ -98,11 +98,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			'en_US': 'en',
     		'en_UK': 'en',
     		'ro_RO': 'ro',
-			'fr_FR': 'fr',
-			'fr_CH': 'fr',
-			'fr_BE': 'fr',
-			'fr_CA': 'fr',
-			'fr_LU': 'fr',
+			'fr_*': 'fr',
 			'de_DE': 'de'
 			//TODO: Other English and German dialects
 		});

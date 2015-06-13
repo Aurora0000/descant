@@ -1,7 +1,5 @@
 <div class="panel">
-	<div class="end">
-		{{'REGISTER' | translate}}
-	</div>
+	<div class="end" translate="REGISTER"></div>
 	<div class="body">
 		<div class="margin-fix">
 			<form>
@@ -15,15 +13,13 @@
 					<input type="password" class="full" placeholder="{{'PASSWORD' | translate}}" ng-model="pass">
 				</p>
 				<p>
-					{{'PASSWD_SECURITY' | translate}} 
+					<span translate="PASSWD_SECURITY"></span> 
 					<entropy-indicator class="full" password="pass" percentage="percentage"></entropy-indicator>
 				</p>
 				<p>
-					<button ng-disabled="(percentage < 25 && registerCtrl.enforce) || percentage == null" class="highlight" ng-click="registerCtrl.register(user, email, pass)">{{'REGISTER' | translate}}</button>
+					<button ng-disabled="(percentage < 25 && registerCtrl.enforce) || percentage == null" class="highlight" ng-click="registerCtrl.register(user, email, pass)" translate="REGISTER"></button>
 				</p>
-				<p>
-					{{'NOTICE_ACTIVATE' | translate}}
-				</p>
+				<p translate="NOTICE_ACTIVATE"></p>
 			</form>
 		</div>
 	</div>
