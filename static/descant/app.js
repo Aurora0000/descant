@@ -138,19 +138,19 @@ angular.module('descant.config', ['ngResource'])
 			'value': 'de'
 		},
 		{
-			'name': 'română',
+			'name': 'rom\u00E2n\u0103',
 			'value': 'ro'
 		},
 		{
-			'name': 'français',
+			'name': 'fran\u00E7ais',
 			'value': 'fr'
 		},
 		{
-			'name': 'español',
+			'name': 'espa\u00F1ol',
 			'value': 'es'
 		},
 		{
-			'name': '简体中文',
+			'name': '\u7B80\u4F53\u4E2D\u6587',
 			'value': 'zh_CN'
 		}
 	]
