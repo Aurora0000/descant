@@ -702,13 +702,19 @@ newTopicApp.directive('newTopicBox', [
     };
   }
 ]);
-var resetCApp = angular.module('descant.directives.resetconf', ['descant.config']);
+var resetCApp = angular.module('descant.directives.resetconf', [
+    'descant.config',
+    'descant.services.templateservice'
+  ]);
 resetCApp.directive('resetPasswordConfirm', [
   '$location',
-  function ($location) {
+  'templateService',
+  function ($location, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/password-reset-confirm.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset-confirm.html';
+      },
       controller: [
         '$rootScope',
         '$http',

@@ -573,12 +573,14 @@ newTopicApp.directive('newTopicBox', function(templateService) {
 		controllerAs: 'newTopicCtrl'
 	};
 });
-var resetCApp = angular.module('descant.directives.resetconf', ['descant.config']);
+var resetCApp = angular.module('descant.directives.resetconf', ['descant.config', 'descant.services.templateservice']);
 
-resetCApp.directive('resetPasswordConfirm', function($location) {
+resetCApp.directive('resetPasswordConfirm', function($location, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/users/password-reset-confirm.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset-confirm.html';	
+		},
 		controller: function($rootScope, $http, descantConfig) {
 			this.reset = function(uid, token, new_pass) {
 				$http.post(descantConfig.backend + "/api/auth/password/reset/confirm/", {"uid": uid, "token": token, "new_password": new_pass}).success(function(data) {
