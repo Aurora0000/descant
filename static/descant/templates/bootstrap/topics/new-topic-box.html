@@ -1,0 +1,33 @@
+<p>
+	<button ng-show="newTopicCtrl.auth" ng-click="newTopicCtrl.toggleNTP()" class="btn btn-primary">
+		<i ng-class="{ 'glyphicon glyphicon-remove': newTopicCtrl.showNTP, 'glyphicon glyphicon-plus': newTopicCtrl.showNTP == false }"></i> 
+		<span translate="NEW_TOPIC"></span>
+	</button>
+	<tag-list></tag-list>
+</p>
+<div ng-show="newTopicCtrl.showNTP" class="panel" ng-show="newTopicCtrl.auth">
+	<div class="end" translate="NEW_TOPIC"></div>
+	<div class="body">
+		<div class="margin-fix">
+			<form>
+				<p>
+					<input class="full" placeholder="{{'TITLE' | translate}}" ng-model="title">
+				</p>
+				<p>
+					<textarea class="full" placeholder="{{'POST' | translate}}" ng-model="contents"></textarea>
+				</p>
+				<p>
+					<tags-input add-from-autocomplete-only="true" ng-model="tag_ids" display-property="name">
+						<auto-complete class="tag-select" source="newTopicCtrl.loadTags()"></auto-complete>
+					</tags-input>
+				</p>
+				<p>
+					<button class="highlight full" ng-click="newTopicCtrl.addTopic(title, contents, tag_ids)">
+						<i ng-show="newTopicCtrl.submitting" class="icon-refresh icon-spin"></i> 
+					    <span translate="POST_BUTTON"></span>
+					</button>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>

@@ -2,7 +2,7 @@ var navApp = angular.module('descant.directives.navbtn', ['descant.services.temp
 
 navApp.directive('navBtn', function(templateService) {
   return {
-    restrict: 'E',
+    restrict: 'AE',
     require: '^routeUrl',
     scope: {
       routeUrl: '@',

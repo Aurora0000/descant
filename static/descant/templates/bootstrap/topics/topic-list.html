@@ -1,0 +1,17 @@
+<div infinite-scroll='topics.updateList()' infinite-scroll-disabled='topics.busy' infinite-scroll-distance='1'>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="topic in topics.list">
+			<h4 class="list-group-item-heading"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></h4>
+			<img class="list-avatar" alt="avatar" ng-src="{{topic.avatar_url}}">
+			<div class="list-stats">
+				<a class="list-author" ng-href="#/user/{{topic.author}}">{{ topic.author_name }}</a>
+				<span class="list-details pull-right"><span translate="POSTED"></span> {{ topic.post_date | relativeDate }} 
+					<span ng-hide="topic.tag_ids.length == 0">/</span>
+					<topic-tags tag-items="topic.tag_ids"></topic-tags> {{ topic.reply_count }} <span translate="REPLIES"></span>
+				</span>
+			</div>
+		</li>
+	</ul>
+	<p class="loading" ng-show="topics.busy" ng-hide="topics.end"><i class="icon-refresh bigicon icon-spin"></i></p>
+	<h2 class="results-end loading" ng-show="topics.end"><i class="icon-check"></i> <span translate="LAST_TOPIC"></span></h2>
+</div>

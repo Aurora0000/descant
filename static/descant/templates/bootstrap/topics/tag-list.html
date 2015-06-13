@@ -1,0 +1,6 @@
+<button ng-click="tagCtrl.toggleBox()" class="btn"><i class="glyphicon glyphicon-tags"></i> <span translate="TAGS_ICON"></span></button>
+<ul class="box tag-list" ng-show="tagCtrl.showTags">
+	<li class="tag-item" ng-repeat="tag in tagCtrl.list">
+		<div class="tag-name"><a ng-href="#/topics/{{tag.id}}">{{ tag.name }}</a></div>
+	</li>
+</ul>

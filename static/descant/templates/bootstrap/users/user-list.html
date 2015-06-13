@@ -1,0 +1,13 @@
+<div infinite-scroll='users.updateList()' infinite-scroll-disabled='users.busy' infinite-scroll-distance='1'>
+	<ul class="box list-list highlight">
+		<li ng-repeat="user in users.list">
+			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
+			<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
+			<div class="list-details">
+				<span class="list-time"><span translate="REGISTERED_ON"></span> {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} <span translate="POSTS"></span></span>
+			</div>
+		</li>
+	</ul>
+	<p class="loading" ng-show="users.busy" ng-hide="users.end"><i class="icon-refresh bigicon icon-spin"></i></p>
+	<h2 class="results-end loading" ng-show="users.end"><i class="icon-check"></i> <span translate="LAST_USER"></span></h2>
+</div>

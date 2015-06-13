@@ -559,7 +559,7 @@ navApp.directive('navBtn', [
   'templateService',
   function (templateService) {
     return {
-      restrict: 'E',
+      restrict: 'AE',
       require: '^routeUrl',
       scope: {
         routeUrl: '@',
