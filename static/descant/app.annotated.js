@@ -13,7 +13,6 @@ var app = angular.module('descant', [
     'descant.directives.authmisc',
     'descant.directives.authstatus',
     'descant.directives.navbtn',
-    'descant.directives.newpost',
     'descant.directives.newtopic',
     'descant.directives.taglist',
     'descant.directives.topiclist',
@@ -26,6 +25,8 @@ var app = angular.module('descant', [
     'descant.directives.resetpass',
     'descant.directives.resetconf',
     'descant.directives.localeselector',
+    'descant.directives.navbar',
+    'descant.directives.newpost',
     'descant.filters.html',
     'descant.controllers.routing',
     'descant.services.templateservice'
@@ -538,6 +539,18 @@ localeApp.directive('localeSelector', [
         }
       ],
       controllerAs: 'ctrl'
+    };
+  }
+]);
+var navBarApp = angular.module('descant.directives.navbar', ['descant.services.templateservice']);
+navBarApp.directive('navBar', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-bar.html';
+      }
     };
   }
 ]);

@@ -1,13 +1,14 @@
 var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTagsInput', 'relativeDate', 'infinite-scroll', 'LocalStorageModule',
 									 'pascalprecht.translate', 'descant.config', 'descant.services.tokenservice', 
 									 'descant.directives.authforms', 'descant.directives.authmisc', 
-									 'descant.directives.authstatus', 'descant.directives.navbtn', 'descant.directives.newpost',
+									 'descant.directives.authstatus', 'descant.directives.navbtn', 
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
 									 'descant.directives.includes', 'descant.directives.resetpass',
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
+									 'descant.directives.navbar', 'descant.directives.newpost',
 									 'descant.filters.html', 'descant.controllers.routing',
 									 'descant.services.templateservice']);
 
@@ -444,6 +445,16 @@ localeApp.directive('localeSelector', function(templateService) {
     	  },
     	  controllerAs: 'ctrl'
     };
+});
+var navBarApp = angular.module('descant.directives.navbar', ['descant.services.templateservice']);
+
+navBarApp.directive('navBar', function(templateService) {
+  return {
+    restrict: 'E',
+    templateUrl: function() {
+      return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-bar.html';
+    }
+  }
 });
 var navApp = angular.module('descant.directives.navbtn', ['descant.services.templateservice']);
 
