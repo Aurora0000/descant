@@ -32,6 +32,8 @@
     "HEADER_TOPICS": "Topics",
     "HEADER_USERS": "Users",
     "TITLE": "Title",
+    "LANGUAGE": "Language: ",
+    "SELECT_LANGUAGE": "Select language",
     "TOPIC_LOCKED": "This topic is locked!",
     "just_now":    "just now",
     "seconds_ago": "{{time}} seconds ago",

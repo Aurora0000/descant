@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'relativeDate', 'infinite-scroll',
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTagsInput', 'relativeDate', 'infinite-scroll', 'LocalStorageModule',
 									 'pascalprecht.translate', 'descant.config', 'descant.services.tokenservice', 
 									 'descant.directives.authforms', 'descant.directives.authmisc', 
 									 'descant.directives.authstatus', 'descant.directives.navbtn', 'descant.directives.newpost',
@@ -7,7 +7,7 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'rel
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
 									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
-									 'descant.directives.resetconf']);
+									 'descant.directives.resetconf', 'descant.directives.localeselector']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
@@ -103,6 +103,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$translateProvider.uniformLanguageTag('java');
   		$translateProvider.determinePreferredLanguage();
 		$translateProvider.fallbackLanguage('en');
+ 		$translateProvider.useLocalStorage();
 });
 
 app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {

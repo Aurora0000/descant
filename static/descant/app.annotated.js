@@ -1,9 +1,11 @@
 var app = angular.module('descant', [
     'ngAnimate',
     'ngRoute',
+    'ngCookies',
     'ngTagsInput',
     'relativeDate',
     'infinite-scroll',
+    'LocalStorageModule',
     'pascalprecht.translate',
     'descant.config',
     'descant.services.tokenservice',
@@ -23,7 +25,8 @@ var app = angular.module('descant', [
     'descant.filters.html',
     'descant.controllers.routing',
     'descant.directives.resetpass',
-    'descant.directives.resetconf'
+    'descant.directives.resetconf',
+    'descant.directives.localeselector'
   ]);
 app.config([
   '$routeProvider',
@@ -100,15 +103,15 @@ app.config([
       'de',
       'ro'
     ], {
-      'en_US': 'en',
-      'en_UK': 'en',
-      'ro_RO': 'ro',
+      'en_*': 'en',
+      'ro_*': 'ro',
       'fr_*': 'fr',
-      'de_DE': 'de'
+      'de_*': 'de'
     });
     $translateProvider.uniformLanguageTag('java');
     $translateProvider.determinePreferredLanguage();
     $translateProvider.fallbackLanguage('en');
+    $translateProvider.useLocalStorage();
   }
 ]);
 app.run([
@@ -458,6 +461,23 @@ entropyApp.directive('entropyIndicator', function () {
       }
     ],
     controllerAs: 'navCtrl'
+  };
+});
+var localeApp = angular.module('descant.directives.localeselector', ['pascalprecht.translate']);
+localeApp.directive('localeSelector', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'templates/settings/locale-selector.html',
+    controller: [
+      '$translate',
+      function ($translate) {
+        this.selectedLanguage = 'select';
+        this.changeLanguage = function () {
+          $translate.use(this.selectedLanguage);
+        };
+      }
+    ],
+    controllerAs: 'ctrl'
   };
 });
 var navApp = angular.module('descant.directives.navbtn', []);
