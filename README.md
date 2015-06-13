@@ -42,6 +42,8 @@ For either option below, if you don't have `git`, instead of `git clone`, downlo
 - German [native, by [@SplittyDev](https://github.com/SplittyDev)]
 - Romanian [native, by [@chronium](https://github.com/chronium)]
 - French [***non-native***, by [@Aurora0000](https://github.com/Aurora0000)]
+- Spanish [***non-native***, by [@Tel-Aviv](https://github.com/Tel-Aviv)]
+- Simplified Chinese [***non-native***, by [@CallumDev](https://github.com/CallumDev)]
 
 ## Developing with Descant
 If you're interested in developing the front-end of Descant, take a look in static/descant/. Otherwise, you'll find the descant/ and forums/ directories interesting.
