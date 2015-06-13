@@ -22,11 +22,12 @@ var app = angular.module('descant', [
     'descant.directives.userlist',
     'descant.directives.userstats',
     'descant.directives.entropyindicator',
-    'descant.filters.html',
-    'descant.controllers.routing',
+    'descant.directives.includes',
     'descant.directives.resetpass',
     'descant.directives.resetconf',
     'descant.directives.localeselector',
+    'descant.filters.html',
+    'descant.controllers.routing',
     'descant.services.templateservice'
   ]);
 app.config([
@@ -500,6 +501,18 @@ entropyApp.directive('entropyIndicator', [
         }
       ],
       controllerAs: 'navCtrl'
+    };
+  }
+]);
+var includesApp = angular.module('descant.directives.includes', ['descant.services.templateservice']);
+includesApp.directive('includes', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/settings/includes.html';
+      }
     };
   }
 ]);

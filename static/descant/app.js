@@ -6,8 +6,9 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTag
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
-									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
+									 'descant.directives.includes', 'descant.directives.resetpass',
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
+									 'descant.filters.html', 'descant.controllers.routing',
 									 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
@@ -415,6 +416,16 @@ entropyApp.directive('entropyIndicator', function(templateService) {
 	},
 	controllerAs: 'navCtrl'
   }
+});
+var includesApp = angular.module('descant.directives.includes', ['descant.services.templateservice']);
+
+includesApp.directive('includes', function(templateService) {
+    return {
+        restrict: 'E',
+        templateUrl: function() {
+          return 'templates/' + templateService.currentTemplateSet() + '/settings/includes.html';  
+        }
+    };
 });
 var localeApp = angular.module('descant.directives.localeselector', ['pascalprecht.translate', 'descant.services.templateservice']);
 
