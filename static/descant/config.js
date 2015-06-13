@@ -8,5 +8,31 @@ angular.module('descant.config', ['ngResource'])
 	'forumName': 'Descant Demo Forum',
 	'apiPaginationLimit': 25,
 	'enforcePasswordEntropy': true,
-	'defaultTemplateSet': 'default'
+	'defaultTemplateSet': 'default',
+	'languages': [
+		{
+			'name': 'English',
+			'value': 'en'
+		},
+		{
+			'name': 'Deutsch',
+			'value': 'de'
+		},
+		{
+			'name': 'română',
+			'value': 'ro'
+		},
+		{
+			'name': 'français',
+			'value': 'fr'
+		},
+		{
+			'name': 'español',
+			'value': 'es'
+		},
+		{
+			'name': '简体中文',
+			'value': 'zh_CN'
+		}
+	]
 });

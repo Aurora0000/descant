@@ -1,10 +1,2 @@
 <span translate="LANGUAGE"></span>
-<select class="form-control" ng-model="ctrl.selectedLanguage" ng-change="ctrl.changeLanguage()">
-  <option value="select" translate="SELECT_LANGUAGE"></option>
-  <option value="en">English</option>
-  <option value="de">Deutsch</option>
-  <option value="ro">română</option>
-  <option value="fr">français</option>
-  <option value="es">español</option>
-  <option value="zh_CN">简体中文</option>
-</select>
+<select class="form-control" ng-model="ctrl.selectedLanguage" ng-options="obj.name for obj in ctrl.arr" ng-change="ctrl.changeLanguage()"></select>

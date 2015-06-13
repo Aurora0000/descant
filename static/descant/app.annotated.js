@@ -142,7 +142,33 @@ angular.module('descant.config', ['ngResource']).config([
   'forumName': 'Descant Demo Forum',
   'apiPaginationLimit': 25,
   'enforcePasswordEntropy': true,
-  'defaultTemplateSet': 'default'
+  'defaultTemplateSet': 'default',
+  'languages': [
+    {
+      'name': 'English',
+      'value': 'en'
+    },
+    {
+      'name': 'Deutsch',
+      'value': 'de'
+    },
+    {
+      'name': 'rom\xe2n\u0103',
+      'value': 'ro'
+    },
+    {
+      'name': 'fran\xe7ais',
+      'value': 'fr'
+    },
+    {
+      'name': 'espa\xf1ol',
+      'value': 'es'
+    },
+    {
+      'name': '\u7b80\u4f53\u4e2d\u6587',
+      'value': 'zh_CN'
+    }
+  ]
 });
 var tagApp = angular.module('descant.services.tagservice', [
     'descant.config',
@@ -531,11 +557,13 @@ localeApp.directive('localeSelector', [
       },
       controller: [
         '$translate',
-        function ($translate) {
+        'descantConfig',
+        function ($translate, descantConfig) {
           this.selectedLanguage = 'select';
           this.changeLanguage = function () {
-            $translate.use(this.selectedLanguage);
+            $translate.use(this.selectedLanguage.value);
           };
+          this.arr = descantConfig.languages;
         }
       ],
       controllerAs: 'ctrl'

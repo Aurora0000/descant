@@ -6,12 +6,14 @@ localeApp.directive('localeSelector', function(templateService) {
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/locale-selector.html';  
         },
-	      controller: function($translate) {
+	      controller: function($translate, descantConfig) {
             this.selectedLanguage = "select"; 
             
             this.changeLanguage = function() {
-                $translate.use(this.selectedLanguage);
+                $translate.use(this.selectedLanguage.value);
             };
+            
+            this.arr = descantConfig.languages;
     	  },
     	  controllerAs: 'ctrl'
     };
