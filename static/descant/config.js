@@ -7,5 +7,6 @@ angular.module('descant.config', ['ngResource'])
 	'version': 0.1,
 	'forumName': 'Descant Demo Forum',
 	'apiPaginationLimit': 25,
-	'enforcePasswordEntropy': true
+	'enforcePasswordEntropy': true,
+	'defaultTemplateSet': 'default'
 });

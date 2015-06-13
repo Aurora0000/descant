@@ -1,13 +1,15 @@
-var userStatsApp = angular.module('descant.directives.userstats', ['descant.config']);
+var userStatsApp = angular.module('descant.directives.userstats', ['descant.config', 'descant.services.templateservice']);
 
 
-userListApp.directive('userStats', function(descantConfig, tokenService) {
+userListApp.directive('userStats', function(descantConfig, tokenService, templateService) {
 	return {
 		restrict: 'E',
 		scope: {
 			userId: '@'
 		},
-		templateUrl: 'templates/users/user-stats.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/user-stats.html';	
+		},
 		controller: function($http, $scope) {
 			var userCtrl = this;
 			tokenService.getAuthStatus().then(function(data) {

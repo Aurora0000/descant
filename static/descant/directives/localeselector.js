@@ -1,9 +1,11 @@
-var localeApp = angular.module('descant.directives.localeselector', ['pascalprecht.translate']);
+var localeApp = angular.module('descant.directives.localeselector', ['pascalprecht.translate', 'descant.services.templateservice']);
 
-localeApp.directive('localeSelector', function() {
+localeApp.directive('localeSelector', function(templateService) {
     return {
         restrict: 'E',
-        templateUrl: 'templates/settings/locale-selector.html',
+        templateUrl: function() {
+          return 'templates/' + templateService.currentTemplateSet() + '/settings/locale-selector.html';  
+        },
 	      controller: function($translate) {
             this.selectedLanguage = "select"; 
             

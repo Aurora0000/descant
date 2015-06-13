@@ -1,13 +1,15 @@
-var entropyApp = angular.module('descant.directives.entropyindicator', []);
+var entropyApp = angular.module('descant.directives.entropyindicator', ['descant.services.templateservice']);
 
-entropyApp.directive('entropyIndicator', function() {
+entropyApp.directive('entropyIndicator', function(templateService) {
   return {
     restrict: 'E',
     scope: {
     	password: '=',
 		percentage: '='
     },
-    templateUrl: 'templates/users/password-entropy-indicator.html',
+    templateUrl: function() {
+		return 'templates/' + templateService.currentTemplateSet() + '/users/password-entropy-indicator.html';	
+	},
 	controller: function($scope) {
 		$scope.$watch('password', function(newVal, oldVal) {
 			if ($scope.password == null) {

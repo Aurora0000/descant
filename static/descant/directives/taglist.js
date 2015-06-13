@@ -1,10 +1,12 @@
-var tagApp = angular.module('descant.directives.taglist', ['descant.config', 'descant.services.tagservice']);
+var tagApp = angular.module('descant.directives.taglist', ['descant.config', 'descant.services.tagservice', 'descant.services.templateservice']);
 
-tagApp.directive('tagList', function($location, tagService) {
+tagApp.directive('tagList', function(tagService, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topics/tag-list.html',
-		controller: function($rootScope, $http, descantConfig) {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/topics/tag-list.html';	
+		},
+		controller: function($rootScope, $http, $location, descantConfig) {
 			this.showTags = false;
 			this.toggleBox = function() {
 				if (this.showTags == true) {

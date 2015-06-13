@@ -26,7 +26,8 @@ var app = angular.module('descant', [
     'descant.controllers.routing',
     'descant.directives.resetpass',
     'descant.directives.resetconf',
-    'descant.directives.localeselector'
+    'descant.directives.localeselector',
+    'descant.services.templateservice'
   ]);
 app.config([
   '$routeProvider',
@@ -139,7 +140,8 @@ angular.module('descant.config', ['ngResource']).config([
   'version': 0.1,
   'forumName': 'Descant Demo Forum',
   'apiPaginationLimit': 25,
-  'enforcePasswordEntropy': true
+  'enforcePasswordEntropy': true,
+  'defaultTemplateSet': 'default'
 });
 var tagApp = angular.module('descant.services.tagservice', [
     'descant.config',
@@ -175,6 +177,28 @@ tagApp.service('tagService', [
     this.getAllTags = function () {
       this.tags = Tag.query();
       return this.tags;
+    };
+  }
+]);
+var tplApp = angular.module('descant.services.templateservice', [
+    'descant.config',
+    'LocalStorageModule'
+  ]);
+tplApp.service('templateService', [
+  'descantConfig',
+  'localStorageService',
+  function (descantConfig, localStorageService) {
+    this.currentTemplateSet = function () {
+      var localStoreTpl = localStorageService.get('templateSet');
+      if (localStoreTpl != null) {
+        return localStoreTpl;
+      } else {
+        this.setTemplateSet(descantConfig.defaultTemplateSet);
+        return descantConfig.defaultTemplateSet;
+      }
+    };
+    this.setTemplateSet = function (newSet) {
+      localStorageService.set('templateSet', newSet);
     };
   }
 ]);
@@ -285,38 +309,47 @@ tokenApp.service('tokenService', [
 ]);
 var authFormApp = angular.module('descant.directives.authforms', [
     'descant.config',
-    'descant.services.tokenservice'
+    'descant.services.tokenservice',
+    'descant.services.templateservice'
   ]);
 authFormApp.directive('loginBox', [
   'tokenService',
-  '$location',
-  function (tokenService, $location) {
+  'templateService',
+  function (tokenService, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/login-box.html',
-      controller: function () {
-        this.login = function (user, pass) {
-          tokenService.login(user, pass).then(function (data) {
-            $location.path('/');
-          }, function (data) {
-            alert('Invalid user/password!');
-          });
-        };
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/login-box.html';
       },
+      controller: [
+        '$location',
+        function ($location) {
+          this.login = function (user, pass) {
+            tokenService.login(user, pass).then(function (data) {
+              $location.path('/');
+            }, function (data) {
+              alert('Invalid user/password!');
+            });
+          };
+        }
+      ],
       controllerAs: 'loginCtrl'
     };
   }
 ]);
 authFormApp.directive('registerBox', [
-  '$location',
-  function ($location) {
+  'templateService',
+  function (templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/register-box.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/register-box.html';
+      },
       controller: [
         '$http',
+        '$location',
         'descantConfig',
-        function ($http, descantConfig) {
+        function ($http, $location, descantConfig) {
           this.enforce = descantConfig.enforcePasswordEntropy;
           this.register = function (user, email, pass) {
             var req = $http.post(descantConfig.backend + '/api/auth/register/', {
@@ -363,7 +396,6 @@ authMiscApp.directive('emitToken', [
   function (tokenService) {
     return {
       restrict: 'E',
-      template: '',
       controller: function () {
         tokenService.setHeader();
       }
@@ -372,16 +404,20 @@ authMiscApp.directive('emitToken', [
 ]);
 var authApp = angular.module('descant.directives.authstatus', [
     'descant.config',
-    'descant.services.tokenservice'
+    'descant.services.tokenservice',
+    'descant.services.templateservice'
   ]);
 authApp.directive('authStatus', [
   '$http',
   'tokenService',
   'descantConfig',
-  function ($http, tokenService, descantConfig) {
+  'templateService',
+  function ($http, tokenService, descantConfig, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/auth-status.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/auth-status.html';
+      },
       controller: [
         '$http',
         '$scope',
@@ -409,118 +445,140 @@ authApp.directive('authStatus', [
     };
   }
 ]);
-var entropyApp = angular.module('descant.directives.entropyindicator', []);
-entropyApp.directive('entropyIndicator', function () {
-  return {
-    restrict: 'E',
-    scope: {
-      password: '=',
-      percentage: '='
-    },
-    templateUrl: 'templates/users/password-entropy-indicator.html',
-    controller: [
-      '$scope',
-      function ($scope) {
-        $scope.$watch('password', function (newVal, oldVal) {
-          if ($scope.password == null) {
-            return;
-          }
-          // Math.log2 is only really supported in ES6, but
-          // this polyfill works well enough
-          Math.log2 = Math.log2 || function (x) {
-            return Math.log(x) / Math.LN2;
-          };
-          var numberRegex = /\d/;
-          var lowerRegex = /[a-z]/;
-          var upperRegex = /[A-Z]/;
-          var symbolRegex = /\W/;
-          var charSpace = 0;
-          if (numberRegex.test($scope.password)) {
-            charSpace += 10;
-          }
-          if (lowerRegex.test($scope.password)) {
-            charSpace += 26;
-          }
-          if (upperRegex.test($scope.password)) {
-            charSpace += 26;
-          }
-          if (symbolRegex.test($scope.password)) {
-            charSpace += 32;
-          }
-          var charEntropy = Math.log2(charSpace);
-          $scope.entropy = charEntropy * $scope.password.length;
-          $scope.percentage = $scope.entropy - 20;
-          if ($scope.entropy < 20) {
-            // All passwords should have more than 20 bits of entropy.
-            $scope.percentage = 0;
-          } else if ($scope.entropy > 120) {
-            // 120 bits of entropy? Congratulations!
-            $scope.percentage = 100;
-          }
-        });
-      }
-    ],
-    controllerAs: 'navCtrl'
-  };
-});
-var localeApp = angular.module('descant.directives.localeselector', ['pascalprecht.translate']);
-localeApp.directive('localeSelector', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/settings/locale-selector.html',
-    controller: [
-      '$translate',
-      function ($translate) {
-        this.selectedLanguage = 'select';
-        this.changeLanguage = function () {
-          $translate.use(this.selectedLanguage);
-        };
-      }
-    ],
-    controllerAs: 'ctrl'
-  };
-});
-var navApp = angular.module('descant.directives.navbtn', []);
-navApp.directive('navBtn', function () {
-  return {
-    restrict: 'E',
-    require: '^routeUrl',
-    scope: {
-      routeUrl: '@',
-      routeName: '@',
-      routeIcon: '@'
-    },
-    templateUrl: 'templates/nav/nav-btn.html',
-    controller: [
-      '$scope',
-      '$location',
-      function ($scope, $location) {
-        this.isActive = function (route) {
-          return route == $location.path();
-        };
-      }
-    ],
-    controllerAs: 'navCtrl'
-  };
-});
-var newPostApp = angular.module('descant.directives.newpost', [
-    'descant.config',
-    'descant.services.tokenservice'
-  ]);
-newPostApp.directive('newPostBox', [
-  '$location',
-  function ($location) {
+var entropyApp = angular.module('descant.directives.entropyindicator', ['descant.services.templateservice']);
+entropyApp.directive('entropyIndicator', [
+  'templateService',
+  function (templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/posts/new-post-box.html',
+      scope: {
+        password: '=',
+        percentage: '='
+      },
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/password-entropy-indicator.html';
+      },
+      controller: [
+        '$scope',
+        function ($scope) {
+          $scope.$watch('password', function (newVal, oldVal) {
+            if ($scope.password == null) {
+              return;
+            }
+            // Math.log2 is only really supported in ES6, but
+            // this polyfill works well enough
+            Math.log2 = Math.log2 || function (x) {
+              return Math.log(x) / Math.LN2;
+            };
+            var numberRegex = /\d/;
+            var lowerRegex = /[a-z]/;
+            var upperRegex = /[A-Z]/;
+            var symbolRegex = /\W/;
+            var charSpace = 0;
+            if (numberRegex.test($scope.password)) {
+              charSpace += 10;
+            }
+            if (lowerRegex.test($scope.password)) {
+              charSpace += 26;
+            }
+            if (upperRegex.test($scope.password)) {
+              charSpace += 26;
+            }
+            if (symbolRegex.test($scope.password)) {
+              charSpace += 32;
+            }
+            var charEntropy = Math.log2(charSpace);
+            $scope.entropy = charEntropy * $scope.password.length;
+            $scope.percentage = $scope.entropy - 20;
+            if ($scope.entropy < 20) {
+              // All passwords should have more than 20 bits of entropy.
+              $scope.percentage = 0;
+            } else if ($scope.entropy > 120) {
+              // 120 bits of entropy? Congratulations!
+              $scope.percentage = 100;
+            }
+          });
+        }
+      ],
+      controllerAs: 'navCtrl'
+    };
+  }
+]);
+var localeApp = angular.module('descant.directives.localeselector', [
+    'pascalprecht.translate',
+    'descant.services.templateservice'
+  ]);
+localeApp.directive('localeSelector', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/settings/locale-selector.html';
+      },
+      controller: [
+        '$translate',
+        function ($translate) {
+          this.selectedLanguage = 'select';
+          this.changeLanguage = function () {
+            $translate.use(this.selectedLanguage);
+          };
+        }
+      ],
+      controllerAs: 'ctrl'
+    };
+  }
+]);
+var navApp = angular.module('descant.directives.navbtn', ['descant.services.templateservice']);
+navApp.directive('navBtn', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      require: '^routeUrl',
+      scope: {
+        routeUrl: '@',
+        routeName: '@',
+        routeIcon: '@'
+      },
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-btn.html';
+      },
+      controller: [
+        '$scope',
+        '$location',
+        function ($scope, $location) {
+          this.isActive = function (route) {
+            return route == $location.path();
+          };
+        }
+      ],
+      controllerAs: 'navCtrl'
+    };
+  }
+]);
+var newPostApp = angular.module('descant.directives.newpost', [
+    'descant.config',
+    'descant.services.tokenservice',
+    'descant.services.templateservice'
+  ]);
+newPostApp.directive('newPostBox', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/posts/new-post-box.html';
+      },
       scope: { postData: '=' },
       controller: [
         'tokenService',
         '$rootScope',
+        '$location',
         '$scope',
         '$http',
         'descantConfig',
-        function (tokenService, $rootScope, $scope, $http, descantConfig) {
+        function (tokenService, $rootScope, $location, $scope, $http, descantConfig) {
           this.submitting = false;
           this.auth = tokenService.authenticated;
           var ntb = this;
@@ -556,21 +614,25 @@ newPostApp.directive('newPostBox', [
 ]);
 var newTopicApp = angular.module('descant.directives.newtopic', [
     'descant.config',
-    'descant.services.tokenservice'
+    'descant.services.tokenservice',
+    'descant.services.templateservice'
   ]);
 newTopicApp.directive('newTopicBox', [
-  '$location',
-  function ($location) {
+  'templateService',
+  function (templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/topics/new-topic-box.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/topics/new-topic-box.html';
+      },
       controller: [
         'tokenService',
         'tagService',
         '$rootScope',
+        '$location',
         '$http',
         'descantConfig',
-        function (tokenService, tagService, $rootScope, $http, descantConfig) {
+        function (tokenService, tagService, $rootScope, $location, $http, descantConfig) {
           this.auth = tokenService.authenticated;
           this.submitting = false;
           var ntb = this;
@@ -644,18 +706,24 @@ resetCApp.directive('resetPasswordConfirm', [
     };
   }
 ]);
-var resetApp = angular.module('descant.directives.resetpass', ['descant.config']);
+var resetApp = angular.module('descant.directives.resetpass', [
+    'descant.config',
+    'descant.services.templateservice'
+  ]);
 resetApp.directive('resetPassword', [
-  '$location',
-  function ($location) {
+  'templateService',
+  function (templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/password-reset.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset.html';
+      },
       controller: [
         '$rootScope',
         '$http',
+        '$location',
         'descantConfig',
-        function ($rootScope, $http, descantConfig) {
+        function ($rootScope, $http, $location, descantConfig) {
           this.reset = function (email) {
             $http.post(descantConfig.backend + '/api/auth/password/reset/', { 'email': email }).success(function (data) {
               $location.path('/');
@@ -671,20 +739,24 @@ resetApp.directive('resetPassword', [
 ]);
 var tagApp = angular.module('descant.directives.taglist', [
     'descant.config',
-    'descant.services.tagservice'
+    'descant.services.tagservice',
+    'descant.services.templateservice'
   ]);
 tagApp.directive('tagList', [
-  '$location',
   'tagService',
-  function ($location, tagService) {
+  'templateService',
+  function (tagService, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/topics/tag-list.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/topics/tag-list.html';
+      },
       controller: [
         '$rootScope',
         '$http',
+        '$location',
         'descantConfig',
-        function ($rootScope, $http, descantConfig) {
+        function ($rootScope, $http, $location, descantConfig) {
           this.showTags = false;
           this.toggleBox = function () {
             if (this.showTags == true) {
@@ -704,13 +776,19 @@ tagApp.directive('tagList', [
     };
   }
 ]);
-var topicListApp = angular.module('descant.directives.topiclist', ['descant.config']);
+var topicListApp = angular.module('descant.directives.topiclist', [
+    'descant.config',
+    'descant.services.templateservice'
+  ]);
 topicListApp.directive('topicList', [
   'descantConfig',
-  function (descantConfig) {
+  'templateService',
+  function (descantConfig, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/topics/topic-list.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-list.html';
+      },
       scope: { url: '@' },
       controller: [
         '$http',
@@ -781,13 +859,19 @@ topicListApp.directive('topicList', [
     };
   }
 ]);
-var topicTagsApp = angular.module('angular.directives.topictags', ['descant.services.tagservice']);
+var topicTagsApp = angular.module('angular.directives.topictags', [
+    'descant.services.tagservice',
+    'descant.services.templateservice'
+  ]);
 tagApp.directive('topicTags', [
   'tagService',
-  function (tagService) {
+  'templateService',
+  function (tagService, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/topics/topic-tags.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-tags.html';
+      },
       scope: { tagItems: '=' },
       controller: [
         '$scope',
@@ -814,14 +898,18 @@ tagApp.directive('topicTags', [
 ]);
 var topicViewApp = angular.module('descant.directives.topicview', [
     'descant.config',
-    'descant.filters.html'
+    'descant.filters.html',
+    'descant.services.templateservice'
   ]);
 topicViewApp.directive('topicFirstpost', [
   'descantConfig',
-  function (descantConfig) {
+  'templateService',
+  function (descantConfig, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/topics/topic-firstpost.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-firstpost.html';
+      },
       scope: {
         postData: '=',
         topicId: '='
@@ -915,54 +1003,62 @@ topicViewApp.directive('topicFirstpost', [
     };
   }
 ]);
-topicViewApp.directive('replyItem', function () {
-  return {
-    restrict: 'E',
-    templateUrl: 'templates/posts/reply-item.html',
-    scope: { post: '=' },
-    controller: [
-      '$http',
-      '$scope',
-      '$route',
-      'descantConfig',
-      'tokenService',
-      function ($http, $scope, $route, descantConfig, tokenService) {
-        this.editing = false;
-        if (tokenService.user != null) {
-          $scope.user = tokenService.user.data.id;
-        } else {
-          $scope.user = -1;
-        }
-        this.edit = function () {
-          $scope.contents_edited = $scope.post.contents;
-          this.editing = !this.editing;
-        };
-        this.editSubmit = function () {
-          var req = $http.put(descantConfig.backend + '/api/v0.1/posts/' + $scope.post.id + '/', { 'contents': $scope.contents_edited });
-          req.success(function (data) {
-            $route.reload();
-          });
-        };
-        this.deleteObj = function () {
-          var del = $http.delete(descantConfig.backend + '/api/v0.1/posts/' + $scope.post.id + '/');
-          del.success(function (data) {
-            $route.reload();
-          });
-          del.error(function (data) {
-            alert('Unexpected error!');
-          });
-        };
-      }
-    ],
-    controllerAs: 'postCtrl'
-  };
-});
-topicViewApp.directive('postList', [
-  'descantConfig',
-  function (descantConfig) {
+topicViewApp.directive('replyItem', [
+  'templateService',
+  function (templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/posts/reply-list.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-item.html';
+      },
+      scope: { post: '=' },
+      controller: [
+        '$http',
+        '$scope',
+        '$route',
+        'descantConfig',
+        'tokenService',
+        function ($http, $scope, $route, descantConfig, tokenService) {
+          this.editing = false;
+          if (tokenService.user != null) {
+            $scope.user = tokenService.user.data.id;
+          } else {
+            $scope.user = -1;
+          }
+          this.edit = function () {
+            $scope.contents_edited = $scope.post.contents;
+            this.editing = !this.editing;
+          };
+          this.editSubmit = function () {
+            var req = $http.put(descantConfig.backend + '/api/v0.1/posts/' + $scope.post.id + '/', { 'contents': $scope.contents_edited });
+            req.success(function (data) {
+              $route.reload();
+            });
+          };
+          this.deleteObj = function () {
+            var del = $http.delete(descantConfig.backend + '/api/v0.1/posts/' + $scope.post.id + '/');
+            del.success(function (data) {
+              $route.reload();
+            });
+            del.error(function (data) {
+              alert('Unexpected error!');
+            });
+          };
+        }
+      ],
+      controllerAs: 'postCtrl'
+    };
+  }
+]);
+topicViewApp.directive('postList', [
+  'descantConfig',
+  'templateService',
+  function (descantConfig, templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-list.html';
+      },
       scope: { url: '@' },
       controller: [
         '$http',
@@ -1086,15 +1182,21 @@ userListApp.directive('userList', [
     };
   }
 ]);
-var userStatsApp = angular.module('descant.directives.userstats', ['descant.config']);
+var userStatsApp = angular.module('descant.directives.userstats', [
+    'descant.config',
+    'descant.services.templateservice'
+  ]);
 userListApp.directive('userStats', [
   'descantConfig',
   'tokenService',
-  function (descantConfig, tokenService) {
+  'templateService',
+  function (descantConfig, tokenService, templateService) {
     return {
       restrict: 'E',
       scope: { userId: '@' },
-      templateUrl: 'templates/users/user-stats.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/user-stats.html';
+      },
       controller: [
         '$http',
         '$scope',

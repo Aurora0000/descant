@@ -1,10 +1,12 @@
-var authFormApp = angular.module('descant.directives.authforms', ['descant.config', 'descant.services.tokenservice']);
+var authFormApp = angular.module('descant.directives.authforms', ['descant.config', 'descant.services.tokenservice', 'descant.services.templateservice']);
 
-authFormApp.directive('loginBox', ['tokenService', '$location', function(tokenService, $location) {
+authFormApp.directive('loginBox', function(tokenService, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/users/login-box.html',
-		controller: function() {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/login-box.html';	
+		},
+		controller: function($location) {
 			this.login = function(user, pass) {
 				tokenService.login(user, pass).then(function(data){
 					$location.path('/');
@@ -15,13 +17,15 @@ authFormApp.directive('loginBox', ['tokenService', '$location', function(tokenSe
 		},
 		controllerAs: 'loginCtrl'
 	};
-}]);
+});
 
-authFormApp.directive('registerBox', function($location) {
+authFormApp.directive('registerBox', function(templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/users/register-box.html',
-		controller: function($http, descantConfig) {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/register-box.html';
+		},
+		controller: function($http, $location, descantConfig) {
 			this.enforce = descantConfig.enforcePasswordEntropy;
 			
 			this.register = function(user, email, pass) {

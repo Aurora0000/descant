@@ -1,10 +1,12 @@
-var resetApp = angular.module('descant.directives.resetpass', ['descant.config']);
+var resetApp = angular.module('descant.directives.resetpass', ['descant.config', 'descant.services.templateservice']);
 
-resetApp.directive('resetPassword', function($location) {
+resetApp.directive('resetPassword', function(templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/users/password-reset.html',
-		controller: function($rootScope, $http, descantConfig) {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset.html';	
+		},
+		controller: function($rootScope, $http, $location, descantConfig) {
 			this.reset = function(email) {
 				$http.post(descantConfig.backend + "/api/auth/password/reset/", {"email": email}).success(function(data) {
 					$location.path("/");

@@ -1,9 +1,11 @@
-var topicViewApp = angular.module('descant.directives.topicview', ['descant.config', 'descant.filters.html']);
+var topicViewApp = angular.module('descant.directives.topicview', ['descant.config', 'descant.filters.html', 'descant.services.templateservice']);
 
-topicViewApp.directive('topicFirstpost', function(descantConfig) {
+topicViewApp.directive('topicFirstpost', function(descantConfig, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topics/topic-firstpost.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-firstpost.html';	
+		},
 		scope: {
 			postData: '=',
 			topicId: '='	
@@ -82,10 +84,12 @@ topicViewApp.directive('topicFirstpost', function(descantConfig) {
 	}
 });
 
-topicViewApp.directive('replyItem', function() {
+topicViewApp.directive('replyItem', function(templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/posts/reply-item.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-item.html';	
+		},
 		scope: {
 			post: '='	
 		},
@@ -126,10 +130,12 @@ topicViewApp.directive('replyItem', function() {
 	}
 });
 
-topicViewApp.directive('postList', function(descantConfig) {
+topicViewApp.directive('postList', function(descantConfig, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/posts/reply-list.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-list.html';	
+		},
 		scope: {
 			url: '@'	
 		},

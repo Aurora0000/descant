@@ -1,9 +1,11 @@
-var topicTagsApp = angular.module('angular.directives.topictags', ['descant.services.tagservice']);
+var topicTagsApp = angular.module('angular.directives.topictags', ['descant.services.tagservice', 'descant.services.templateservice']);
 
-tagApp.directive('topicTags', function (tagService) {
+tagApp.directive('topicTags', function (tagService, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topics/topic-tags.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-tags.html';
+		},
 		scope: {
 			tagItems: '=',
 		},

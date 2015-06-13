@@ -7,7 +7,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTag
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
 									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
-									 'descant.directives.resetconf', 'descant.directives.localeselector']);
+									 'descant.directives.resetconf', 'descant.directives.localeselector',
+									 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
