@@ -72,7 +72,6 @@ app.config([
       templateUrl: 'pages/logout.html'
     }).when('/activate', {
       title: 'Account Activation',
-      template: '',
       controller: 'ActivateController'
     }).when('/registered', {
       title: 'Registration Succeeded!',
