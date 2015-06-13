@@ -1,6 +1,6 @@
 <div infinite-scroll='posts.updateList()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='1'>
-	<ul class="box list-list">
-		<li class="list-item" ng-repeat="post in posts.list">
+	<ul class="box list-group">
+		<li class="list-group-item" ng-repeat="post in posts.list">
 			<reply-item post="post"></reply-item>
 		</li>
 	</ul>

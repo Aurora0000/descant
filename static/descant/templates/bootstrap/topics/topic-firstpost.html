@@ -3,23 +3,25 @@
 <div class="topic-op" ng-show="topic.loaded" ng-hide="topic.error">
 	<h1 ng-hide="topic.editing">{{ topic.post.title }}</h1>
 	<textarea ng-show="topic.editing" class="full" ng-model="title_edited"></textarea>
-	<ul class="box list-list">
-		<li class="list-item first-post">
+	<ul class="box list-group">
+		<li class="list-group-item first-post">
 			<img class="list-avatar" alt="avatar" ng-src="{{topic.post.avatar_url}}">
-			<div class="list-stats">
+			<div class="author-name">
 				{{ topic.post.author_name }} 
+			</div>
+			<div class="list-stats">
 				<span class="list-details"><span translate="POSTED"></span> {{ topic.post.post_date | relativeDate }}
 					<span ng-show="topic.post.was_edited"> / <span translate="LAST_EDITED"></span> {{ topic.post.last_edit_date | relativeDate }}</span>	
 				</span>
 			</div>
 			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
-				<span class="edit-button" ng-click="topic.edit()"><i class="icon-edit"></i> <span translate="EDIT_BUTTON"></span></span>
-				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="icon-lock"></i> <span translate="LOCK_BUTTON"></span></span>
-				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="icon-lock_open"></i> <span translate="UNLOCK_BUTTON"></span></span>
-				<span class="delete-button" ng-click="topic.deleteObj()"><i class="icon-delete"></i> <span translate="DELETE_BUTTON"></span></span>
+				<span class="edit-button" ng-click="topic.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></span>
+				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="glyphicon glyphicon-lock"></i> <span translate="LOCK_BUTTON"></span></span>
+				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="glyphicon glyphicon-lock"></i> <span translate="UNLOCK_BUTTON"></span></span>
+				<span class="delete-button" ng-click="topic.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></span>
 			</div>
 			<div class="list-mod-buttons" ng-hide="topic.post.can_edit">
-				<span class="flag-button" onclick="alert('Not yet!');"><i class="icon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
+				<span class="flag-button" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
 			</div>
 			<div class="list-contents" ng-hide="topic.editing" ng-bind-html="topic.post.contents_marked_up | html"></div>
 			<div ng-show="topic.editing">

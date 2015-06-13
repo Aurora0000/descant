@@ -1,19 +1,15 @@
 <div class="panel">
 	<div class="end" translate="LOGIN"></div>
 	<div class="body">
-		<div class="margin-fix">
 			<form>
-				<p>
-					<input class="full" placeholder="{{'USERNAME' | translate}}" ng-model="user">
-				</p>
-				<p>
-					<input type="password" placeholder="{{'PASSWORD' | translate}}" class="full" ng-model="pass">
-				</p>
-				<p>
-					<button class="highlight" ng-click="loginCtrl.login(user, pass)" translate="LOGIN"></button>
-				</p>
+				<div class="form-group">
+					<input class="form-control" placeholder="{{'USERNAME' | translate}}" ng-model="user">
+				</div>
+				<div class="form-group">
+					<input type="password" placeholder="{{'PASSWORD' | translate}}" class="form-control" ng-model="pass">
+				</div>
+				<button class="btn btn-primary" ng-click="loginCtrl.login(user, pass)" translate="LOGIN"></button>
 				<p><a href="#/resetpass" translate="FORGOTTEN_PASS"></a></p>
 			</form>
-		</div>
 	</div>
 </div>

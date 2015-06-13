@@ -1,17 +1,16 @@
-<h2 class="locked-msg" ng-show="postData.is_locked"><i class="icon-lock"></i> <span translate="TOPIC_LOCKED"></span></h2>
+<h2 class="text-center" ng-show="postData.is_locked"><i class="glyphicon glyphicon-lock"></i> <span translate="TOPIC_LOCKED"></span></h2>
 <button ng-show="newPostCtrl.auth && !postData.is_locked" ng-click="newPostCtrl.toggleNTP()" class="btn btn-primary">
 	<i ng-class="{ 'glyphicon glyphicon-remove': newPostCtrl.showNTP, 'glyphicon glyphicon-plus': newPostCtrl.showNTP == false }"></i> 
 	<span translate="REPLY_BUTTON"></span>
 </button>
 </p>
 <div ng-show="newPostCtrl.showNTP && newPostCtrl.auth" class="panel">
-	<div class="end" translate="REPLY_BUTTON"></div>
 	<form>
 		<div class="form-group">
-			<textarea class="full" class="form-control" rows="3" placeholder="Post" ng-model="contents"></textarea>
+			<textarea class="form-control" rows="3" placeholder="Post" ng-model="contents"></textarea>
 		</div>
 		<div class="form-group">
-			<button class="highlight full" class="form-control" ng-click="newPostCtrl.addReply(contents)"><i ng-show="newPostCtrl.submitting" class="icon-refresh icon-spin"></i> <span translate="POST_BUTTON"></span></button>
+			<button class="btn btn-primary form-control" ng-click="newPostCtrl.addReply(contents)"><i ng-show="newPostCtrl.submitting" class="glyphicon glyphicon-sort"></i> <span translate="POST_BUTTON"></span></button>
 		</div>
 	</form>
 </div>
