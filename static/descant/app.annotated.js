@@ -1162,13 +1162,19 @@ topicViewApp.directive('postList', [
     };
   }
 ]);
-var userListApp = angular.module('descant.directives.userlist', ['descant.config']);
+var userListApp = angular.module('descant.directives.userlist', [
+    'descant.config',
+    'descant.services.templateservice'
+  ]);
 userListApp.directive('userList', [
   'descantConfig',
-  function (descantConfig) {
+  'templateService',
+  function (descantConfig, templateService) {
     return {
       restrict: 'E',
-      templateUrl: 'templates/users/user-list.html',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/users/user-list.html';
+      },
       controller: [
         '$http',
         function ($http) {

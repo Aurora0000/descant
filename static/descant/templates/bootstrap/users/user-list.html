@@ -1,6 +1,6 @@
 <div infinite-scroll='users.updateList()' infinite-scroll-disabled='users.busy' infinite-scroll-distance='1'>
-	<ul class="box list-list highlight">
-		<li ng-repeat="user in users.list">
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="user in users.list">
 			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
 			<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
 			<div class="list-details">
