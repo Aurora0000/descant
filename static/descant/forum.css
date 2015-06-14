@@ -1,10 +1,6 @@
 @import url(framework.css);
 @import url(tags.css);
 
-@-ms-viewport {
-	width: device-width;
-}
-
 body {
 	overflow-y: scroll;
 }
@@ -80,20 +76,6 @@ div.container {
 	text-decoration: none;
 }
 
-nav-btn>a {
-	text-decoration: none;
-	color: white;
-}
-
-auth-status>span>a {
-	color: white;
-}
-
-auth-status a {
-	text-decoration: none;
-	color: white;
-}
-
 div.loading, div.load-error, h2.loading, p.loading, p.load-error, .locked-msg {
 	text-align: center;
 }
@@ -105,15 +87,6 @@ div.loading, div.load-error, h2.loading, p.loading, p.load-error, .locked-msg {
 
 input.ng-invalid {
 	border: 3px solid #ff0000;
-}
-
-nav-btn, auth-status {
-	padding: 0!important;
-}
-
-nav-btn>a, auth-status>span {
-	padding: 10px 20px!important;
-	display: inline-block;
 }
 
 @media only screen and (max-width: 450px) {
