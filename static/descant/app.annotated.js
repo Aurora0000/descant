@@ -1,5 +1,4 @@
 var app = angular.module('descant', [
-    'ngAnimate',
     'ngRoute',
     'ngCookies',
     'ngTagsInput',

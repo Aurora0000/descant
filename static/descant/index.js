@@ -1,4 +1,4 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTagsInput', 'relativeDate', 'infinite-scroll', 'LocalStorageModule',
+var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'relativeDate', 'infinite-scroll', 'LocalStorageModule',
 									 'pascalprecht.translate', 'descant.config', 'descant.services.tokenservice', 
 									 'descant.directives.authforms', 'descant.directives.authmisc', 
 									 'descant.directives.authstatus', 'descant.directives.navbtn', 
