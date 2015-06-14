@@ -5,7 +5,6 @@ var concat = require('gulp-concat-util');
 var uglify = require('gulp-uglify');
 var gulpSequence = require('gulp-sequence');
 var ngAnnotate = require('gulp-ng-annotate');
-var minifyCss = require('gulp-minify-css');
  
 gulp.task('js', function () {
   gulp.src(['vendor/*.js', 'index.js', 'config.cpl.js', 'services/*.js', 'directives/*.js', 'controllers/*.js', 'filters/*.js'])
