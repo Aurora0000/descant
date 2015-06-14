@@ -1,6 +1,10 @@
 @import url(normalize.css);
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro);
 
+a {
+	outline: none;
+}
+
 body {
 	font-size: 1em;
 	font-size: 1rem;
@@ -227,10 +231,6 @@ a.highlight {
 	color: #44546a;
 }
 
-nav-tab, a {
-	outline: none;
-}
-
 hr {
 	display: block;
 	margin-top: 0.5em;
@@ -253,17 +253,29 @@ hr {
 	cursor: default;
 }
 
-.nav>nav-btn {
+.nav>nav-btn, .nav>auth-status {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	text-decoration: none;
 	color: white;
-	padding: 10px 20px;
 	display: inline-block;
 	cursor: pointer;
 	height: 40px;
+}
+
+.nav>nav-btn>a, .nav>auth-status>span {
+	padding: 10px 20px;
+	display: inline-block;
+	color: white;
+	text-decoration: none;
+	height: 40px;
+}
+
+.nav>auth-status>span>a {
+	color: white;
+	text-decoration: none;
 }
 
 .nav .active {
