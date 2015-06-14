@@ -23,15 +23,8 @@ pids
 
 htmlcov/*
 
-<<<<<<< HEAD
-# Dependency directory
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
-
 # Visual Studio Code
 .settings
-=======
 .vagrant/*
 
 .coverage
->>>>>>> origin/backend
