@@ -99,7 +99,8 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			'en_*': 'en',
     		'ro_*': 'ro',
 			'fr_*': 'fr',
-			'de_*': 'de'
+			'de_*': 'de',
+			'es_*': 'es'
 		});
 		$translateProvider.uniformLanguageTag('java');
   		$translateProvider.determinePreferredLanguage();

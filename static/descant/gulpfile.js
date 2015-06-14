@@ -3,6 +3,7 @@ var rename = require('gulp-rename');
 var include = require('gulp-include');
 var concat = require('gulp-concat-util');
 var uglify = require('gulp-uglify');
+var gulpSequence = require('gulp-sequence');
 var ngAnnotate = require('gulp-ng-annotate');
 var minifyCss = require('gulp-minify-css');
  
@@ -32,3 +33,5 @@ gulp.task('update-config', function() {
     .pipe(rename('config.cpl.js'))
     .pipe(gulp.dest('.'));
 });
+
+gulp.task('default', gulpSequence(['lang-setup', 'theme-setup'], 'update-config', 'js'));
