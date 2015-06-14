@@ -38,6 +38,8 @@
     "HEADER_TOPICS": "Sujets",
     "HEADER_USERS": "Utilisateurs",
 	"TITLE": "Titre",
+	"LANGUAGE": "Langue: ",
+	"THEME": "Style",
 	"TOPIC_LOCKED": "Le sujet est clos.",
 	"just_now": "à l'instant",
 	"seconds_ago": "il y a {{time}} secondes",
