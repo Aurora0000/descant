@@ -29,7 +29,8 @@ var app = angular.module('descant', [
     'descant.directives.themeselector',
     'descant.filters.html',
     'descant.controllers.routing',
-    'descant.services.templateservice'
+    'descant.services.templateservice',
+    'descant.directives.usercpsettings'
   ]);
 app.config([
   '$routeProvider',
@@ -80,9 +81,7 @@ app.config([
       templateUrl: 'pages/registration-done.html'
     }).when('/usercp', {
       title: 'User Control Panel',
-      templateUrl: 'pages/user-cp.html',
-      controller: 'UserCPController',
-      controllerAs: 'cpCtrl'
+      templateUrl: 'pages/user-cp.html'
     }).when('/resetpass', {
       title: 'Reset Password',
       templateUrl: 'pages/reset-pass.html'
@@ -1242,6 +1241,57 @@ topicViewApp.directive('postList', [
     };
   }
 ]);
+var cpApp = angular.module('descant.directives.usercpsettings', ['descant.services.templateservice']);
+cpApp.directive('userCpSettings', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/settings/user-cp-settings.html';
+      },
+      controller: [
+        '$http',
+        '$location',
+        'descantConfig',
+        function ($http, $location, descantConfig) {
+          this.options = false;
+          this.changeUser = function (new_username, current_password) {
+            $http.post(descantConfig.backend + '/api/auth/username/', {
+              'new_username': new_username,
+              'current_password': current_password
+            }).success(function (data) {
+              $location.path('/');
+            }).error(function (data) {
+              alert('Error! Is your current password correct?');
+            });
+          };
+          this.changeEmail = function (new_mail) {
+            $http.patch(descantConfig.backend + '/api/auth/me/', { 'email': new_mail }).success(function (data) {
+              $location.path('/');
+            }).error(function (data) {
+              alert('Error! Is your current password correct?');
+            });
+          };
+          this.changePassword = function (new_password, current_password) {
+            $http.post(descantConfig.backend + '/api/auth/password/', {
+              'current_password': current_password,
+              'new_password': new_password
+            }).success(function (data) {
+              $location.path('/');
+            }).error(function (data) {
+              alert('Error! Is your current password correct?');
+            });
+          };
+          this.showOptions = function () {
+            this.options = true;
+          };
+        }
+      ],
+      controllerAs: 'cpCtrl'
+    };
+  }
+]);
 var userListApp = angular.module('descant.directives.userlist', [
     'descant.config',
     'descant.services.templateservice'
@@ -1382,44 +1432,6 @@ controllerApp.controller('ResetPassController', [
   function ($scope, $routeParams) {
     $scope.uid = $routeParams.uid;
     $scope.tok = $routeParams.token;
-  }
-]);
-controllerApp.controller('UserCPController', [
-  '$http',
-  '$location',
-  'descantConfig',
-  function ($http, $location, descantConfig) {
-    this.options = false;
-    this.changeUser = function (new_username, current_password) {
-      $http.post(descantConfig.backend + '/api/auth/username/', {
-        'new_username': new_username,
-        'current_password': current_password
-      }).success(function (data) {
-        $location.path('/');
-      }).error(function (data) {
-        alert('Error! Is your current password correct?');
-      });
-    };
-    this.changeEmail = function (new_mail) {
-      $http.patch(descantConfig.backend + '/api/auth/me/', { 'email': new_mail }).success(function (data) {
-        $location.path('/');
-      }).error(function (data) {
-        alert('Error! Is your current password correct?');
-      });
-    };
-    this.changePassword = function (new_password, current_password) {
-      $http.post(descantConfig.backend + '/api/auth/password/', {
-        'current_password': current_password,
-        'new_password': new_password
-      }).success(function (data) {
-        $location.path('/');
-      }).error(function (data) {
-        alert('Error! Is your current password correct?');
-      });
-    };
-    this.showOptions = function () {
-      this.options = true;
-    };
   }
 ]);
 var htmlApp = angular.module('descant.filters.html', []);
