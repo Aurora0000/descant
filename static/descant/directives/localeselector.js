@@ -13,8 +13,8 @@ localeApp.directive('localeSelector', function(templateService) {
                 $translate.use(this.selectedLanguage.value);
             };
             
-            this.arr = descantConfig.languages;
+            this.localearr = descantConfig.languages;
     	  },
-    	  controllerAs: 'ctrl'
+    	  controllerAs: 'localeCtrl'
     };
 });

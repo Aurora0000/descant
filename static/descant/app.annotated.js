@@ -574,14 +574,17 @@ localeApp.directive('localeSelector', [
           this.changeLanguage = function () {
             $translate.use(this.selectedLanguage.value);
           };
-          this.arr = descantConfig.languages;
+          this.localearr = descantConfig.languages;
         }
       ],
-      controllerAs: 'ctrl'
+      controllerAs: 'localeCtrl'
     };
   }
 ]);
-var navBarApp = angular.module('descant.directives.navbar', ['descant.services.templateservice']);
+var navBarApp = angular.module('descant.directives.navbar', [
+    'descant.services.templateservice',
+    'descant.config'
+  ]);
 navBarApp.directive('navBar', [
   'templateService',
   function (templateService) {
@@ -589,7 +592,14 @@ navBarApp.directive('navBar', [
       restrict: 'E',
       templateUrl: function () {
         return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-bar.html';
-      }
+      },
+      controller: [
+        'descantConfig',
+        function (descantConfig) {
+          this.name = descantConfig.forumName;
+        }
+      ],
+      controllerAs: 'navBarCtrl'
     };
   }
 ]);
