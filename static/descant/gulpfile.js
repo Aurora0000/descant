@@ -10,7 +10,7 @@ gulp.task('js', function () {
   gulp.src(['vendor/*.js', 'index.js', 'config.cpl.js', 'services/*.js', 'directives/*.js', 'controllers/*.js', 'filters/*.js'])
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate())
-    .pipe(uglify())
+    .pipe(uglify({output: {ascii_only: true }}))
     .pipe(gulp.dest('.'));
 });
 

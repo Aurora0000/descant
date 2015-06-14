@@ -41,13 +41,11 @@ angular.module('descant.config', ['ngResource'])
 				{
 					"name": "Bootswatch Theme",
 					"value": "bootstrap"
-				}
-				,
+				},
 				{
 					"name": "Default Theme",
 					"value": "default"
 				}
-				
 
 		
 	]
