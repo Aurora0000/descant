@@ -89,7 +89,7 @@ button.highlight, .button.highlight {
 	border-bottom-left-radius: 5px;
 }
 
-body.width {
+.container {
 	width: 80%;
 	margin: 0 auto;
 }
@@ -280,4 +280,24 @@ hr {
 
 .nav .active {
 	background-color: #3e3e3e;
+}
+
+@media only screen and (max-width: 450px) {
+	.nav nav-btn, .nav>nav-btn>a, .nav>auth-status>span {
+		display: block;
+	}
+	
+	.nav {
+		height: auto;
+		position: static;
+		width: 100%;
+	}
+	
+	body.hasnav {
+		padding-top: 0;
+	}
+
+	.nav .f-right {
+		float: none;
+	}
 }

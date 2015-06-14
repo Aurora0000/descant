@@ -89,31 +89,6 @@ input.ng-invalid {
 	border: 3px solid #ff0000;
 }
 
-@media only screen and (max-width: 450px) {
-	nav-btn {
-		display: block!important;
-	}
-	.nav {
-		height: auto;
-		border: 1px solid rgb(230, 230, 230);
-		color: black!important;
-		background-color: white;
-		position: static;
-		border-radius: 5px;
-	}
-
-	nav-btn>*, auth-status * {
-		color: black!important;
-	}
-
-	.hasnav {
-		padding-top: 0;
-	}
-	.nav .f-right {
-		float: none;
-	}
-}
-
 .list-tag {
 	margin: 0 2px;
 	border-right: 1px solid rgb(76, 76, 76);
