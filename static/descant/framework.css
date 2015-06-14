@@ -1,6 +1,10 @@
 @import url(normalize.css);
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro);
 
+a {
+	outline: none;
+}
+
 body {
 	font-size: 1em;
 	font-size: 1rem;
@@ -266,6 +270,7 @@ hr {
 	display: inline-block;
 	color: white;
 	text-decoration: none;
+	height: 40px;
 }
 
 .nav>auth-status>span>a {
