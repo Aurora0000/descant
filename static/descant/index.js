@@ -10,7 +10,8 @@ var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'rel
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
 									 'descant.directives.navbar', 'descant.directives.newpost',
 									 'descant.directives.themeselector','descant.filters.html', 
-									 'descant.controllers.routing', 'descant.services.templateservice']);
+									 'descant.controllers.routing', 'descant.services.templateservice',
+									 'descant.directives.usercpsettings']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
@@ -71,9 +72,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		})
 		.when('/usercp', {
 			title: 'User Control Panel',
-			templateUrl: 'pages/user-cp.html',
-			controller: 'UserCPController',
-			controllerAs: 'cpCtrl'
+			templateUrl: 'pages/user-cp.html'
 		})
 		.when('/resetpass', {
 			title: 'Reset Password',
