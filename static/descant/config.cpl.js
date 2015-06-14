@@ -36,6 +36,16 @@ angular.module('descant.config', ['ngResource'])
 		}
 	],
 	'themes': [
-		//= include themes.json
+		{
+			"name": "Bootswatch Theme",
+			"value": "bootstrap"
+		}
+		,
+		{
+			"name": "Default Theme",
+			"value": "default"
+		}
+		
+
 	]
 });
