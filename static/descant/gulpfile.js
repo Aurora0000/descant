@@ -20,6 +20,12 @@ gulp.task('theme-setup', function() {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('lang-setup', function() {
+  gulp.src('translations/definitions/*.json')
+    .pipe(concat('langs.json', {sep: ',\n'}))
+    .pipe(gulp.dest('.'));
+});
+
 gulp.task('update-config', function() {
   gulp.src('config.js')
     .pipe(include())
