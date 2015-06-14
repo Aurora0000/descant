@@ -34,6 +34,7 @@
     "HEADER_USERS": "Users",
     "TITLE": "Title",
     "LANGUAGE": "Language: ",
+    "THEME": "Theme: ",
     "SELECT_LANGUAGE": "Select language",
     "TOPIC_LOCKED": "This topic is locked!",
     "ENTER_CURRENT_PASSWD": "Enter your current password: ",

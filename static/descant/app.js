@@ -9,8 +9,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTag
 									 'descant.directives.includes', 'descant.directives.resetpass',
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
 									 'descant.directives.navbar', 'descant.directives.newpost',
-									 'descant.filters.html', 'descant.controllers.routing',
-									 'descant.services.templateservice']);
+									 'descant.directives.themeselector','descant.filters.html', 
+									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
@@ -152,6 +152,16 @@ angular.module('descant.config', ['ngResource'])
 		{
 			'name': '\u7B80\u4F53\u4E2D\u6587',
 			'value': 'zh_CN'
+		}
+	],
+	'themes': [
+		{
+			'name': 'Default Theme',
+			'value': 'default'
+		},
+		{
+			'name': 'Bootswatch Theme',
+			'value': 'bootstrap'
 		}
 	]
 });
@@ -669,7 +679,28 @@ tagApp.directive('tagList', function(tagService, templateService) {
 		},
 		controllerAs: 'tagCtrl'
 	};
-});var topicListApp = angular.module('descant.directives.topiclist', ['descant.config', 'descant.services.templateservice']);
+});var themeApp = angular.module('descant.directives.themeselector', ['descant.services.templateservice']);
+
+themeApp.directive('themeSelector', function(templateService) {
+    return {
+        restrict: 'E',
+        templateUrl: function() {
+          return 'templates/' + templateService.currentTemplateSet() + '/settings/theme-selector.html';  
+        },
+	    controller: function($translate, $window, descantConfig) {
+          this.selectedTheme = templateService.currentTemplateSet(); 
+            
+          this.changeTheme = function() {
+              templateService.setTemplateSet(this.selectedTheme.value);
+              $window.location.reload();
+          };
+		             
+          this.arr = descantConfig.themes;
+    	},
+    	controllerAs: 'ctrl'
+    };
+});
+var topicListApp = angular.module('descant.directives.topiclist', ['descant.config', 'descant.services.templateservice']);
 
 topicListApp.directive('topicList', function(descantConfig, templateService) {
 	return {

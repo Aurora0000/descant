@@ -34,5 +34,15 @@ angular.module('descant.config', ['ngResource'])
 			'name': '\u7B80\u4F53\u4E2D\u6587',
 			'value': 'zh_CN'
 		}
+	],
+	'themes': [
+		{
+			'name': 'Default Theme',
+			'value': 'default'
+		},
+		{
+			'name': 'Bootswatch Theme',
+			'value': 'bootstrap'
+		}
 	]
 });

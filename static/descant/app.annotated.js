@@ -27,6 +27,7 @@ var app = angular.module('descant', [
     'descant.directives.localeselector',
     'descant.directives.navbar',
     'descant.directives.newpost',
+    'descant.directives.themeselector',
     'descant.filters.html',
     'descant.controllers.routing',
     'descant.services.templateservice'
@@ -167,6 +168,16 @@ angular.module('descant.config', ['ngResource']).config([
     {
       'name': '\u7b80\u4f53\u4e2d\u6587',
       'value': 'zh_CN'
+    }
+  ],
+  'themes': [
+    {
+      'name': 'Default Theme',
+      'value': 'default'
+    },
+    {
+      'name': 'Bootswatch Theme',
+      'value': 'bootstrap'
     }
   ]
 });
@@ -832,6 +843,32 @@ tagApp.directive('tagList', [
         }
       ],
       controllerAs: 'tagCtrl'
+    };
+  }
+]);
+var themeApp = angular.module('descant.directives.themeselector', ['descant.services.templateservice']);
+themeApp.directive('themeSelector', [
+  'templateService',
+  function (templateService) {
+    return {
+      restrict: 'E',
+      templateUrl: function () {
+        return 'templates/' + templateService.currentTemplateSet() + '/settings/theme-selector.html';
+      },
+      controller: [
+        '$translate',
+        '$window',
+        'descantConfig',
+        function ($translate, $window, descantConfig) {
+          this.selectedTheme = templateService.currentTemplateSet();
+          this.changeTheme = function () {
+            templateService.setTemplateSet(this.selectedTheme.value);
+            $window.location.reload();
+          };
+          this.arr = descantConfig.themes;
+        }
+      ],
+      controllerAs: 'ctrl'
     };
   }
 ]);

@@ -9,8 +9,8 @@ var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTag
 									 'descant.directives.includes', 'descant.directives.resetpass',
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
 									 'descant.directives.navbar', 'descant.directives.newpost',
-									 'descant.filters.html', 'descant.controllers.routing',
-									 'descant.services.templateservice']);
+									 'descant.directives.themeselector','descant.filters.html', 
+									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
