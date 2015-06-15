@@ -147,7 +147,8 @@ progress {
 }
 
 button[disabled] {
-	background: #c0392b;
+	background: #83C1A9;
+	border-color: #83C1A9;
 }
 
 .bigicon {
