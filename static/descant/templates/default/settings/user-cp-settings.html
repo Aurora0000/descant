@@ -1,15 +1,15 @@
 <div class="user-cp-password-entry" ng-hide="cpCtrl.options">
-<span translate="ENTER_CURRENT_PASSWD"></span>
-<input type="password" placeholder="Password" ng-model="current_password">
-<button ng-click="cpCtrl.showOptions()" translate="CONFIRM_BUTTON"></button>
+	<span translate="ENTER_CURRENT_PASSWD"></span>
+	<input type="password" placeholder="Password" ng-model="current_password">
+	<button ng-click="cpCtrl.showOptions()" translate="CONFIRM_BUTTON"></button>
 </div>
 <div class="user-cp-options" ng-show="cpCtrl.options">
-<input type="text" placeholder="{{'USERNAME' | translate}}" ng-model="new_username">
-<button ng-click="cpCtrl.changeUser(new_username, current_password)" translate="CHG_USERNAME"></button>
-<br>
-<input type="email" placeholder="{{'EMAIL_ADDR' | translate}}" ng-model="new_email">
-<button ng-click="cpCtrl.changeEmail(new_email)" translate="CHG_EMAIL"></button>
-<br>
-<input type="password" placeholder="{{'PASSWORD' | translate}}" ng-model="new_password">
-<button ng-click="cpCtrl.changePassword(new_password, current_password)" translate="CHG_PASSWD"></button>
+	<input type="text" placeholder="{{'USERNAME' | translate}}" ng-model="new_username">
+	<button ng-click="cpCtrl.changeUser(new_username, current_password)" translate="CHG_USERNAME"></button>
+	<br>
+	<input type="email" placeholder="{{'EMAIL_ADDR' | translate}}" ng-model="new_email">
+	<button ng-click="cpCtrl.changeEmail(new_email)" translate="CHG_EMAIL"></button>
+	<br>
+	<input type="password" placeholder="{{'PASSWORD' | translate}}" ng-model="new_password">
+	<button ng-click="cpCtrl.changePassword(new_password, current_password)" translate="CHG_PASSWD"></button>
 </div>

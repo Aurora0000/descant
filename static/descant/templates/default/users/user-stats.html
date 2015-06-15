@@ -1,5 +1,14 @@
 <div class="user-stats box">
-	<h2 class="user-name">{{userCtrl.user.username}} <a href="#/usercp"><i class="icon-settings" ng-show="userCtrl.user.username == userCtrl.user_auth.username"></i></a></h2>
-	<div class="user-register-date"><i class="icon-perm_contact_calendar"></i><span translate="REGISTERED_ON"></span> {{userCtrl.user.date_joined | relativeDate}}</div>
-	<div class="user-post-count"><i class="icon-chat_bubble"></i>{{userCtrl.user.post_count}} <span translate="POSTS"></span></div>
+	<h1 class="user-name">{{userCtrl.user.username}}</h1>
+	<h2>Statistics</h2>
+	<div class="panel">
+		<div class="body">
+			<p>
+				<i class="icon-perm_contact_calendar"></i><span translate="REGISTERED_ON"></span> {{userCtrl.user.date_joined | relativeDate}}
+			</p>
+			<p>
+				<i class="icon-chat_bubble"></i>{{userCtrl.user.post_count}} <span translate="POSTS"></span>
+			</p>
+		</div>
+	</div>
 </div>

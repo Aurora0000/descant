@@ -3,12 +3,14 @@
 
 a {
 	outline: none;
+	color: #2c5c44;
 }
 
 body {
 	font-size: 1em;
 	font-size: 1rem;
 	font-family: "Source Sans Pro", "Open Sans", "Segoe UI", Arial, sans-serif;
+	background-color: #efefef;
 }
 
 body.hasnav {
@@ -19,8 +21,8 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 }
 
-button, input, .button, textarea {
-	border: 1px solid rgb(230, 230, 230);
+button, input, .button, textarea, select {
+	border: 1px solid #cccccc;
 	background-color: white;
 	border-radius: 5px;
 	padding: 10px;
@@ -32,6 +34,7 @@ button, input, .button, textarea {
 	font-variant: normal;
 	font-weight: 400;
 	line-height: normal;
+	color: black;
 }
 
 button, .button {
@@ -39,36 +42,25 @@ button, .button {
 	text-align: center;
 }
 
-nav.main {
-	background-color: rgb(230, 230, 230);
-	padding: 10px;
-	margin-bottom: 1em;
-}
-
-nav.main>* {
-	color: black;
-	text-decoration: none;
-}
-
 input:focus, textarea:focus {
 	border: 1px solid #44546a;
 }
 
 button.highlight, .button.highlight {
-	background-color: #44546a;
+	background-color: #309770;
 	color: white;
-	border: 1px solid #44546a;
+	border: 1px solid #309770;
+	padding: 9px;
 }
 
 .panel {
-	border: 1px solid rgb(230, 230, 230);
 	background-color: white;
 	border-radius: 5px;
 	margin: 1em 0;
 }
 
 .panel>.body, .panel>.end {
-	border-top: 1px solid rgb(230, 230, 230);
+	border-top: 2px solid #efefef;
 	padding: 10px;
 }
 
@@ -119,7 +111,7 @@ input[type='checkbox'] + label:before, input[type='radio'] + label:before {
 	padding-left: 5px;
 	width: 1.28em;
 	text-align: center;
-	color: rgb(230, 230, 230);
+	color: #efefef;
 }
 
 input[type=radio] + label:before {
@@ -199,9 +191,7 @@ ul.box {
 }
 
 ul.box>li {
-	border-bottom: 1px solid rgb(230, 230, 230);
-	border-left: 1px solid rgb(230, 230, 230);
-	border-right: 1px solid rgb(230, 230, 230);
+	border-bottom: 2px solid #efefef;
 	background-color: white;
 	padding: 10px;
 }
@@ -213,22 +203,14 @@ ul.box>li.end {
 }
 
 ul.box>li:first-child {
-	border-top: 1px solid rgb(230, 230, 230);
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 }
 
 ul.box>li:last-child {
+	border-bottom: none;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
-}
-
-a {
-	color: #323f4f;
-}
-
-a.highlight {
-	color: #44546a;
 }
 
 hr {
@@ -239,7 +221,7 @@ hr {
 	margin-right: auto;
 	height: 1px;
 	border: none;
-	background-color: rgb(230, 230, 230);
+	background-color: #cccccc;
 }
 
 .nav {
@@ -279,20 +261,44 @@ hr {
 }
 
 .nav .active {
-	background-color: #3e3e3e;
+	background-color: #1e1e1e;
+	position: relative;
+}
+
+.nav .active:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-top-color: #1e1e1e;
+	border-width: 8px;
+	margin-left: -8px;
+}
+
+.undernav nav-btn>a {
+	color: white;
+	text-decoration: none;
+}
+
+.undernav .active {
+	color: #2c5c44;
 }
 
 @media only screen and (max-width: 450px) {
 	.nav nav-btn, .nav>nav-btn>a, .nav>auth-status>span {
 		display: block;
 	}
-	
+
 	.nav {
 		height: auto;
 		position: static;
 		width: 100%;
 	}
-	
+
 	body.hasnav {
 		padding-top: 0;
 	}

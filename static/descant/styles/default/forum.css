@@ -31,7 +31,6 @@ body {
 
 .list-list.highlight>li:hover {
 	background-color: rgb(253, 253, 253);
-	cursor: pointer;
 }
 
 .list-list>li:before, .list-list>li:after {
@@ -80,11 +79,6 @@ div.loading, div.load-error, h2.loading, p.loading, p.load-error, .locked-msg {
 	text-align: center;
 }
 
-.first-post {
-	padding: 0!important;
-	border: none!important;
-}
-
 input.ng-invalid {
 	border: 3px solid #ff0000;
 }
@@ -131,7 +125,7 @@ progress {
 	);
 }
 
-.orange{
+.orange {
 	background-color: #f1a165;
 	background-image: linear-gradient(to bottom, #f1a165, #f36d0a);
 }
@@ -158,4 +152,14 @@ button[disabled] {
 
 .bigicon {
 	font-size: 200%;
+}
+
+.undernav {
+	background-color: #309770;
+	padding: 20px 20px;
+	color: white;
+}
+
+.undernav>nav-btn {
+	padding: 0 20px;
 }
