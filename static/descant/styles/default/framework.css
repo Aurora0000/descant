@@ -46,6 +46,10 @@ input:focus, textarea:focus {
 	border: 1px solid #44546a;
 }
 
+button:focus, input:focus, optgroup:focus, select:focus, textarea:focus {
+	outline: none;
+}
+
 button.highlight, .button.highlight {
 	background-color: #309770;
 	color: white;
