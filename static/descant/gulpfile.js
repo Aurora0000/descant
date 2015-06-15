@@ -7,7 +7,7 @@ var gulpSequence = require('gulp-sequence');
 var ngAnnotate = require('gulp-ng-annotate');
  
 gulp.task('js', function () {
-  gulp.src(['vendor/*.js', 'index.js', 'config.cpl.js', 'services/*.js', 'directives/*.js', 'controllers/*.js', 'filters/*.js'])
+  gulp.src(['vendor/jQuery.js', 'vendor/*.js', 'index.js', 'config.cpl.js', 'services/*.js', 'directives/*.js', 'controllers/*.js', 'filters/*.js'])
     .pipe(concat('app.min.js'))
     .pipe(ngAnnotate())
     .pipe(uglify({output: {ascii_only: true }}))
