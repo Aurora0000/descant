@@ -1,4 +1,4 @@
-var cpApp = angular.module('descant.directives.usercpsettings', ['descant.services.templateservice']);
+var cpApp = angular.module('descant.directives.usercpsettings', ['descant.services.templateservice', 'descant.services.tokenservice']);
 
 cpApp.directive('userCpSettings', function(templateService) {
     return {
@@ -6,8 +6,12 @@ cpApp.directive('userCpSettings', function(templateService) {
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/user-cp-settings.html';  
         },
-        controller: function($http, $location, descantConfig) {
+        controller: function($http, $location, tokenService, descantConfig) {
            this.options = false;
+           var serv = this;
+           tokenService.getAuthStatus().then(function(data) {
+               this.logged_in = data;
+           });
     
            this.changeUser = function(new_username, current_password) {
                $http.post(descantConfig.backend + "/api/auth/username/", {"new_username": new_username, "current_password": current_password}).success(function(data) {

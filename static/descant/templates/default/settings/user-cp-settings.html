@@ -1,4 +1,4 @@
-<div class="user-cp-password-entry" ng-hide="cpCtrl.options">
+<div class="user-cp-password-entry" ng-hide="cpCtrl.options || !cpCtrl.logged_in">
 	<span translate="ENTER_CURRENT_PASSWD"></span>
 	<input type="password" placeholder="Password" ng-model="current_password">
 	<button ng-click="cpCtrl.showOptions()" translate="CONFIRM_BUTTON"></button>

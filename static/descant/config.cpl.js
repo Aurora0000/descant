@@ -11,10 +11,6 @@ angular.module('descant.config', ['ngResource'])
 	'defaultTemplateSet': 'default',
 	'languages': [
 				{
-					"name": "Pirate",
-					"value": "arr"
-				},
-				{
 					"name": "Deutsch",
 					"value": "de"
 				},
@@ -29,6 +25,10 @@ angular.module('descant.config', ['ngResource'])
 				{
 					"name": "fran\u00E7ais",
 					"value": "fr"
+				},
+				{
+					"name": "Pirate",
+					"value": "arr"
 				},
 				{
 					"name": "rom\u00E2n\u0103",
