@@ -8,10 +8,8 @@ cpApp.directive('userCpSettings', function(templateService) {
         },
         controller: function($http, $location, tokenService, descantConfig) {
            this.options = false;
-           var serv = this;
-           tokenService.getAuthStatus().then(function(data) {
-               this.logged_in = data;
-           });
+           this.logged_in = tokenService.authenticated;
+           
     
            this.changeUser = function(new_username, current_password) {
                $http.post(descantConfig.backend + "/api/auth/username/", {"new_username": new_username, "current_password": current_password}).success(function(data) {
