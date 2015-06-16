@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/Aurora0000/descant](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Aurora0000/descant?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Coverage Status](https://coveralls.io/repos/Aurora0000/descant/badge.svg)](https://coveralls.io/r/Aurora0000/descant) ![Travis CI](https://travis-ci.org/Aurora0000/descant.svg)
+![Stars](https://img.shields.io/github/stars/Aurora0000/descant.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 
 Free, open-source forum software powered by Angular and Django.
