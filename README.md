@@ -41,7 +41,7 @@ For either option below, if you don't have `git`, instead of `git clone`, downlo
 - English [native, by [@Aurora0000](https://github.com/Aurora0000)]
 - German [native, by [@SplittyDev](https://github.com/SplittyDev)]
 - Romanian [native, by [@chronium](https://github.com/chronium)]
-- French [***non-native***, by [@Aurora0000](https://github.com/Aurora0000)]
+- French [***non-native***, **incomplete**, by [@Aurora0000](https://github.com/Aurora0000)]
 - Spanish [***non-native***, by [@Tel-Aviv](https://github.com/Tel-Aviv)]
 - Simplified Chinese [***non-native***, by [@CallumDev](https://github.com/CallumDev)]
 

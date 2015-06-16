@@ -1,8 +1,13 @@
-<p class="navbar-text navbar-right">
-<span ng-show="auth.error"><a href="#/login" class="auth-login ng-cloak"><i class="glyphicon glyphicon-log-in"></i> <span translate="LOGIN"></span></a></span>
-<span ng-hide="auth.error" ng-show="auth.user != null" class="auth-hi ng-cloak">
-	<a href="#/usercp"><i class="glyphicon glyphicon-cog"></i></a>
-	<a ng-href="#/user/{{auth.user.id}}" class="auth-hi">{{auth.user.username}}</a>	
-	<a href="#/logout"><i class="glyphicon glyphicon-log-out"></i></a> 
-</span>
-</p>
+<li ng-show="auth.error"><a href="#/register" class="auth-register ng-cloak"><i class="glyphicon glyphicon-user"></i> <span translate="REGISTER"></span></a></li>
+<li ng-show="auth.error"><a href="#/login" class="auth-login ng-cloak"><i class="glyphicon glyphicon-log-in"></i> <span translate="LOGIN"></span></a></li>
+<li class="dropdown" ng-hide="auth.error" ng-show="auth.user != null">
+	<a class="dropdown-toggle" data-toggle="dropdown">
+		{{auth.user.username}}
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+        <li><a href="#/user/{{auth.user.id}}" class="auth-register ng-cloak"><i class="glyphicon glyphicon-user"></i> <span translate="PROFILE"></span></a></li>
+        <li><a href="#/usercp"><i class="glyphicon glyphicon-cog"></i> <span translate="USER_CP_HEADER"></span></a></li>
+        <li><a href="#/logout"><i class="glyphicon glyphicon-log-out"></i> <span translate="LOGOUT"></span></a></li> 
+    </ul>
+</li>

@@ -4,7 +4,7 @@ var authApp = angular.module('descant.directives.authstatus', ['descant.config',
 
 authApp.directive('authStatus', function($http, tokenService, descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/auth-status.html';	
 		},
