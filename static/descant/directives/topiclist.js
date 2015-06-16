@@ -52,7 +52,7 @@ topicListApp.directive('topicList', function(descantConfig, templateService) {
 					return;
 				}
 				topicsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + this.url + "?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
+				var req = $http.get(descantConfig.backend + topicsCtrl.url + "?limit=" + topicsCtrl.limit.toString() + "&offset=" + topicsCtrl.offset.toString());
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
@@ -74,7 +74,7 @@ topicListApp.directive('topicList', function(descantConfig, templateService) {
 			this.refreshList = function() {
 				topicsCtrl.busy = true;
 				topicsCtrl.end = false;
-				var req = $http.get(descantConfig.backend + this.url + "?limit=" + topicsCtrl.offset.toString() + "&offset=0");
+				var req = $http.get(descantConfig.backend + topicsCtrl.url + "?limit=" + topicsCtrl.offset.toString() + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						topicsCtrl.end = true;
