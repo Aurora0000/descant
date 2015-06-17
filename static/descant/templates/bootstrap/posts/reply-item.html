@@ -2,9 +2,9 @@
 	<div class="col-md-2">
 		<img class="img-circle center-block" alt="avatar" ng-src="{{post.avatar_url}}">
 		<span class="list-details text-center">
-			<a class="list-author text-center" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
-			<span class="list-details"><span translate="POSTED"></span> {{ post.post_date | relativeDate }}</span> 
-			<span ng-show="post.was_edited"><span translate="LAST_EDITED"></span> {{post.last_edit_date | relativeDate}}</span>	
+			<div><a class="list-author" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a></div>
+			<div class="list-details"><span translate="POSTED"></span> {{ post.post_date | relativeDate }}</div> 
+			<div ng-show="post.was_edited"><span translate="LAST_EDITED"></span> {{post.last_edit_date | relativeDate}}</div>	
 		</span>
 	</div>
 	<div class="col-md-10">
