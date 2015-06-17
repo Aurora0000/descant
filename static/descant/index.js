@@ -9,9 +9,9 @@ var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'rel
 									 'descant.directives.includes', 'descant.directives.resetpass',
 									 'descant.directives.resetconf', 'descant.directives.localeselector',
 									 'descant.directives.navbar', 'descant.directives.newpost',
+									 'descant.directives.usercpsettings', 'descant.directives.pages',
 									 'descant.directives.themeselector','descant.filters.html', 
-									 'descant.controllers.routing', 'descant.services.templateservice',
-									 'descant.directives.usercpsettings']);
+									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
@@ -95,7 +95,7 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		});
 		
 		$translateProvider.useSanitizeValueStrategy('escape');
-		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'de', 'ro'], {
+		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'de', 'ro', 'es'], {
 			'en_*': 'en',
     		'ro_*': 'ro',
 			'fr_*': 'fr',
