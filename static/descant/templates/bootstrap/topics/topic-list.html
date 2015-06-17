@@ -13,10 +13,16 @@
 <div infinite-scroll='topics.updateList()' infinite-scroll-disabled='topics.busy' infinite-scroll-distance='1'>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="topic in topics.list">
-			<h4 class="list-group-item-heading"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></h4>
-			<img class="img-thumbnail" alt="avatar" ng-src="{{topic.avatar_url}}">
-			<div class="list-stats">
-				<a class="list-author" ng-href="#/user/{{topic.author}}">{{ topic.author_name }}</a>
+			<div class="container-fluid">
+				<div class="col-md-3">
+					<img class="img-circle" alt="avatar" ng-src="{{topic.avatar_url}}">
+				</div>
+				<div class="col-md-9">
+					<h4 class="list-group-item-heading"><a ng-href="#/topic/{{ topic.id }}">{{ topic.title }}</a></h4>
+					<a class="list-author" ng-href="#/user/{{topic.author}}">{{ topic.author_name }}</a>
+				</div>
+			</div>
+			<div class="container-fluid">
 				<span class="list-details pull-right">
 					<span class="label label-default"><span translate="POSTED"></span> {{ topic.post_date | relativeDate }}</span>
 					<topic-tags tag-items="topic.tag_ids"></topic-tags> 
