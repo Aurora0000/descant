@@ -1,18 +1,28 @@
-<img class="list-avatar" alt="avatar" ng-src="{{post.avatar_url}}">
-<a class="list-author" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
-<span class="list-details">
-	<span class="list-details"><span translate="POSTED"></span> {{ post.post_date | relativeDate }}</span> 
-	<span ng-show="post.was_edited">/ <span translate="LAST_EDITED"></span> {{post.last_edit_date | relativeDate}}</span>	
-</span>
-<div class="list-mod-buttons" ng-show="post.can_edit">
-	<span class="edit-button" ng-click="postCtrl.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></span>
-	<span class="delete-button" ng-click="postCtrl.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></span>
+<div class="container-fluid">
+	<div class="col-md-2">
+		<img class="img-circle center-block" alt="avatar" ng-src="{{post.avatar_url}}">
+		<span class="list-details text-center">
+			<a class="list-author text-center" ng-href="#/user/{{post.author}}">{{ post.author_name }}</a>
+			<span class="list-details"><span translate="POSTED"></span> {{ post.post_date | relativeDate }}</span> 
+			<span ng-show="post.was_edited"><span translate="LAST_EDITED"></span> {{post.last_edit_date | relativeDate}}</span>	
+		</span>
+	</div>
+	<div class="col-md-10">
+		<div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
+		<div class="list-edit-boxes" ng-show="postCtrl.editing">
+			<textarea ng-model="contents_edited"></textarea>
+			<button class="btn btn-primary" ng-click="postCtrl.editSubmit()"><span translate="SAVE_BUTTON"></span></button>
+		</div>
+	</div>
 </div>
-<div class="list-mod-buttons" ng-hide="post.can_edit">
-	<span class="flag-button" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
-</div>
-<div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
-<div class="list-edit-boxes" ng-show="postCtrl.editing">
-	<textarea ng-model="contents_edited"></textarea>
-	<button ng-click="postCtrl.editSubmit()"><span translate="SAVE_BUTTON"></span></button>
+<hr />
+<div class="container-fluid">
+	<div class="list-mod-buttons" ng-show="post.can_edit">
+		<span class="btn btn-primary" ng-click="postCtrl.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></span>
+		<span class="btn btn-danger" ng-click="postCtrl.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></span>
+	</div>
+	<div class="list-mod-buttons" ng-hide="post.can_edit">
+		<span class="btn btn-danger" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
+	</div>
+
 </div>

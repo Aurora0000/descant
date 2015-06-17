@@ -5,31 +5,41 @@
 	<textarea ng-show="topic.editing" class="full" ng-model="title_edited"></textarea>
 	<ul class="box list-group">
 		<li class="list-group-item first-post">
-			<img class="list-avatar" alt="avatar" ng-src="{{topic.post.avatar_url}}">
-			<div class="author-name">
-				{{ topic.post.author_name }} 
+			<div class="container-fluid">
+				<div class="col-md-2">
+					<img class="img-circle center-block" alt="avatar" ng-src="{{topic.post.avatar_url}}">
+					<div class="author-name text-center">
+						<a ng-href="#/user/{{topic.post.author}}">{{ topic.post.author_name }}</a>
+					</div>
+					<div class="list-stats text-center">
+						<span class="list-details">
+							<div><span translate="POSTED"></span> {{ topic.post.post_date | relativeDate }}</div>
+							<div ng-show="topic.post.was_edited"><span translate="LAST_EDITED"></span> {{ topic.post.last_edit_date | relativeDate }}</div>	
+						</span>
+					</div>
+				</div>
+				<div class="col-md-10">
+				<div class="list-contents" ng-hide="topic.editing" ng-bind-html="topic.post.contents_marked_up | html"></div>
+				<div ng-show="topic.editing">
+					<textarea ng-model="contents_edited" class="full"></textarea>
+					<tags-input add-from-autocomplete-only="true" ng-model="tag_ids_edited" display-property="name">
+						<auto-complete class="tag-select" source="topic.loadTags()"></auto-complete>
+					</tags-input>
+					<button class="btn btn-primary" ng-click="topic.editSubmit()"><span translate="SAVE_BUTTON"></span></button>
+				</div>
+				</div>
 			</div>
-			<div class="list-stats">
-				<span class="list-details"><span translate="POSTED"></span> {{ topic.post.post_date | relativeDate }}
-					<span ng-show="topic.post.was_edited"> / <span translate="LAST_EDITED"></span> {{ topic.post.last_edit_date | relativeDate }}</span>	
-				</span>
-			</div>
-			<div class="list-mod-buttons" ng-show="topic.post.can_edit">
-				<span class="edit-button" ng-click="topic.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></span>
-				<span class="lock-button" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="glyphicon glyphicon-lock"></i> <span translate="LOCK_BUTTON"></span></span>
-				<span class="unlock-button" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="glyphicon glyphicon-lock"></i> <span translate="UNLOCK_BUTTON"></span></span>
-				<span class="delete-button" ng-click="topic.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></span>
-			</div>
-			<div class="list-mod-buttons" ng-hide="topic.post.can_edit">
-				<span class="flag-button" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
-			</div>
-			<div class="list-contents" ng-hide="topic.editing" ng-bind-html="topic.post.contents_marked_up | html"></div>
-			<div ng-show="topic.editing">
-				<textarea ng-model="contents_edited" class="full"></textarea>
-				<tags-input add-from-autocomplete-only="true" ng-model="tag_ids_edited" display-property="name">
-					<auto-complete class="tag-select" source="topic.loadTags()"></auto-complete>
-				</tags-input>
-				<button ng-click="topic.editSubmit()"><span translate="SAVE_BUTTON"></span></button>
+			<hr />
+			<div class="container-fluid">
+				<div class="list-mod-buttons" ng-show="topic.post.can_edit">
+					<button class="btn btn-primary" ng-click="topic.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></button>
+					<button class="btn btn-warning" ng-hide="topic.post.is_locked" ng-click="topic.lock()"><i class="glyphicon glyphicon-lock"></i> <span translate="LOCK_BUTTON"></span></button>
+					<button class="btn btn-warning" ng-show="topic.post.is_locked" ng-click="topic.unlock()"><i class="glyphicon glyphicon-lock"></i> <span translate="UNLOCK_BUTTON"></span></button>
+					<button class="btn btn-danger" ng-click="topic.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></button>
+				</div>
+				<div class="list-mod-buttons" ng-hide="topic.post.can_edit">
+					<button class="btn btn-danger flag-button" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
+				</div>
 			</div>
 		</li>
 	</ul>
