@@ -64,7 +64,8 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		})
 		.when('/activate', {
 			title: 'Account Activation',
-			controller: 'ActivateController'
+			controller: 'ActivateController',
+			template: ''
 		})
 		.when('/registered', {
 			title: 'Registration Succeeded!',
