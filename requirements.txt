@@ -5,3 +5,4 @@ django-cors-headers
 git+git://github.com/sunscrapers/djoser@c54d9f5998a9b542d31b74594acc863cbc01b9ae
 bleach
 markdown2
+django-admin-bootstrapped
