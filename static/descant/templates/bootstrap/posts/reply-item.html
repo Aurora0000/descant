@@ -7,18 +7,19 @@
 			<div ng-show="post.was_edited"><span translate="LAST_EDITED"></span> {{post.last_edit_date | relativeDate}}</div>	
 		</span>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-10">
 		<div class="list-contents" ng-class="post-{{post.id}}" ng-hide="postCtrl.editing" ng-bind-html="post.contents_marked_up | html"></div>
 		<div class="list-edit-boxes" ng-show="postCtrl.editing">
 			<textarea ng-model="contents_edited"></textarea>
 			<button class="btn btn-primary" ng-click="postCtrl.editSubmit()"><span translate="SAVE_BUTTON"></span></button>
 		</div>
 	</div>
-	<div class="col-md-2">
-		<div class="btn-group btn-group-vertical center-block">
-			<button class="btn btn-primary" ng-show="post.can_edit" ng-click="postCtrl.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></button>
-			<button class="btn btn-danger" ng-show="post.can_edit" ng-click="postCtrl.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></button>
-			<button class="btn btn-danger" ng-hide="post.can_edit" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
-		</div>
+</div>
+<hr />
+<div class="container-fluid">
+	<div class="btn-group">
+		<button class="btn btn-primary btn-xs" ng-show="post.can_edit" ng-click="postCtrl.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></button>
+		<button class="btn btn-danger btn-xs" ng-show="post.can_edit" ng-click="postCtrl.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></button>
+		<button class="btn btn-danger btn-xs" ng-hide="post.can_edit" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
 	</div>
 </div>

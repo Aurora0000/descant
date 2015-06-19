@@ -1,10 +1,14 @@
 <div infinite-scroll='users.updateList()' infinite-scroll-disabled='users.busy' infinite-scroll-distance='1'>
 	<ul class="list-group">
 		<li class="list-group-item" ng-repeat="user in users.list">
-			<img class="list-avatar" alt="avatar" ng-src="{{user.avatar_url}}">
-			<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
-			<div class="list-details">
-				<span class="list-time"><span translate="REGISTERED_ON"></span> {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} <span translate="POSTS"></span></span>
+			<div class="container-fluid">
+				<div class="col-md-2">
+					<img class="list-avatar img-circle" alt="avatar" ng-src="{{user.avatar_url}}">
+				</div>
+				<div class="list-title"><a ng-href="#/user/{{user.id}}">{{ user.username }}</a></div>
+				<div class="list-details">
+					<span class="list-time"><span translate="REGISTERED_ON"></span> {{ user.date_joined | date: 'mediumDate' }} / {{ user.posts.length }} <span translate="POSTS"></span></span>
+				</div>
 			</div>
 		</li>
 	</ul>

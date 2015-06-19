@@ -11,10 +11,9 @@
 			<div class="form-group">
 				<input type="password" class="form-control" placeholder="{{'PASSWORD' | translate}}" ng-model="pass">
 			</div>
-			<div class="form-group">
-				<span translate="PASSWD_SECURITY"></span> 
-				<entropy-indicator class="form-control" password="pass" percentage="percentage"></entropy-indicator>
-			</div>
+			<span translate="PASSWD_SECURITY"></span> 
+			<entropy-indicator class="form-control" password="pass" percentage="percentage"></entropy-indicator>
+			<br />
 			<button ng-disabled="(percentage < 25 && registerCtrl.enforce) || percentage == null" class="btn btn-primary" ng-click="registerCtrl.register(user, email, pass)" translate="REGISTER"></button>
 			<p translate="NOTICE_ACTIVATE"></p>
 		</form>
