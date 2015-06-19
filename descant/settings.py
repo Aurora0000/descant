@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'djoser',
     'corsheaders',
     'permission',
+    'notifications',
     'forums',
 )
 
@@ -112,6 +113,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+NOTIFICATIONS_USE_JSONFIELD = True
 
 
 # Static files (CSS, JavaScript, Images)

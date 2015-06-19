@@ -19,6 +19,11 @@ urlpatterns = [
     url(r'users/(?P<pk>[0-9]+)/$', UserDetail.as_view()),
     url(r'users/', UserList.as_view()),
     url(r'avatars/(?P<pk>[0-9]+)/$', GravatarLink.as_view()),
-    url(r'stats/', ForumStats.as_view())
+    url(r'stats/', ForumStats.as_view()),
+    url(r'notifications/(?P<pk>[0-9]+)/mark-read/$', MarkNotificationAsRead.as_view()),
+    url(r'notifications/(?P<pk>[0-9]+)/$', NotificationDetail.as_view()),
+    url(r'notifications/send/', MessageCreate.as_view()),
+    url(r'notifications/read/', NotificationList.as_view(all=True)),
+    url(r'notifications/', NotificationList.as_view(all=False)),
 ]
 

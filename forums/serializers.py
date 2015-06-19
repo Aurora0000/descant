@@ -2,9 +2,17 @@ from hashlib import md5
 
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from notifications.models import Notification
 
 from .models import Post, Tag
 
+
+class JSONSerializerField(serializers.Field):
+    def to_internal_value(self, data):
+        return data
+
+    def to_representation(self, value):
+        return value
 
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
@@ -156,3 +164,20 @@ class UserGravatarSerializer(serializers.ModelSerializer):
     def get_gravatar_url(self, obj):
         emailhash = md5(obj.email.strip().lower().encode('utf-8')).hexdigest()
         return "https://secure.gravatar.com/avatar/{}?d=identicon".format(emailhash)
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    actor_name = serializers.SerializerMethodField()
+    data = JSONSerializerField()
+
+    class Meta:
+        model = Notification
+        fields = ('id', 'actor_name', 'verb', 'target', 'action_object', 'timestamp', 'data', 'unread')
+
+    def get_actor_name(self, obj):
+        return obj.actor.username
+
+
+class PMSerializer(serializers.Serializer):
+    recipient = serializers.CharField(max_length=50)
+    message = serializers.CharField(max_length=5000)
