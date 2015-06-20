@@ -2,6 +2,9 @@
 	<div class="end" translate="REGISTER"></div>
 	<div class="body">
 		<form>
+			<div class="alert alert-danger" role="alert" ng-show="registerCtrl.error">
+  				Error! {{registerCtrl.errorMessage | translate}}
+			</div>
 			<div class="form-group">
 				<input class="form-control" autocomplete="username" placeholder="{{'USERNAME' | translate}}" ng-model="user">
 			</div>
