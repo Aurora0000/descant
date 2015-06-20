@@ -53,6 +53,7 @@
     "LANGUAGE_THEME": "Language & Theme",
     "ACTIVATE": "Activate your Account",
     "ACTIVATE_INFO": "Before you can log in and post, you need to activate your account with the email we've sent you. You may need to wait up to 10 minutes, and check Junk, Spam or Deleted folders just in case. If you still can't find the email, please contact the board administrators.",
+    "ERROR": "Error!",
     "ERROR_USERNAME_TAKEN": "This username is taken. Please select a different name.",
     "ERROR_USERNAME_BLANK": "Please enter a username.",
     "ERROR_INVALID_USERNAME": "This username is invalid. Please use only A-Z, a-z, 0-9 and @/./+/-/_ characters. You must select a username with less than 30 characters.",

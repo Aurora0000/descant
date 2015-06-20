@@ -3,6 +3,7 @@
 	<div class="body">
 		<div class="margin-fix">
 			<form>
+				<span ng-show="registerCtrl.error">{{registerCtrl.errorMessage | translate}}</span>
 				<p>
 					<input class="full" placeholder="{{'USERNAME' | translate}}" ng-model="user">
 				</p>
