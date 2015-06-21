@@ -1,0 +1,29 @@
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+		{{notificationCtrl.currentDisplayMode.name | translate}}
+    	<span class="caret"></span>
+	</button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+      <li role="presentation" ng-repeat="displayMode in notificationCtrl.displayModes">
+		  <a role="menuitem" tabindex="-1" ng-click="notificationCtrl.setDisplayMode(displayMode.id)">{{displayMode.name | translate}}</a>
+	  </li>
+    </ul>
+</div>
+<br />
+<div infinite-scroll='notificationCtrl.updateList()' infinite-scroll-disabled='notificationCtrl.busy' infinite-scroll-distance='1'>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="notification in notificationCtrl.list">
+			<div class="container-fluid">
+				<div class="col-md-10">
+					<h4 class="list-group-item-heading"><a ng-href="#/user/{{ notification.actor_object_id }}">{{notification.actor_name}}</a> {{notification.verb | translate}} </h4>
+					<span class="label label-info"><i class="glyphicon glyphicon-time"></i> {{notification.timestamp | relativeDate}}</span>
+				</div>
+				<div class="col-md-1">
+					<a class="btn btn-primary" href="#/notification/{{notification.id}}"><i class="glyphicon glyphicon-eye-open"></i> <span translate="READ_BUTTON"></span></a>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<h2 class="text-center" ng-show="notificationCtrl.busy" ng-hide="notificationCtrl.end"><i class="glyphicon glyphicon-sort"></i></h2>
+	<h2 class="results-end text-center" ng-show="notificationCtrl.end"><i class="glyphicon glyphicon-ok"></i> <span translate="LAST_NOTIFICATION"></span></h2>
+</div>

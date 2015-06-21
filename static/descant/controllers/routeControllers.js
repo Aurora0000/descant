@@ -33,3 +33,7 @@ controllerApp.controller('ResetPassController', function($scope, $routeParams) {
 	$scope.uid = $routeParams.uid;
 	$scope.tok = $routeParams.token;
 });
+
+controllerApp.controller('NotificationViewController', function($scope, $routeParams) {
+	$scope.id = $routeParams.id;
+});

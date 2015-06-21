@@ -116,3 +116,21 @@ pageApp.directive('pageUsers', function(templateService) {
 		}
 	}
 });
+
+pageApp.directive('pageNotifications', function(templateService) {
+	return {
+		restrict: 'E',
+		templateUrl: function () {
+			return 'templates/' + templateService.currentTemplateSet() + '/pages/notifications.html';
+		}
+	}
+});
+
+pageApp.directive('pageNotificationView', function(templateService) {
+	return {
+		restrict: 'E',
+		templateUrl: function () {
+			return 'templates/' + templateService.currentTemplateSet() + '/pages/notification-view.html';
+		}
+	}
+});
