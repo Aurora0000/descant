@@ -79,6 +79,14 @@ topicViewApp.directive('topicFirstpost', function(descantConfig, templateService
 			this.loadTags = function() {
 				return tagService.getAllTags();
 			};
+			
+			this.report = function(message) {
+				$http.post(descantConfig.backend + "/api/v0.1/posts/" + $scope.topicId + "/report/", {'message': message}).success(function(data) {
+					$location.path('/');
+				}).error(function(data) {
+					alert("Error!");
+				});
+			};
 		},
 		controllerAs: 'topic'
 	}
@@ -93,7 +101,7 @@ topicViewApp.directive('replyItem', function(templateService) {
 		scope: {
 			post: '='	
 		},
-		controller: function($http, $scope, $route, descantConfig, tokenService) {
+		controller: function($http, $location, $scope, $route, descantConfig, tokenService) {
 			this.editing = false;
 			
 			if (tokenService.user != null) {
@@ -122,6 +130,14 @@ topicViewApp.directive('replyItem', function(templateService) {
 				});
 				del.error(function(data) {
 					alert("Unexpected error!");
+				});
+			};
+			
+			this.report = function(message) {
+				$http.post(descantConfig.backend + "/api/v0.1/posts/" + $scope.post.id + "/report/", {'message': message}).success(function(data) {
+					$location.path('/');
+				}).error(function(data) {
+					alert("Error!");
 				});
 			};
 			
@@ -189,6 +205,8 @@ topicViewApp.directive('postList', function(descantConfig, templateService) {
 					postsCtrl.end = true;
 				});
 			};
+			
+			
 			
 			// Update once every 45 seconds.
 			this.stopRefreshList = $interval(this.refreshList, 45000);

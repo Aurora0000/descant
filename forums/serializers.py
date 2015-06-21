@@ -219,3 +219,7 @@ class NotificationSerializer(serializers.ModelSerializer):
 class PMSerializer(serializers.Serializer):
     recipient = serializers.CharField(max_length=50)
     message = serializers.CharField(max_length=5000)
+
+
+class ReportSerializer(serializers.Serializer):
+    message = serializers.CharField(max_length=5000)

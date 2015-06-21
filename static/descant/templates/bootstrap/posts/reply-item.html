@@ -20,6 +20,8 @@
 	<div class="btn-group">
 		<button class="btn btn-primary btn-xs" ng-show="post.can_edit" ng-click="postCtrl.edit()"><i class="glyphicon glyphicon-edit"></i> <span translate="EDIT_BUTTON"></span></button>
 		<button class="btn btn-danger btn-xs" ng-show="post.can_edit" ng-click="postCtrl.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></button>
-		<button class="btn btn-danger btn-xs" ng-hide="post.can_edit" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
+		<button class="btn btn-danger btn-xs" ng-hide="post.can_edit"
+				ng-click="postCtrl.report('I am reporting this post.')"><i class="glyphicon glyphicon-flag"></i> <span
+				translate="REPORT_BUTTON"></span></button>
 	</div>
 </div>

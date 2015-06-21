@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^topics/newest/$', TopicListReverse.as_view()),
     url(r'^topics/newestreplies/$', TopicListByLastReply.as_view()),
     url(r'^topics/$', TopicList.as_view()),
+    url(r'^posts/(?P<pk>[0-9]+)/report/$', ReportPost.as_view()),
     url(r'^posts/(?P<pk>[0-9]+)/$', AnyPostDetail.as_view()),
     url(r'tags/(?P<id>[0-9]+)/newest/$', TagDetailReverse.as_view()),
     url(r'tags/(?P<id>[0-9]+)/newestreplies/$', TagDetailByLastReply.as_view()),

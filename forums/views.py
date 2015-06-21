@@ -231,6 +231,21 @@ class MessageCreate(generics.CreateAPIView):
         except ObjectDoesNotExist:
             raise serializers.ValidationError('recipient does not exist!')
 
+
+class ReportPost(generics.CreateAPIView):
+    queryset = None
+    serializer_class = ReportSerializer
+    permission_classes = (IsAuthenticated,)
+    throttle_classes = (StandardThrottle,)
+
+    def perform_create(self, serializer):
+        try:
+            utils.notify_send_bleached(self.request.user, recipient=User.objects.get(pk=1),
+                                       verb='REPORTED_POST', target=Post.objects.get(pk=self.kwargs['pk']),
+                                       message=serializer.data['message'])
+        except ObjectDoesNotExist:
+            raise serializers.ValidationError('Post does not exist!')
+
 # Should really be moved to somewhere that makes more sense.
 @receiver(user_activated)
 def add_user_to_group(sender, **kwargs):

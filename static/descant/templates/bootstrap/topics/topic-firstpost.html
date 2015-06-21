@@ -38,7 +38,8 @@
 					<button class="btn btn-danger" ng-click="topic.deleteObj()"><i class="glyphicon glyphicon-remove-sign"></i> <span translate="DELETE_BUTTON"></span></button>
 				</div>
 				<div class="list-mod-buttons" ng-hide="topic.post.can_edit">
-					<button class="btn btn-danger flag-button" onclick="alert('Not yet!');"><i class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
+					<button class="btn btn-danger flag-button" ng-click="topic.report('I am reporting this post.')"><i
+							class="glyphicon glyphicon-flag"></i> <span translate="REPORT_BUTTON"></span></button>
 				</div>
 			</div>
 		</li>

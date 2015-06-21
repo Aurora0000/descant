@@ -19,7 +19,8 @@
 				<span class="delete-button" ng-click="topic.deleteObj()"><i class="icon-delete"></i> <span translate="DELETE_BUTTON"></span></span>
 			</div>
 			<div class="list-mod-buttons" ng-hide="topic.post.can_edit">
-				<span class="flag-button" onclick="alert('Not yet!');"><i class="icon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
+				<span class="flag-button" ng-click="topic.report('I am reporting this topic.')"><i
+						class="icon-flag"></i> <span translate="REPORT_BUTTON"></span></span>
 			</div>
 			<div class="list-contents" ng-hide="topic.editing" ng-bind-html="topic.post.contents_marked_up | html"></div>
 			<div ng-show="topic.editing">
