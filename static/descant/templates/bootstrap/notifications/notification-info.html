@@ -16,7 +16,7 @@
         <img ng-src="{{notificationCtrl.notification.actor.avatar_url}}" class="img-circle" />
       </div>
       <div class="col-md-10">
-        <p ng-show="notificationCtrl.notification.data.message != null">{{notificationCtrl.notification.data.message}}</p>
+        <p ng-show="notificationCtrl.notification.data.message != null">{{notificationCtrl.notification.data.message | html}}</p>
 	      <p ng-show="notificationCtrl.notification.data.message == null">No extra information was included with this notification.</p>
       </div>
     </div>

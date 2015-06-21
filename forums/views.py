@@ -8,8 +8,9 @@ from rest_framework.throttling import UserRateThrottle
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from djoser.signals import user_activated
-from notifications import notify
 
+from forums import utils
+from descant import settings
 from .serializers import *
 
 
@@ -229,8 +230,8 @@ class MessageCreate(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            notify.send(self.request.user, recipient=User.objects.get(username=serializer.data['recipient']),
-                        verb='SENT_PRIVATE_MESSAGE', message=serializer.data['message'])
+            utils.notify_send_bleached(self.request.user, recipient=User.objects.get(username=serializer.data['recipient']),
+                                       verb='SENT_PRIVATE_MESSAGE', message=serializer.data['message'])
         except ObjectDoesNotExist:
             raise serializers.ValidationError('recipient does not exist!')
 
@@ -239,4 +240,4 @@ class MessageCreate(generics.CreateAPIView):
 def add_user_to_group(sender, **kwargs):
     grp = Group.objects.get(name='registered')
     grp.user_set.add(kwargs['user'])
-    notify.send(kwargs['user'], recipient=kwargs['user'], verb=u'ACTIVATED_ACCOUNT')
+    utils.notify_send_bleached(kwargs['user'], recipient=kwargs['user'], verb=u'ACTIVATED_ACCOUNT')
