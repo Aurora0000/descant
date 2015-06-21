@@ -14,6 +14,19 @@ class JSONSerializerField(serializers.Field):
     def to_representation(self, value):
         return value
 
+class TargetRelatedField(serializers.RelatedField):
+
+    def to_representation(self, value):
+        """
+        Serialize target object
+        """
+        if isinstance(value, Post):
+            return ContextlessPostOrTopicSerializer(value).data
+        elif isinstance(value, User):
+            return UserSerializer(value).data
+
+        raise Exception('Unexpected type of tagged object')
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
@@ -126,6 +139,28 @@ class PostOrTopicSerializer(serializers.ModelSerializer):
                 return False
         return False
 
+class ContextlessPostOrTopicSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    was_edited = serializers.SerializerMethodField()
+    avatar_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Post
+        fields = ('id', 'author', 'author_name', 'contents',
+                  'post_date', 'last_edit_date', 'is_topic',
+                  'was_edited', 'avatar_url', 'contents_marked_up')
+
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    def get_was_edited(self, obj):
+        return obj.was_edited()
+
+    def get_avatar_url(self, obj):
+        email_hash = md5(obj.author.email.strip().lower().encode('utf-8')).hexdigest()
+        return "https://secure.gravatar.com/avatar/{}?d=identicon".format(email_hash)
+
+
 class UserSerializer(serializers.ModelSerializer):
     avatar_url = serializers.SerializerMethodField()
 
@@ -167,12 +202,14 @@ class UserGravatarSerializer(serializers.ModelSerializer):
 
 
 class NotificationSerializer(serializers.ModelSerializer):
-    actor_name = serializers.SerializerMethodField()
     data = JSONSerializerField()
+    target = TargetRelatedField(read_only=True)
+    actor = TargetRelatedField(read_only=True)
+    action_object = TargetRelatedField(read_only=True)
 
     class Meta:
         model = Notification
-        fields = ('id', 'actor_name', 'actor_object_id', 'verb', 'target_object_id', 'action_object_object_id', 'timestamp', 'data', 'unread')
+        fields = ('id', 'actor', 'verb', 'target', 'action_object', 'timestamp', 'data', 'unread')
 
     def get_actor_name(self, obj):
         return obj.actor.username

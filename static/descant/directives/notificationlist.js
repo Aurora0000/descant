@@ -69,7 +69,7 @@ notifListApp.directive('notificationList', function(descantConfig, templateServi
 			this.refreshList = function() {
 				ctrl.busy = true;
 				ctrl.end = false;
-				var req = $http.get(descantConfig.backend + "/api/v0.1/notifications" + ctrl.url + "?limit=" + ctrl.offset.toString() + "&offset=0");
+				var req = $http.get(descantConfig.backend + "/api/v0.1/notifications" + ctrl.url + "?limit=" + descantConfig.apiPaginationLimit + "&offset=0");
 				req.success(function (data) {
 					if (data['results'].length == 0){
 						ctrl.end = true;
