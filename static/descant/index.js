@@ -11,7 +11,8 @@ var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'rel
 									 'descant.directives.navbar', 'descant.directives.newpost',
 									 'descant.directives.usercpsettings', 'descant.directives.pages',
 									 'descant.directives.notificationlist','descant.directives.notificationinfo',
-									 'descant.directives.themeselector','descant.filters.html', 
+									 'descant.directives.themeselector', 'descant.directives.notificationbutton',
+									 'descant.filters.html', 
 									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {

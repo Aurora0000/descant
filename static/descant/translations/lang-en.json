@@ -66,6 +66,8 @@
     "UNREAD_NOTIFICATIONS": "Unread Notifications",
     "ALL_NOTIFICATIONS": "All Notifications",
     "SENT_PRIVATE_MESSAGE": "sent you a private message",
+    "REPORTED_POST": "reported",
+    "THIS_POST": "this post.",
     "LAST_NOTIFICATION": "You've reached the last notification!",
     "just_now":    "just now",
     "seconds_ago": "{{time}} seconds ago",

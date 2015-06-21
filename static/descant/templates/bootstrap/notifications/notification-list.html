@@ -15,10 +15,17 @@
 		<li class="list-group-item" ng-repeat="notification in notificationCtrl.list">
 			<div class="container-fluid">
 				<div class="col-md-2">
-					<img ng-src="{{notification.actor.gravatar_url}}" class="img-circle" />
+					<img ng-src="{{notification.actor.avatar_url}}" class="img-circle" />
 				</div>
 				<div class="col-md-9">
-					<h4 class="list-group-item-heading"><a ng-href="#/user/{{ notification.actor.id }}">{{notification.actor.username}}</a> {{notification.verb | translate}}</h4>
+					<h4 class="list-group-item-heading">
+						<a ng-href="#/user/{{ notification.actor.id }}">{{notification.actor.username}}</a> 
+						{{notification.verb | translate}} 
+						<a ng-show="notification.target != null" ng-href="#/post/{{notification.target.id}}">
+							<span ng-show="notification.target.title != null">{{notification.target.title}}</span>
+							<span ng-show="notification.target.title == null" translate="THIS_POST"></span>
+						</a>
+					</h4>
 					<span class="label label-info"><i class="glyphicon glyphicon-time"></i> {{notification.timestamp | relativeDate}}</span>
 				</div>
 				<div class="col-md-1">

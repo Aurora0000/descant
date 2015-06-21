@@ -1,5 +1,6 @@
 <li ng-show="auth.error"><a href="#/register" class="auth-register ng-cloak"><i class="glyphicon glyphicon-user"></i> <span translate="REGISTER"></span></a></li>
 <li ng-show="auth.error"><a href="#/login" class="auth-login ng-cloak"><i class="glyphicon glyphicon-log-in"></i> <span translate="LOGIN"></span></a></li>
+<li ng-hide="auth.error"><a href="#/notifications" notification-button></a></li>
 <li class="dropdown" ng-hide="auth.error" ng-show="auth.user != null">
 	<a class="dropdown-toggle" data-toggle="dropdown">
 		{{auth.user.username}}
