@@ -206,6 +206,10 @@ topicViewApp.directive('postList', function(descantConfig, templateService) {
 			};
 			
 			this.refreshList = function() {
+				if (postsCtrl.noPagination) {
+					// Don't update if they're just viewing one post.
+					return;
+				}
 				postsCtrl.busy = true;
 				postsCtrl.end = false;
 				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + postsCtrl.offset.toString() + "&offset=0");
