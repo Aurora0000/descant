@@ -37,3 +37,7 @@ controllerApp.controller('ResetPassController', function($scope, $routeParams) {
 controllerApp.controller('NotificationViewController', function($scope, $routeParams) {
 	$scope.id = $routeParams.id;
 });
+
+controllerApp.controller('PostController', function($scope, $routeParams) {
+	$scope.postId = $routeParams.id;
+});

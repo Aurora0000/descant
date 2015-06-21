@@ -143,3 +143,13 @@ pageApp.directive('pagePmSend', function(templateService) {
 		}
 	}
 });
+
+
+pageApp.directive('pagePost', function(templateService) {
+	return {
+		restrict: 'E',
+		templateUrl: function () {
+			return 'templates/' + templateService.currentTemplateSet() + '/pages/post.html';
+		}
+	}
+});

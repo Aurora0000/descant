@@ -154,7 +154,8 @@ topicViewApp.directive('postList', function(descantConfig, templateService) {
 			return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-list.html';	
 		},
 		scope: {
-			url: '@'	
+			url: '@',
+			noPagination: '@'
 		},
 		controller: function($http, $interval, $route, $rootScope, $scope, tokenService) {
 			var postsCtrl = this;
@@ -169,17 +170,33 @@ topicViewApp.directive('postList', function(descantConfig, templateService) {
 					return;
 				}
 				postsCtrl.busy = true;
-				var req = $http.get(descantConfig.backend + $scope.url + "?limit=" + postsCtrl.limit.toString() + "&offset=" + postsCtrl.offset.toString());
+				var req = null;
+				postsCtrl.noPagination = $scope.noPagination;
+				if (postsCtrl.noPagination) {
+					req = $http.get(descantConfig.backend + $scope.url);	
+				}
+				else {
+					req = $http.get(descantConfig.backend + $scope.url + "?limit=" + postsCtrl.limit.toString() + "&offset=" + postsCtrl.offset.toString());
+				}
 				req.success(function (data) {
-					if (data['results'].length == 0){
+					var res = null;
+					if (postsCtrl.noPagination) {
+						res = [];
+						res.push(data);
 						postsCtrl.end = true;
-						return;
 					}
-					var items = data['results'];
+					else {
+						if (data['results'].length == 0){
+							postsCtrl.end = true;
+							return;
+						}
+						res = data['results'];
+					}
+					var items = res;
       				for (var i = 0; i < items.length; i++) {
         				postsCtrl.list.push(items[i]);
       				}
-					postsCtrl.offset += data['results'].length;
+					postsCtrl.offset += res.length;
 					postsCtrl.busy = false;
 				});
 				req.error(function(data) {

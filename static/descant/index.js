@@ -99,6 +99,11 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			title: 'Send Private Message',
 			templateUrl: 'pages/pm-send.html'
 		})
+		.when('/post/:id', {
+			title: 'View Post',
+			templateUrl: 'pages/post.html',
+			controller: 'PostController'
+		})
 		.when('/404', {
 			title: 'Not Found',
 			templateUrl: 'pages/404.html'
