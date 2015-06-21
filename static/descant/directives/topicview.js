@@ -67,6 +67,7 @@ topicViewApp.directive('topicFirstpost', function(descantConfig, templateService
 				var ctrl = this;
 				req.success(function(data) {
 					ctrl.edit();
+					$route.reload();
 				});
 			};
 			
