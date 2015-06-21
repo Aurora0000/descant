@@ -134,3 +134,12 @@ pageApp.directive('pageNotificationView', function(templateService) {
 		}
 	}
 });
+
+pageApp.directive('pagePmSend', function(templateService) {
+	return {
+		restrict: 'E',
+		templateUrl: function () {
+			return 'templates/' + templateService.currentTemplateSet() + '/pages/pm-send.html';
+		}
+	}
+});

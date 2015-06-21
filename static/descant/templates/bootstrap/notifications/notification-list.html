@@ -1,13 +1,18 @@
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-		{{notificationCtrl.currentDisplayMode.name | translate}}
-    	<span class="caret"></span>
-	</button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-      <li role="presentation" ng-repeat="displayMode in notificationCtrl.displayModes">
-		  <a role="menuitem" tabindex="-1" ng-click="notificationCtrl.setDisplayMode(displayMode.id)">{{displayMode.name | translate}}</a>
-	  </li>
-    </ul>
+<div class="btn-group">
+	<a role="button" href="#/pm/send" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i> <span translate="SEND_PM"></span></a>
+	<div class="btn-group">
+	<div class="dropdown">
+    	<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+			{{notificationCtrl.currentDisplayMode.name | translate}}
+    		<span class="caret"></span>
+		</button>
+    	<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+      		<li role="presentation" ng-repeat="displayMode in notificationCtrl.displayModes">
+				<a role="menuitem" tabindex="-1" ng-click="notificationCtrl.setDisplayMode(displayMode.id)">{{displayMode.name | translate}}</a>
+			</li>
+    	</ul>
+	</div>
+	</div>
 </div>
 <br />
 <div infinite-scroll='notificationCtrl.updateList()' infinite-scroll-disabled='notificationCtrl.busy' infinite-scroll-distance='1'>

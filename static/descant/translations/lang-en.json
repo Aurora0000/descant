@@ -69,6 +69,8 @@
     "REPORTED_POST": "reported",
     "THIS_POST": "this post.",
     "LAST_NOTIFICATION": "You've reached the last notification!",
+    "MESSAGE": "Message",
+    "SEND_PM": "Send Private Message",
     "just_now":    "just now",
     "seconds_ago": "{{time}} seconds ago",
     "a_minute_ago": "a minute ago",

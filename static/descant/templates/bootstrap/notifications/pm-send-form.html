@@ -1,0 +1,14 @@
+<div class="panel">
+	<div class="end" translate="SEND_PM"></div>
+	<div class="body">
+			<form>
+				<div class="form-group">
+					<input class="form-control" placeholder="{{'USERNAME' | translate}}" ng-model="user">
+				</div>
+				<div class="form-group">
+					<textarea placeholder="{{'MESSAGE' | translate}}" class="form-control" ng-model="message"></textarea>
+				</div>
+				<a class="btn btn-primary" ng-click="pmFormCtrl.send(user, message)" translate="SEND_PM"></a>
+			</form>
+	</div>
+</div>

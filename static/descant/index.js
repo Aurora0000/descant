@@ -12,7 +12,7 @@ var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'rel
 									 'descant.directives.usercpsettings', 'descant.directives.pages',
 									 'descant.directives.notificationlist','descant.directives.notificationinfo',
 									 'descant.directives.themeselector', 'descant.directives.notificationbutton',
-									 'descant.filters.html', 
+									 'descant.directives.pmsendform', 'descant.filters.html', 
 									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
@@ -94,6 +94,10 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			title: 'View Notification',
 			templateUrl: 'pages/notification-view.html',
 			controller: 'NotificationViewController'
+		})
+		.when('/pm/send', {
+			title: 'Send Private Message',
+			templateUrl: 'pages/pm-send.html'
 		})
 		.when('/404', {
 			title: 'Not Found',
