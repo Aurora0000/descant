@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from djoser.signals import user_activated
 
 from forums import utils
-from descant import settings
+
 from .serializers import *
 
 
@@ -23,10 +23,6 @@ class DjangoObjectPermissionsOrAnonReadOnly(DjangoObjectPermissions):
 
 class StandardThrottle(UserRateThrottle):
     rate = '60/min'  # 1 per second
-
-
-class StrictThrottle(UserRateThrottle):
-    rate = '5/min'
 
 
 class ForumStats(APIView):
@@ -226,7 +222,7 @@ class MessageCreate(generics.CreateAPIView):
     queryset = None
     serializer_class = PMSerializer
     permission_classes = (IsAuthenticated,)
-    throttle_classes = (StrictThrottle,)
+    throttle_classes = (StandardThrottle,)
 
     def perform_create(self, serializer):
         try:
