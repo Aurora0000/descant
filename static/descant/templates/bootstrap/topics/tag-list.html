@@ -1,7 +1,9 @@
-<button ng-click="tagCtrl.toggleBox()" class="btn"><i class="glyphicon glyphicon-tags"></i> &nbsp;<span translate="TAGS_ICON"></span></button>
-<br />
-<ul class="list-group" ng-show="tagCtrl.showTags">
-	<li class="list-group-item" ng-repeat="tag in tagCtrl.list">
-		<div class="tag-name"><a ng-href="#/topics/{{tag.id}}">{{ tag.name }}</a></div>
-	</li>
-</ul>
+<h2 translate="TAGS_ICON"></h2>
+<div class="container-fluid">
+	<div class="col-md-4" ng-repeat="tag in tagCtrl.list">
+		<div class="panel panel-primary" style="border-radius: 5px;">
+			<div class="panel-header"><a ng-href="#/topics/{{tag.id}}" class="text-center"><h3><i class="glyphicon glyphicon-tag"></i> {{ tag.name }}</h3></a></div>
+			<div class="panel-body text-center"><i class="glyphicon glyphicon-bullhorn"></i> {{tag.posts.length}} <span translate="POSTS"></span></div>
+		</div>
+	</div>
+</div>
