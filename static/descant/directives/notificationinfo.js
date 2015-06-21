@@ -12,7 +12,7 @@ notificationApp.directive('notificationInfo', function(descantConfig, templateSe
 		controller: function($http, $location, $scope, tokenService) {
 			this.loadNotification = function() {
 				var ctrl = this;
-				var req = $http.get(descantConfig.backend + '/api/v0.1/notifications/' + $scope.id + '/mark-read/');
+				var req = $http.post(descantConfig.backend + '/api/v0.1/notifications/' + $scope.id + '/mark-read/');
 				req.success(function(data) { 
 					ctrl.notification = data;
 				});

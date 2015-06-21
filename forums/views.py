@@ -211,14 +211,14 @@ class MarkNotificationAsRead(APIView):
     def post(self, request, format=None, pk=None):
         try:
             user = User.objects.get(pk=request.user.id)
-            notification = user.notifications.unread().filter(pk=pk)
-            notification[0].mark_as_read()
+            notification = user.notifications.all().filter(pk=pk)[0]
+            notification.mark_as_read()
         except ObjectDoesNotExist:
             resp_data = {
                 'pk': 'Not found!'
             }
             return Response(resp_data, status=404)
-        return NotificationSerializer(notification)
+        return Response(NotificationSerializer(notification).data, status=200)
 
 
 class MessageCreate(generics.CreateAPIView):
