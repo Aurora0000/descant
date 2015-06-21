@@ -1,6 +1,6 @@
 var nBtnApp = angular.module('descant.directives.notificationbutton', ['descant.config', 'descant.services.templateservice']);
 
-nBtnApp.directive('notificationButton', function(descantConfig, templateService) {
+nBtnApp.directive('notificationButton', function(descantConfig, tokenService, templateService) {
   return {
     restrict: 'AE',
     templateUrl: function() {
@@ -10,6 +10,9 @@ nBtnApp.directive('notificationButton', function(descantConfig, templateService)
         var ctrl = this;
       
         this.checkAlerts = function() {
+            if (!tokenService.authenticated) {
+                return;
+            }
 			      $http.get(descantConfig.backend + '/api/v0.1/notifications/').success(function(data) {
 				        ctrl.notifications = data;
 				        ctrl.notificationCount = data.length;
