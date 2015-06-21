@@ -25,13 +25,13 @@ class Post(models.Model):
     post_date = models.DateTimeField(editable=False)
 
     last_edit_date = models.DateTimeField(blank=True)
-    
+
     # These fields apply to topics only #
-    
+
     is_topic = models.BooleanField(default=False)
-    
+
     title = models.CharField(max_length=120, blank=True, null=True)
-    
+
     # Tags are stored in their own table, the IDs of those are here.
     tag_ids = models.ManyToManyField(Tag, related_name='posts', blank=True)
 
@@ -46,7 +46,7 @@ class Post(models.Model):
 
     def was_edited(self):
         return True if self.last_edit_date != self.post_date else False
-    
+
     def __str__(self):
         return "Reply to Topic {} (ID {})".format(str(self.reply_to), str(self.id)) if (self.title is None) or (
             self.title == "") else self.title
@@ -59,3 +59,18 @@ class Post(models.Model):
         self.contents_marked_up = bleach.clean(markdown(self.contents).replace('\n', ''), settings.ALLOWED_TAGS,
                                                settings.ALLOWED_ATTRIBUTES)
         return super(Post, self).save(*args, **kwargs)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'author': self.author,
+            'contents': self.contents,
+            'contents_marked_up': self.contents_marked_up,
+            'post_date': self.post_date,
+            'last_edit_date': self.last_edit_date,
+            'is_topic': self.is_topic,
+            'tag_ids': self.tag_ids,
+            'is_locked': self.is_locked,
+            'reply_to': self.reply_to
+        }

@@ -218,10 +218,7 @@ class MarkNotificationAsRead(APIView):
                 'pk': 'Not found!'
             }
             return Response(resp_data, status=404)
-        resp_data = {
-            'unread': False
-        }
-        return Response(resp_data)
+        return NotificationSerializer(notification)
 
 
 class MessageCreate(generics.CreateAPIView):
