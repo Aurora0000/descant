@@ -15,6 +15,7 @@ Free, open-source forum software powered by Angular and Django.
 - Avatars powered by Gravatar
 - Topic locking/unlocking
 - Administration Panel (via Django)
+- Notifications, Reports and Private Messages
 
 ## Installing
 For either option below, if you don't have `git`, instead of `git clone`, download the .tar.gz from below, extract and navigate into that folder with your shell, then continue after the `cd descant` line.
@@ -23,7 +24,7 @@ For either option below, if you don't have `git`, instead of `git clone`, downlo
 ### Debian, Ubuntu or other apt-based distributions
 
     sudo apt-get install python3 python3-pip git
-    git clone -b v0.1.0 --depth=1 https://github.com/Aurora0000/descant.git
+    git clone -b v0.2.0 --depth=1 https://github.com/Aurora0000/descant.git
     cd descant
     sudo pip3 install -r requirements.txt
     sudo python3 manage.py migrate
@@ -31,7 +32,7 @@ For either option below, if you don't have `git`, instead of `git clone`, downlo
 
 ### Via Docker/Vagrant
 
-    git clone -b v0.1.0 --depth=1 https://github.com/Aurora0000/descant.git
+    git clone -b v0.2.0 --depth=1 https://github.com/Aurora0000/descant.git
     cd descant
     vagrant up
 
