@@ -2,7 +2,7 @@ var localeApp = angular.module('descant.directives.localeselector', ['pascalprec
 
 localeApp.directive('localeSelector', function(templateService) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/locale-selector.html';  
         },

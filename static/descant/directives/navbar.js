@@ -2,7 +2,7 @@ var navBarApp = angular.module('descant.directives.navbar', ['descant.services.t
 
 navBarApp.directive('navBar', function(templateService) {
   return {
-    restrict: 'E',
+    restrict: 'AE',
     templateUrl: function() {
       return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-bar.html';
     },

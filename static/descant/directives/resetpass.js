@@ -2,7 +2,7 @@ var resetApp = angular.module('descant.directives.resetpass', ['descant.config',
 
 resetApp.directive('resetPassword', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset.html';	
 		},

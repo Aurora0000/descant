@@ -2,7 +2,7 @@ var includesApp = angular.module('descant.directives.includes', ['descant.servic
 
 includesApp.directive('includes', function(templateService) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/includes.html';  
         }

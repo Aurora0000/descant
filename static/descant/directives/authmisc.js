@@ -2,7 +2,7 @@ var authMiscApp = angular.module('descant.directives.authmisc', ['descant.servic
 
 authMiscApp.directive('logout', function(tokenService, $location) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		controller: function($location) {
 			tokenService.logout().then(function(data){
 				$location.path('/');
@@ -16,7 +16,7 @@ authMiscApp.directive('logout', function(tokenService, $location) {
 
 authMiscApp.directive('emitToken', function(tokenService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		controller: function() {
 			tokenService.setHeader();
 		}

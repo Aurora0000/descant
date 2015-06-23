@@ -2,7 +2,7 @@ var pmApp = angular.module('descant.directives.pmsendform', ['descant.config', '
 
 pmApp.directive('pmSendForm', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/notifications/pm-send-form.html';	
 		},

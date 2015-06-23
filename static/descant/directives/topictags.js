@@ -2,7 +2,7 @@ var topicTagsApp = angular.module('angular.directives.topictags', ['descant.serv
 
 tagApp.directive('topicTags', function (tagService, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-tags.html';
 		},

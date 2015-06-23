@@ -2,7 +2,7 @@ var resetCApp = angular.module('descant.directives.resetconf', ['descant.config'
 
 resetCApp.directive('resetPasswordConfirm', function($location, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/password-reset-confirm.html';	
 		},

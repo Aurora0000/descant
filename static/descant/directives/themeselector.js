@@ -2,7 +2,7 @@ var themeApp = angular.module('descant.directives.themeselector', ['descant.serv
 
 themeApp.directive('themeSelector', function(templateService) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/theme-selector.html';  
         },

@@ -2,7 +2,7 @@ var topicViewApp = angular.module('descant.directives.topicview', ['descant.conf
 
 topicViewApp.directive('topicFirstpost', function(descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-firstpost.html';	
 		},
@@ -95,7 +95,7 @@ topicViewApp.directive('topicFirstpost', function(descantConfig, templateService
 
 topicViewApp.directive('replyItem', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-item.html';	
 		},
@@ -149,7 +149,7 @@ topicViewApp.directive('replyItem', function(templateService) {
 
 topicViewApp.directive('postList', function(descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/posts/reply-list.html';	
 		},

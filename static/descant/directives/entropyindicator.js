@@ -2,7 +2,7 @@ var entropyApp = angular.module('descant.directives.entropyindicator', ['descant
 
 entropyApp.directive('entropyIndicator', function(templateService) {
   return {
-    restrict: 'E',
+    restrict: 'AE',
     scope: {
     	password: '=',
 		percentage: '='

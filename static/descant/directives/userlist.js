@@ -3,7 +3,7 @@ var userListApp = angular.module('descant.directives.userlist', ['descant.config
 
 userListApp.directive('userList', function(descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/user-list.html';	
 		},

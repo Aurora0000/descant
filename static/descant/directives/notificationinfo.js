@@ -2,7 +2,7 @@ var notificationApp = angular.module('descant.directives.notificationinfo', ['de
 
 notificationApp.directive('notificationInfo', function(descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/notifications/notification-info.html';	
 		},

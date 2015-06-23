@@ -2,7 +2,7 @@ var notifListApp = angular.module('descant.directives.notificationlist', ['desca
 
 notifListApp.directive('notificationList', function(descantConfig, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/notifications/notification-list.html';	
 		},

@@ -2,7 +2,7 @@ var cpApp = angular.module('descant.directives.usercpsettings', ['descant.servic
 
 cpApp.directive('userCpSettings', function(templateService) {
     return {
-        restrict: 'E',
+        restrict: 'AE',
         templateUrl: function() {
           return 'templates/' + templateService.currentTemplateSet() + '/settings/user-cp-settings.html';  
         },

@@ -3,7 +3,7 @@ var userStatsApp = angular.module('descant.directives.userstats', ['descant.conf
 
 userListApp.directive('userStats', function(descantConfig, tokenService, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		scope: {
 			userId: '@'
 		},

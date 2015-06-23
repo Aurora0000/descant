@@ -3,7 +3,7 @@ var newTopicApp = angular.module('descant.directives.newtopic', ['descant.config
 
 newTopicApp.directive('newTopicBox', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/topics/new-topic-box.html';	
 		},

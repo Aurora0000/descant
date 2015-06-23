@@ -3,7 +3,7 @@ var newPostApp = angular.module('descant.directives.newpost', ['descant.config',
 
 newPostApp.directive('newPostBox', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/posts/new-post-box.html';	
 		},

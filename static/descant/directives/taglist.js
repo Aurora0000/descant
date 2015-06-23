@@ -2,7 +2,7 @@ var tagApp = angular.module('descant.directives.taglist', ['descant.config', 'de
 
 tagApp.directive('tagList', function(tagService, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/topics/tag-list.html';	
 		},

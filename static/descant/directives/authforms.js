@@ -2,7 +2,7 @@ var authFormApp = angular.module('descant.directives.authforms', ['descant.confi
 
 authFormApp.directive('loginBox', function(tokenService, templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/login-box.html';	
 		},
@@ -21,7 +21,7 @@ authFormApp.directive('loginBox', function(tokenService, templateService) {
 
 authFormApp.directive('registerBox', function(templateService) {
 	return {
-		restrict: 'E',
+		restrict: 'AE',
 		templateUrl: function() {
 			return 'templates/' + templateService.currentTemplateSet() + '/users/register-box.html';
 		},
