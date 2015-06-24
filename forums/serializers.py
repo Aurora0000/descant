@@ -36,7 +36,7 @@ class TagSerializer(serializers.ModelSerializer):
 class TagForTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('name', 'colour')
+        fields = ('name', 'description')
 
 class PostSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()

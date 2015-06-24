@@ -8,8 +8,7 @@ from descant import settings
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)
-    # Hex colours will be converted to an integer here for convenience
-    colour = models.IntegerField()
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
