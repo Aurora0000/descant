@@ -2,11 +2,11 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory, force_authenticate
 
-from .models import Post, Tag
+from .models import Post
 from .serializers import TopicSerializer
-from .views import TagList, TopicDetail, AnyPostDetail
+from .views import TopicDetail, AnyPostDetail
 
-
+"""
 class TagTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
@@ -28,6 +28,7 @@ class TagTestCase(TestCase):
         response = view(request)
         self.assertEqual(response.data[0]['name'], 'test')
         self.assertEqual(response.data[1]['name'], '\\#231[][=-')
+"""
 
 
 class SerializerReplyTestCase(TestCase):
