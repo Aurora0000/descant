@@ -6,19 +6,19 @@ from .models import Post
 from .serializers import TopicSerializer
 from .views import TopicDetail, AnyPostDetail
 
-"""
+
 class TagTestCase(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin', 'fake@fakeness.net', 'null')
-        Tag.objects.create(name='test', colour=0xFFFFFF)
-        Tag.objects.create(name='\\#231[][=-', colour=0xDEAD12)
+        Tag.objects.create(name='test', description='potato')
+        Tag.objects.create(name='\\#231[][=-', description='ggggh')
 
     def test_colours_stored_correctly(self):
         # Check that everything gets stored right.
         test = Tag.objects.get(name='test')
         rand_chars = Tag.objects.get(name='\\#231[][=-')
-        self.assertEqual(rand_chars.colour, 0xDEAD12)
-        self.assertEqual(test.colour, 0xFFFFFF)
+        self.assertEqual(rand_chars.description, 'ggggh')
+        self.assertEqual(test.desciption, 'potato')
 
     def test_api_is_correct(self):
         factory = APIRequestFactory()
@@ -28,7 +28,6 @@ class TagTestCase(TestCase):
         response = view(request)
         self.assertEqual(response.data[0]['name'], 'test')
         self.assertEqual(response.data[1]['name'], '\\#231[][=-')
-"""
 
 
 class SerializerReplyTestCase(TestCase):
