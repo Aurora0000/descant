@@ -30,7 +30,7 @@ class TargetRelatedField(serializers.RelatedField):
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('id', 'name', 'colour', 'posts')
+        fields = ('id', 'name', 'description', 'posts')
 
 
 class TagForTopicSerializer(serializers.ModelSerializer):
