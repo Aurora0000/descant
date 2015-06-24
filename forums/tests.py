@@ -2,9 +2,9 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIRequestFactory, force_authenticate
 
-from .models import Post
+from .models import Post, Tag
 from .serializers import TopicSerializer
-from .views import TopicDetail, AnyPostDetail
+from .views import TopicDetail, AnyPostDetail, TagList
 
 
 class TagTestCase(TestCase):
