@@ -18,7 +18,7 @@ class TagTestCase(TestCase):
         test = Tag.objects.get(name='test')
         rand_chars = Tag.objects.get(name='\\#231[][=-')
         self.assertEqual(rand_chars.description, 'ggggh')
-        self.assertEqual(test.desciption, 'potato')
+        self.assertEqual(test.description, 'potato')
 
     def test_api_is_correct(self):
         factory = APIRequestFactory()
