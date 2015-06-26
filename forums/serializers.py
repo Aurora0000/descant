@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from notifications.models import Notification
 
-from .models import Post, Tag
+from .models import *
 
 
 class JSONSerializerField(serializers.Field):
@@ -223,3 +223,9 @@ class PMSerializer(serializers.Serializer):
 
 class ReportSerializer(serializers.Serializer):
     message = serializers.CharField(max_length=5000)
+
+
+class RulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ForumSettings
+        fields = ('rules_marked_up',)

@@ -7,3 +7,4 @@ bleach
 markdown2
 django-admin-bootstrapped
 django-notifications-hq
+django-solo

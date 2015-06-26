@@ -1,10 +1,23 @@
 from django.db import models
+from solo.models import SingletonModel
 from django.utils import timezone
 import bleach
 from markdown2 import markdown
 
 from descant import settings
 
+
+class ForumSettings(SingletonModel):
+    rules = models.TextField(default='There are no rules.')
+    rules_marked_up = models.TextField(editable=False, default='<p>There are no rules.</p>')
+
+    def save(self, *args, **kwargs):
+        self.rules_marked_up = bleach.clean(markdown(self.rules).replace('\n', ''), settings.ALLOWED_TAGS,
+                                            settings.ALLOWED_ATTRIBUTES)
+        return super(ForumSettings, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Forum Settings'
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)

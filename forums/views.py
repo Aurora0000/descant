@@ -201,8 +201,18 @@ class NotificationDetail(generics.RetrieveDestroyAPIView):
         return user.notifications.filter(pk=self.kwargs['pk'])
 
 
+class RulesView(APIView):
+    permission_classes = (AllowAny,)
+    throttle_classes = (StandardThrottle,)
+
+    def get(self, request, format=None):
+        data = RulesSerializer(ForumSettings.get_solo()).data
+        return Response(data, status=200)
+
+
 class MarkNotificationAsRead(APIView):
     permission_classes = (IsAuthenticated,)
+    throttle_classes = (StandardThrottle,)
 
     def post(self, request, format=None, pk=None):
         try:

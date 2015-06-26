@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'notifications/send/', MessageCreate.as_view()),
     url(r'notifications/read/', NotificationList.as_view(all=True)),
     url(r'notifications/', NotificationList.as_view(all=False)),
+    url(r'rules/', RulesView.as_view()),
 ]
 
