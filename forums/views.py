@@ -10,7 +10,6 @@ from rest_framework.response import Response
 from djoser.signals import user_activated
 
 from forums import utils
-
 from .serializers import *
 
 
@@ -240,9 +239,10 @@ class ReportPost(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         try:
-            utils.notify_send_bleached(self.request.user, recipient=User.objects.get(pk=1),
-                                       verb='REPORTED_POST', target=Post.objects.get(pk=self.kwargs['pk']),
-                                       message=serializer.data['message'])
+            for user in User.objects.filter(groups__name='moderators'):
+                utils.notify_send_bleached(self.request.user, recipient=user,
+                                           verb='REPORTED_POST', target=Post.objects.get(pk=self.kwargs['pk']),
+                                           message=serializer.data['message'])
         except ObjectDoesNotExist:
             raise serializers.ValidationError('Post does not exist!')
 
