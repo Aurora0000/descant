@@ -153,3 +153,13 @@ pageApp.directive('pagePost', function(templateService) {
 		}
 	}
 });
+
+
+pageApp.directive('pageRules', function(templateService) {
+	return {
+		restrict: 'E',
+		templateUrl: function () {
+			return 'templates/' + templateService.currentTemplateSet() + '/pages/rules.html';
+		}
+	}
+});

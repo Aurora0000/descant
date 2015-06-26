@@ -12,7 +12,7 @@ var app = angular.module('descant', ['ngRoute', 'ngCookies', 'ngTagsInput', 'rel
 									 'descant.directives.usercpsettings', 'descant.directives.pages',
 									 'descant.directives.notificationlist','descant.directives.notificationinfo',
 									 'descant.directives.themeselector', 'descant.directives.notificationbutton',
-									 'descant.directives.pmsendform', 'descant.filters.html', 
+									 'descant.directives.rules', 'descant.directives.pmsendform', 'descant.filters.html', 
 									 'descant.controllers.routing', 'descant.services.templateservice']);
 
 app.config(function($routeProvider, $locationProvider, $translateProvider) {
@@ -103,6 +103,10 @@ app.config(function($routeProvider, $locationProvider, $translateProvider) {
 			title: 'View Post',
 			templateUrl: 'pages/post.html',
 			controller: 'PostController'
+		})
+		.when('/rules', {
+			title: 'Rules',
+			templateUrl: 'pages/rules.html'
 		})
 		.when('/404', {
 			title: 'Not Found',
