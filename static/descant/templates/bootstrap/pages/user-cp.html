@@ -2,8 +2,9 @@
   <div class="col-md-3">
     <span ng-init="langThemeTab = true"></span>
     <ul class="nav nav-pills nav-stacked">
-      <li role="presentation" ng-class="{'active': langThemeTab }" ng-click="langThemeTab = true; userCpTab = false;"><a translate="LANGUAGE_THEME"></a></li>
-      <li role="presentation" ng-class="{'active': userCpTab }" ng-click="langThemeTab = false; userCpTab = true;"><a translate="USER_CP_HEADER"></a></li>
+      <li role="presentation" ng-class="{'active': langThemeTab }" ng-click="langThemeTab = true; userCpTab = false; rulesTab = false;"><a translate="LANGUAGE_THEME"></a></li>
+      <li role="presentation" ng-class="{'active': userCpTab }" ng-click="langThemeTab = false; userCpTab = true; rulesTab = false;"><a translate="USER_CP_HEADER"></a></li>
+      <li role="presentation" ng-class="{'active': rulesTab }" ng-click="langThemeTab = false; userCpTab = false; rulesTab = true;"><a translate="RULES"></a></li>
     </ul>
   </div>
   <div class="col-md-9">
@@ -13,6 +14,9 @@
     </div>
     <div ng-show="userCpTab">
       <user-cp-settings></user-cp-settings>
+    </div>
+    <div ng-show="rulesTab">
+      <rules></rules>
     </div>
   </div>
 </div>
