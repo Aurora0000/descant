@@ -1,15 +1,18 @@
-var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngTagsInput', 'relativeDate', 'infinite-scroll',
- 									 'descant.config', 'descant.services.tokenservice', 'descant.directives.authforms',
-									 'descant.directives.authmisc', 'descant.directives.authstatus', 
-									 'descant.directives.navbtn', 'descant.directives.newpost',
+var app = angular.module('descant', ['ngAnimate', 'ngRoute', 'ngCookies', 'ngTagsInput', 'relativeDate', 'infinite-scroll', 'LocalStorageModule',
+									 'pascalprecht.translate', 'descant.config', 'descant.services.tokenservice', 
+									 'descant.directives.authforms', 'descant.directives.authmisc', 
+									 'descant.directives.authstatus', 'descant.directives.navbtn', 
 									 'descant.directives.newtopic', 'descant.directives.taglist',
 									 'descant.directives.topiclist', 'descant.directives.topicview',
 									 'descant.directives.topicview', 'descant.directives.userlist',
 									 'descant.directives.userstats', 'descant.directives.entropyindicator',
-									 'descant.filters.html', 'descant.controllers.routing', 'descant.directives.resetpass',
-									 'descant.directives.resetconf']);
+									 'descant.directives.includes', 'descant.directives.resetpass',
+									 'descant.directives.resetconf', 'descant.directives.localeselector',
+									 'descant.directives.navbar', 'descant.directives.newpost',
+									 'descant.filters.html', 'descant.controllers.routing',
+									 'descant.services.templateservice']);
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(function($routeProvider, $locationProvider, $translateProvider) {
 		$routeProvider
     	.when('/', {
 			title: 'Home',
@@ -60,7 +63,6 @@ app.config(function($routeProvider, $locationProvider) {
 		})
 		.when('/activate', {
 			title: 'Account Activation',
-			template: '',
 			controller: 'ActivateController'
 		})
 		.when('/registered', {
@@ -87,7 +89,23 @@ app.config(function($routeProvider, $locationProvider) {
 			templateUrl: 'pages/404.html'
 		})
 		.otherwise('/404');
-
+		
+		$translateProvider.useStaticFilesLoader({
+ 			prefix: 'translations/lang-',
+  			suffix: '.json'
+		});
+		
+		$translateProvider.useSanitizeValueStrategy('escape');
+		$translateProvider.registerAvailableLanguageKeys(['en', 'fr', 'de', 'ro'], {
+			'en_*': 'en',
+    		'ro_*': 'ro',
+			'fr_*': 'fr',
+			'de_*': 'de'
+		});
+		$translateProvider.uniformLanguageTag('java');
+  		$translateProvider.determinePreferredLanguage();
+		$translateProvider.fallbackLanguage('en');
+ 		$translateProvider.useLocalStorage();
 });
 
 app.run(function ($rootScope, $route, $timeout, $window, descantConfig) {

@@ -4,6 +4,7 @@ python:
 branches:
   only:
     - master
+    - v0.2-devel
 install:
   - pip install -r requirements.txt
   - pip install coverage

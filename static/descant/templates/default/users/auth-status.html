@@ -1,0 +1,6 @@
+<span ng-show="auth.error"><a href="#/login" class="auth-login ng-cloak"><i class="icon-account_box"></i> <span translate="LOGIN"></span></a></span>
+<span ng-hide="auth.error" ng-show="auth.user != null" class="auth-hi ng-cloak">
+	<a href="#/usercp"><i class="icon-settings"></i></a>
+	<a ng-href="#/user/{{auth.user.id}}" class="auth-hi">{{auth.user.username}}</a>	
+	<a href="#/logout"><i class="icon-exit_to_app"></i></a> 
+</span>

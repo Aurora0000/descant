@@ -17,7 +17,6 @@ authMiscApp.directive('logout', function(tokenService, $location) {
 authMiscApp.directive('emitToken', function(tokenService) {
 	return {
 		restrict: 'E',
-		template: '',
 		controller: function() {
 			tokenService.setHeader();
 		}

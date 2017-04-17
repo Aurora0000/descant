@@ -1,20 +1,15 @@
 <!doctype html>
 <html ng-app="descant">
 	<head>
-		<link rel="stylesheet" href="forum.css">
-		<link rel="stylesheet" href="icons/style.css">
 		<script src="vendor.min.js"></script>
 		<script src="app.js"></script>
 		<title>Descant Forum</title>
+		<includes></includes>
 	</head>
 	<body class="width hasnav">
 			<emit-token></emit-token>
 			<!--Nav-->
-			<div class="nav">
-				<nav-btn route-url="/topics" route-name="Topics" route-icon="icon-forum"></nav-btn>
-				<nav-btn route-url="/users" route-name="Users" route-icon="icon-people"></nav-btn>
-				<auth-status class="f-right"></auth-status>
-			</div>
+			<nav-bar></nav-bar>
 			<!--Pages-->
 			<div class="container">
 				<div id="main" ng-view></div>
@@ -28,8 +23,12 @@
 				</p>
 				<h3>Solutions</h3>
 				<ul>
-					<li>Enable JavaScript in your browser</li>
-					<li>Upgrade to a more modern browser.</li>
+					<li><a href="https://support.microsoft.com/en-us/gp/howtoscript">
+						Enable JavaScript in your browser
+					</a></li>
+					<li><a href="http://whatbrowser.org/">
+						Upgrade to a more modern browser.
+					</a></li>
 				</ul>
 			</noscript>
 	</body>

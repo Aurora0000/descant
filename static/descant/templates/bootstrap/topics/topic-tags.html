@@ -1,0 +1,5 @@
+<span class="tag-holder" ng-hide="tags.tags.length == 0">
+	<span class="list-tag" ng-repeat="tag in tags.tags">
+		<span class="label label-primary"><a ng-href="#/topics/{{tag.id}}" class="bg-primary"><i class="glyphicon glyphicon-tag"></i> {{tag.name}}</a></span>
+	</span>
+</span>

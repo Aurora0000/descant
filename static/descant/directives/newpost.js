@@ -1,13 +1,16 @@
-var newPostApp = angular.module('descant.directives.newpost', ['descant.config', 'descant.services.tokenservice']);
+var newPostApp = angular.module('descant.directives.newpost', ['descant.config', 'descant.services.tokenservice',
+															   'descant.services.templateservice']);
 
-newPostApp.directive('newPostBox', function($location) {
+newPostApp.directive('newPostBox', function(templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/posts/new-post-box.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/posts/new-post-box.html';	
+		},
 		scope: {
 			postData: '='
 		},
-		controller: function(tokenService, $rootScope, $scope, $http, descantConfig) {
+		controller: function(tokenService, $rootScope, $location, $scope, $http, descantConfig) {
 			this.submitting = false;
 			this.auth = tokenService.authenticated;
 			var ntb = this;

@@ -1,0 +1,21 @@
+<h2 class="locked-msg" ng-show="postData.is_locked"><i class="icon-lock"></i> <span translate="TOPIC_LOCKED"></span></h2>
+<button ng-show="newPostCtrl.auth && !postData.is_locked" ng-click="newPostCtrl.toggleNTP()" class="highlight">
+	<i ng-class="{ 'icon-remove': newPostCtrl.showNTP, 'icon-add': newPostCtrl.showNTP == false }"></i> 
+	<span translate="REPLY_BUTTON"></span>
+</button>
+</p>
+<div ng-show="newPostCtrl.showNTP && newPostCtrl.auth" class="panel">
+	<div class="end" translate="REPLY_BUTTON"></div>
+	<div class="body">
+		<div class="margin-fix">
+			<form>
+				<p>
+					<textarea class="full" placeholder="Post" ng-model="contents"></textarea>
+				</p>
+				<p>
+					<button class="highlight full" ng-click="newPostCtrl.addReply(contents)"><i ng-show="newPostCtrl.submitting" class="icon-refresh icon-spin"></i> <span translate="POST_BUTTON"></span></button>
+				</p>
+			</form>
+		</div>
+	</div>
+</div>

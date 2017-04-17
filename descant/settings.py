@@ -163,6 +163,7 @@ ALLOWED_HOSTS = []
 # Set up your email configuration here
 # Get configuration information at:
 # https://docs.djangoproject.com/en/1.8/ref/settings/#email-backend
+# noinspection PyPackageRequirements
 if DEBUG:
     # If debug is on, log emails to a file
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
@@ -189,19 +190,22 @@ DATABASES = {
     }
 }
 
+# See PASSWORD_RESET_CONFIRM_URL's comment to understand what this does
+FRONTEND_URL = 'forums/'
+
 # Change these settings to something more appropriate
 DJOSER = {
     # Set this to your domain (it'll be put on emails, etc)
     'DOMAIN': 'localhost',
     # Include your site's name here
     'SITE_NAME': 'Descant Forum',
-    # Currently not available in the front-end UI, so users will have to interact
-    # with the API directly
-    'PASSWORD_RESET_CONFIRM_URL': 'api/auth/password/reset/confirm/{uid}/{token}',
-    # Change this to <frontend_url>/#/activate?uid={uid}&token={token}
-    # Make sure to replace <frontend_url> with the actual front-end URL,
-    # relative to 'DOMAIN', like this: forums/#/activate?uid={uid}&token={token}
-    'ACTIVATION_URL': 'api/auth/activate/{uid}/{token}',
+    # Don't edit PASSWORD_RESET or ACTIVATION_URL directly. Instead
+    # edit FRONTEND_URL so this would work:
+    # DOMAIN/FRONTEND_URL/#/reset?uid={uid}&token={token}
+    # For example, if your site's index page is at example.com/descant/
+    # you would set DOMAIN to example.com and FRONTEND_URL to descant/
+    'PASSWORD_RESET_CONFIRM_URL': FRONTEND_URL + '#/reset?uid={uid}&token={token}',
+    'ACTIVATION_URL': FRONTEND_URL + '#/activate?uid={uid}&tpken={token}',
     # Don't touch these.
     'LOGIN_AFTER_ACTIVATION': True,
     'SEND_ACTIVATION_EMAIL': True,

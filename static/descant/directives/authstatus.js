@@ -1,11 +1,14 @@
-var authApp = angular.module('descant.directives.authstatus', ['descant.config', 'descant.services.tokenservice']);
+var authApp = angular.module('descant.directives.authstatus', ['descant.config', 'descant.services.tokenservice',
+															   'descant.services.templateservice']);
 
 
-authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', function($http, tokenService, descantConfig) {
+authApp.directive('authStatus', function($http, tokenService, descantConfig, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/users/auth-status.html',
-		controller: ['$http', '$scope', 'tokenService', function($http, $scope, tokenService) {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/users/auth-status.html';	
+		},
+		controller: function($http, $scope, tokenService) {
 			this.tryAuth = function() {
 				var ctrl = this;
 				tokenService.getAuthStatus().then(function(data) {
@@ -23,7 +26,7 @@ authApp.directive('authStatus', ['$http', 'tokenService', 'descantConfig', funct
 				authCtrl.tryAuth();
 			});
 			authCtrl.tryAuth();
-		}],
+		},
 		controllerAs: 'auth'
 	}
-}]);
+});

@@ -44,5 +44,11 @@ For either option below, if you don't have `git`, instead of `git clone`, downlo
 
 **Note:** The Vagrant image does *not* serve static files. You'll need to configure nginx to serve up static files. [This](https://gist.github.com/Aurora0000/0af65d3310e2c7d059fb) code may be helpful.
 
+## Translations
+- English [native, by [@Aurora0000](https://github.com/Aurora0000)]
+- German [native, by [@SplittyDev](https://github.com/SplittyDev)]
+- Romanian [native, by [@chronium](https://github.com/chronium)]
+- French [***non-native***, by [@Aurora0000](https://github.com/Aurora0000)]
+
 ## Developing with Descant
 If you're interested in developing the front-end of Descant, take a look in static/descant/. Otherwise, you'll find the descant/ and forums/ directories interesting.

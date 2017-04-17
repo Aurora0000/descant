@@ -1,9 +1,11 @@
-var topicListApp = angular.module('descant.directives.topiclist', ['descant.config']);
+var topicListApp = angular.module('descant.directives.topiclist', ['descant.config', 'descant.services.templateservice']);
 
-topicListApp.directive('topicList', function(descantConfig) {
+topicListApp.directive('topicList', function(descantConfig, templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topics/topic-list.html',
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/topics/topic-list.html';	
+		},
 		scope: {
 			url: '@'	
 		},

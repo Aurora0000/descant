@@ -1,15 +1,17 @@
-var navApp = angular.module('descant.directives.navbtn', []);
+var navApp = angular.module('descant.directives.navbtn', ['descant.services.templateservice']);
 
-navApp.directive('navBtn', function() {
+navApp.directive('navBtn', function(templateService) {
   return {
-    restrict: 'E',
+    restrict: 'AE',
     require: '^routeUrl',
     scope: {
       routeUrl: '@',
 			routeName: '@',
 			routeIcon: '@'
     },
-    templateUrl: 'templates/nav/nav-btn.html',
+    templateUrl: function() {
+      return 'templates/' + templateService.currentTemplateSet() + '/nav/nav-btn.html';
+    },
 		controller: function($scope, $location) {
 		    this.isActive = function(route) {
 		        return route == $location.path();

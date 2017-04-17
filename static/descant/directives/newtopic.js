@@ -1,10 +1,13 @@
-var newTopicApp = angular.module('descant.directives.newtopic', ['descant.config', 'descant.services.tokenservice']);
+var newTopicApp = angular.module('descant.directives.newtopic', ['descant.config', 'descant.services.tokenservice',
+																 'descant.services.templateservice']);
 
-newTopicApp.directive('newTopicBox', function($location) {
+newTopicApp.directive('newTopicBox', function(templateService) {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/topics/new-topic-box.html',
-		controller: function(tokenService, tagService, $rootScope, $http, descantConfig) {
+		templateUrl: function() {
+			return 'templates/' + templateService.currentTemplateSet() + '/topics/new-topic-box.html';	
+		},
+		controller: function(tokenService, tagService, $rootScope, $location, $http, descantConfig) {
 			this.auth = tokenService.authenticated;
 			this.submitting = false;
 			
